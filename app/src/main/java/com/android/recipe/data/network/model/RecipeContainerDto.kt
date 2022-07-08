@@ -1,11 +1,15 @@
 package com.android.recipe.data.network.model
 
+import androidx.room.Entity
+import androidx.room.PrimaryKey
 import com.google.gson.annotations.Expose
 import com.google.gson.annotations.SerializedName
 
+@Entity(tableName = "recipe_info")
 data class RecipeContainerDto(
     @SerializedName("id")
     @Expose
+    @PrimaryKey
     val id: Int,
     @SerializedName("image")
     @Expose
