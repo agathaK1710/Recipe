@@ -1,31 +1,31 @@
-package com.android.recipe
+package com.android.recipe.presentation
 
-import android.os.Bundle
+import android.app.Application
 import android.util.Log
-import androidx.appcompat.app.AppCompatActivity
+import androidx.lifecycle.AndroidViewModel
+import com.android.recipe.data.database.AppDatabase
 import com.android.recipe.data.network.ApiFactory
 import io.reactivex.android.schedulers.AndroidSchedulers
 import io.reactivex.disposables.CompositeDisposable
 import io.reactivex.schedulers.Schedulers
 
-class MainActivity : AppCompatActivity() {
+class RecipeViewModel(application: Application) : AndroidViewModel(application) {
+    private val db = AppDatabase.getInstance(application)
     private val compositeDisposable = CompositeDisposable()
-    override fun onCreate(savedInstanceState: Bundle?) {
-        super.onCreate(savedInstanceState)
-        setContentView(R.layout.activity_main)
+    fun loadData() {
         val disposable = ApiFactory.apiService.searchRecipeByName(name = "pasta")
             .subscribeOn(Schedulers.io())
             .observeOn(AndroidSchedulers.mainThread())
             .subscribe({
                 Log.d("TAG", it.toString())
-            },{
+            }, {
                 it.message?.let { it1 -> Log.d("TAG", it1) }
             })
         compositeDisposable.add(disposable)
     }
 
-    override fun onDestroy() {
-        super.onDestroy()
+    override fun onCleared() {
+        super.onCleared()
         compositeDisposable.dispose()
     }
 }

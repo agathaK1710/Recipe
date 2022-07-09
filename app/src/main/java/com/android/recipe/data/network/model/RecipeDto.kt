@@ -6,7 +6,7 @@ import com.google.gson.annotations.Expose
 import com.google.gson.annotations.SerializedName
 
 @Entity(tableName = "recipe_info")
-data class RecipeContainerDto(
+data class RecipeDto(
     @SerializedName("id")
     @Expose
     @PrimaryKey
@@ -25,11 +25,11 @@ data class RecipeContainerDto(
     val missedIngredientCount: Int,
     @SerializedName("missedIngredients")
     @Expose
-    val missedIngredients: List<IngredientDto>? = null,
+    val missedIngredients: List<IngredientDto>?,
     @SerializedName("usedIngredientCount")
     @Expose
     val usedIngredientCount: Int,
     @SerializedName("usedIngredients")
     @Expose
-    val usedIngredients: List<IngredientDto>? = null
+    val usedIngredients: List<IngredientDto>?
 )
