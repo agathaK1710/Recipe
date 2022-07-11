@@ -1,6 +1,7 @@
 package com.android.recipe.data.database
 
 import androidx.room.TypeConverter
+import com.android.recipe.data.network.model.EquipmentDto
 import com.android.recipe.data.network.model.IngredientDto
 import com.android.recipe.data.network.model.NutrientDto
 import com.android.recipe.data.network.model.NutritionListDto
@@ -34,5 +35,33 @@ class RecipeConverter {
         val gson = Gson()
         val type = object : TypeToken<List<NutrientDto>>() {}.type
         return gson.fromJson(nutrients, type)
+    }
+
+    @TypeConverter
+    fun fromDishTypesList(dishTypes: List<String>): String {
+        val gson = Gson()
+        val type = object : TypeToken<List<String>>() {}.type
+        return gson.toJson(dishTypes, type)
+    }
+
+    @TypeConverter
+    fun toDishTypesList(dishTypes: String): List<String> {
+        val gson = Gson()
+        val type = object : TypeToken<List<String>>() {}.type
+        return gson.fromJson(dishTypes, type)
+    }
+
+    @TypeConverter
+    fun fromEquipmentsList(equipments: List<EquipmentDto>): String {
+        val gson = Gson()
+        val type = object : TypeToken<List<EquipmentDto>>() {}.type
+        return gson.toJson(equipments, type)
+    }
+
+    @TypeConverter
+    fun toEquipmentsList(equipments: String): List<EquipmentDto> {
+        val gson = Gson()
+        val type = object : TypeToken<List<EquipmentDto>>() {}.type
+        return gson.fromJson(equipments, type)
     }
 }

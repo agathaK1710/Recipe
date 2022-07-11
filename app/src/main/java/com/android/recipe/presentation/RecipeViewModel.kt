@@ -17,23 +17,25 @@ class RecipeViewModel(application: Application) : AndroidViewModel(application) 
     private val compositeDisposable = CompositeDisposable()
     private val mapper = RecipeMapper()
 
+    val recipeList = db.recipeDao().getRecipeList()
+
     fun loadData() {
-        val disposable = ApiFactory.apiService.searchRecipeByName(name = "pasta")
-            .subscribeOn(Schedulers.io())
-            .subscribe({
-                Log.d("TAG", it.foods.toString())
-                val recipeDtoList = mapper.mealListDtoToRecipeListDto(it.foods)
-                db.recipeDao().insertRecipeList(recipeDtoList)
-            }, {
-                it.message?.let { it1 -> Log.d("TAG", it1) }
-            })
-//        val disposable = ApiFactory.apiService.searchRecipeByIngredients(ingredients = "apples,flour,sugar")
+//        val disposable = ApiFactory.apiService.searchRecipeByName(name = "pasta")
 //            .subscribeOn(Schedulers.io())
 //            .subscribe({
-//                Log.d("TAG", it.toString())
+//                Log.d("TAG", it.foods.toString())
+//                val recipeDtoList = mapper.mealListDtoToRecipeListDto(it.foods)
+//                db.recipeDao().insertRecipeList(recipeDtoList)
 //            }, {
 //                it.message?.let { it1 -> Log.d("TAG", it1) }
 //            })
+        val disposable = ApiFactory.apiService.getRecipeInformation(id = 654959)
+            .subscribeOn(Schedulers.io())
+            .subscribe({
+                Log.d("TAG", it.toString())
+            }, {
+                it.message?.let { it1 -> Log.d("TAG", it1) }
+            })
         compositeDisposable.add(disposable)
     }
 
