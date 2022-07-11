@@ -25,11 +25,12 @@ data class RecipeDto(
     val missedIngredientCount: Int,
     @SerializedName("missedIngredients")
     @Expose
-    val missedIngredients: List<IngredientDto>?,
+    val missedIngredients: List<IngredientDto>? = null,
     @SerializedName("usedIngredientCount")
     @Expose
     val usedIngredientCount: Int,
     @SerializedName("usedIngredients")
     @Expose
-    val usedIngredients: List<IngredientDto>?
+    val usedIngredients: List<IngredientDto>? = null,
+    val nutrients: List<NutrientDto>
 )

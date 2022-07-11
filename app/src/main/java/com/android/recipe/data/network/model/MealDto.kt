@@ -10,19 +10,10 @@ data class MealDto(
     @SerializedName("title")
     @Expose
     val title: String,
-    @SerializedName("calories")
-    @Expose
-    val calories: Int,
-    @SerializedName("carbs")
-    @Expose
-    val carbs: String,
-    @SerializedName("fat")
-    @Expose
-    val fat: String,
     @SerializedName("image")
     @Expose
     val image: String,
-    @SerializedName("protein")
+    @SerializedName("nutrition")
     @Expose
-    val protein: String
+    val nutrition: NutritionListDto
 )
