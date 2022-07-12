@@ -1,15 +1,11 @@
 package com.android.recipe.data.network.model
 
-import androidx.room.Entity
-import androidx.room.PrimaryKey
 import com.google.gson.annotations.Expose
 import com.google.gson.annotations.SerializedName
 
-@Entity(tableName = "recipe_info")
 data class RecipeDto(
     @SerializedName("id")
     @Expose
-    @PrimaryKey
     val id: Int,
     @SerializedName("image")
     @Expose
@@ -25,12 +21,11 @@ data class RecipeDto(
     val missedIngredientCount: Int,
     @SerializedName("missedIngredients")
     @Expose
-    val missedIngredients: List<IngredientDto>? = null,
+    val missedIngredients: List<IngredientDto>,
     @SerializedName("usedIngredientCount")
     @Expose
     val usedIngredientCount: Int,
     @SerializedName("usedIngredients")
     @Expose
-    val usedIngredients: List<IngredientDto>? = null,
-    val nutrients: List<NutrientDto>
+    val usedIngredients: List<IngredientDto>
 )
