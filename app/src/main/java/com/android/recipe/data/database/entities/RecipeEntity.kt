@@ -15,8 +15,8 @@ data class RecipeEntity(
     val servings: Int,
     val dishTypes: String,
     val instructions: String,
-    val calories: Int,
-    val carbs: String,
-    val fat: String,
-    val protein: String
+    val calories: Double,
+    val carbs: Double,
+    val fat: Double,
+    val protein: Double
 )

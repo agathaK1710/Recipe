@@ -9,9 +9,5 @@ data class NutrientDto(
     val name: String,
     @SerializedName("amount")
     @Expose
-    val amount: Double,
-    @SerializedName("unit")
-    @Expose
-    val unit: String
-
+    val amount: Double
 )

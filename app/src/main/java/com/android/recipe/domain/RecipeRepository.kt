@@ -9,4 +9,5 @@ interface RecipeRepository {
     fun addRecipe(recipe: RecipeInfo)
     fun removeRecipe(recipe: RecipeInfo)
     fun editRecipe(recipe: RecipeInfo)
+    suspend fun loadData()
 }
