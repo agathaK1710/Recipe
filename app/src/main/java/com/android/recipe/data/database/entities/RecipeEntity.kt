@@ -8,8 +8,8 @@ data class RecipeEntity(
     @PrimaryKey
     val recipeId: Int,
     val image: String,
-    val likes: Int,
     val title: String,
+    val likes: Int,
     val healthScore: Int,
     val readyInMinutes: Int,
     val servings: Int,

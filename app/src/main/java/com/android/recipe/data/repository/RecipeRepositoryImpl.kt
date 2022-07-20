@@ -1,6 +1,7 @@
 package com.android.recipe.data.repository
 
 import android.app.Application
+import android.util.Log
 import androidx.lifecycle.LiveData
 import androidx.lifecycle.Transformations
 import com.android.recipe.data.database.AppDatabase
@@ -16,7 +17,7 @@ class RecipeRepositoryImpl(
     private val mapper = RecipeMapper()
     private val recipeDao = AppDatabase.getInstance(application).recipeDao()
     override fun getRecipeList(): LiveData<List<RecipeInfo>> {
-        return Transformations.map(recipeDao.getRecipeList()){
+        return Transformations.map(recipeDao.getRecipeList()) {
             it.map {
                 mapper.mapEntityToInfo(it)
             }
@@ -24,12 +25,12 @@ class RecipeRepositoryImpl(
     }
 
     override fun getRecipeInfo(id: Int): LiveData<RecipeInfo> {
-        return Transformations.map(recipeDao.getRecipeById(id)){
+        return Transformations.map(recipeDao.getRecipeById(id)) {
             mapper.mapEntityToInfo(it)
         }
     }
 
-    override fun addRecipe(recipe: RecipeInfo) {
+    override suspend fun addRecipe(recipe: RecipeInfo) {
         recipeDao.insertRecipe(mapper.mapInfoToEntity(recipe))
     }
 
@@ -39,5 +40,22 @@ class RecipeRepositoryImpl(
 
     override fun editRecipe(recipe: RecipeInfo) {
         recipeDao.editRecipe(mapper.mapInfoToEntity(recipe))
+    }
+
+    override suspend fun loadData() {
+        try {
+            val randomRecipes = apiService.getRandomRecipes(number = 20).randomRecipesId.map {
+                mapper.mapDtoToRecipeEntity(
+                    apiService.getRecipeInformation(
+                        it.id,
+                        includeNutrition = true
+                    )
+                )
+            }
+            recipeDao.insertRecipeList(randomRecipes)
+
+        } catch (e: Exception) {
+            Log.d("TAG", "Some went wrong")
+        }
     }
 }

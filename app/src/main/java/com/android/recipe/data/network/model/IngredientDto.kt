@@ -15,7 +15,7 @@ data class IngredientDto(
     val name: String,
     @SerializedName("amount")
     @Expose
-    val amount: Int,
+    val amount: Double,
     @SerializedName("unit")
     @Expose
     val unit: String

@@ -6,7 +6,7 @@ import com.android.recipe.data.database.entities.RecipeEntity
 
 @Dao
 interface RecipeDao {
-    @Query("SELECT * FROM recipes ORDER BY likes")
+    @Query("SELECT * FROM recipes")
     fun getRecipeList(): LiveData<List<RecipeEntity>>
 
     @Query("SELECT * FROM recipes WHERE recipeId == :id LIMIT 1")
@@ -19,5 +19,8 @@ interface RecipeDao {
     fun editRecipe(recipe: RecipeEntity)
 
     @Insert(onConflict = OnConflictStrategy.REPLACE)
-    fun insertRecipe(recipe: RecipeEntity)
+    suspend fun insertRecipeList(recipes: List<RecipeEntity>)
+
+    @Insert(onConflict = OnConflictStrategy.REPLACE)
+    suspend fun insertRecipe(recipe: RecipeEntity)
 }

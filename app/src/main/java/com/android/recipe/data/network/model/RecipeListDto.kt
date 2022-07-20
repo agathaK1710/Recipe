@@ -6,5 +6,5 @@ import com.google.gson.annotations.SerializedName
 data class RecipeListDto(
     @SerializedName("results")
     @Expose
-    val foods: List<MealDto>
+    val recipes: List<RecipeDetailDto>
 )

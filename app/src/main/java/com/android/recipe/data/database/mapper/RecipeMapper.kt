@@ -1,37 +1,43 @@
 package com.android.recipe.data.database.mapper
 
 import com.android.recipe.data.database.entities.RecipeEntity
-import com.android.recipe.data.network.model.MealDto
 import com.android.recipe.data.network.model.NutritionListDto
+import com.android.recipe.data.network.model.RandomRecipeListDto
 import com.android.recipe.data.network.model.RecipeDetailDto
-import com.android.recipe.data.network.model.RecipeDto
 import com.android.recipe.domain.RecipeInfo
 
 class RecipeMapper {
     fun mapDtoToRecipeEntity(
-        recipeDto: RecipeDto,
         recipeDetailDto: RecipeDetailDto,
-        mealDto: MealDto
     ) = RecipeEntity(
-        recipeId = recipeDto.id,
-        image = recipeDto.image,
-        likes = recipeDto.likes,
-        title = recipeDto.title,
+        recipeId = recipeDetailDto.id,
+        image = recipeDetailDto.image,
+        title = recipeDetailDto.title,
+        likes = recipeDetailDto.likes,
         healthScore = recipeDetailDto.healthScore,
         readyInMinutes = recipeDetailDto.readyInMinutes,
         servings = recipeDetailDto.servings,
         dishTypes = recipeDetailDto.dishTypes.joinToString(", "),
         instructions = recipeDetailDto.instructions,
-        calories = getEnergyValueFromNutritionList(mealDto.nutrition, 0),
-        carbs = getEnergyValueFromNutritionList(mealDto.nutrition, 1),
-        fat = getEnergyValueFromNutritionList(mealDto.nutrition, 2),
-        protein = getEnergyValueFromNutritionList(mealDto.nutrition, 3)
-        )
+        calories = getEnergyValueFromNutritionList(recipeDetailDto.nutrition)["Calories"] ?: 0.0,
+        carbs = getEnergyValueFromNutritionList(recipeDetailDto.nutrition)["Carbohydrates"] ?: 0.0,
+        fat = getEnergyValueFromNutritionList(recipeDetailDto.nutrition)["Fat"] ?: 0.0,
+        protein = getEnergyValueFromNutritionList(recipeDetailDto.nutrition)["Protein"] ?: 0.0
+    )
 
-    private fun getEnergyValueFromNutritionList(nutritionListDto: NutritionListDto, index: Int) =
-        with(nutritionListDto.nutrients[index]) {
-            amount
+    private fun getEnergyValueFromNutritionList(nutritionListDto: NutritionListDto?): Map<String, Double> {
+        val map = HashMap<String, Double>()
+        nutritionListDto?.nutrients?.forEach {
+            when (it.name) {
+                "Calories" -> map["Calories"] = it.amount
+                "Fat" -> map["Fat"] = it.amount
+                "Protein" -> map["Protein"] = it.amount
+                "Carbohydrates" -> map["Carbohydrates"] = it.amount
+            }
         }
+        return map
+    }
+
 
     fun mapEntityToInfo(recipeEntity: RecipeEntity) = RecipeInfo(
         id = recipeEntity.recipeId,

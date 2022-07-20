@@ -1,6 +1,7 @@
 package com.android.recipe.data.database
 
 import androidx.room.TypeConverter
+import com.android.recipe.data.database.entities.RecipeEntity
 import com.android.recipe.data.network.model.EquipmentDto
 import com.android.recipe.data.network.model.IngredientDto
 import com.android.recipe.data.network.model.NutrientDto
@@ -11,16 +12,16 @@ import com.google.gson.reflect.TypeToken
 
 class RecipeConverter {
     @TypeConverter
-    fun fromRecipeInfo(recipeInfo: RecipeInfo): String {
+    fun fromRecipeInfoList(recipes: List<RecipeEntity>): String {
         val gson = Gson()
-        val type = object : TypeToken<RecipeInfo>() {}.type
-        return gson.toJson(recipeInfo, type)
+        val type = object : TypeToken<List<RecipeEntity>>() {}.type
+        return gson.toJson(recipes, type)
     }
 
     @TypeConverter
-    fun toRecipeInfo(recipeInfo: String): RecipeInfo {
+    fun toRecipeInfo(recipes: String): List<RecipeEntity> {
         val gson = Gson()
-        val type = object : TypeToken<RecipeInfo>() {}.type
-        return gson.fromJson(recipeInfo, type)
+        val type = object : TypeToken<List<RecipeEntity>>() {}.type
+        return gson.fromJson(recipes, type)
     }
 }

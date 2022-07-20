@@ -4,9 +4,7 @@ import android.content.Context
 import androidx.room.Database
 import androidx.room.Room
 import androidx.room.RoomDatabase
-import androidx.room.TypeConverters
 import com.android.recipe.data.database.entities.*
-import com.android.recipe.data.network.model.RecipeDto
 
 @Database(
     version = 1,
@@ -19,12 +17,13 @@ import com.android.recipe.data.network.model.RecipeDto
                ],
     exportSchema = false
 )
-@TypeConverters(RecipeConverter::class)
+
 abstract class AppDatabase : RoomDatabase() {
     companion object {
         private var db: AppDatabase? = null
         private const val DB_NAME = "recipeApp.db"
         private val LOCK = Any()
+
         fun getInstance(context: Context): AppDatabase {
             synchronized(LOCK) {
                 db?.let {
