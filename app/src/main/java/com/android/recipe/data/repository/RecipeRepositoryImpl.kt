@@ -7,8 +7,11 @@ import androidx.lifecycle.Transformations
 import com.android.recipe.data.database.AppDatabase
 import com.android.recipe.data.database.mapper.RecipeMapper
 import com.android.recipe.data.network.ApiFactory
-import com.android.recipe.domain.RecipeInfo
 import com.android.recipe.domain.RecipeRepository
+import com.android.recipe.domain.entities.RecipeInfo
+import com.android.recipe.domain.entities.RecipeWithIngredientsInfo
+import com.android.recipe.domain.entities.RecipeWithStepsInfo
+import com.android.recipe.domain.entities.StepWithIngredientsInfo
 
 class RecipeRepositoryImpl(
     application: Application
@@ -19,27 +22,45 @@ class RecipeRepositoryImpl(
     override fun getRecipeList(): LiveData<List<RecipeInfo>> {
         return Transformations.map(recipeDao.getRecipeList()) {
             it.map {
-                mapper.mapEntityToInfo(it)
+                mapper.mapRecipeEntityToInfo(it)
             }
         }
     }
 
     override fun getRecipeInfo(id: Int): LiveData<RecipeInfo> {
         return Transformations.map(recipeDao.getRecipeById(id)) {
-            mapper.mapEntityToInfo(it)
+            mapper.mapRecipeEntityToInfo(it)
         }
     }
 
     override suspend fun addRecipe(recipe: RecipeInfo) {
-        recipeDao.insertRecipe(mapper.mapInfoToEntity(recipe))
+        recipeDao.insertRecipe(mapper.mapRecipeInfoToEntity(recipe))
     }
 
     override fun removeRecipe(recipe: RecipeInfo) {
-        recipeDao.deleteRecipe(mapper.mapInfoToEntity(recipe))
+        recipeDao.deleteRecipe(mapper.mapRecipeInfoToEntity(recipe))
     }
 
     override fun editRecipe(recipe: RecipeInfo) {
-        recipeDao.editRecipe(mapper.mapInfoToEntity(recipe))
+        recipeDao.editRecipe(mapper.mapRecipeInfoToEntity(recipe))
+    }
+
+    override fun getRecipeWithIngredients(id: Int): LiveData<RecipeWithIngredientsInfo> {
+        return Transformations.map(recipeDao.getRecipeWithIngredients(id)){
+            mapper.mapRecipeIngredientEntityToInfo(it)
+        }
+    }
+
+    override fun getRecipeWithSteps(id: Int): LiveData<RecipeWithStepsInfo> {
+        return Transformations.map(recipeDao.getRecipeWithSteps(id)){
+            mapper.mapRecipeStepsEntityToInfo(it)
+        }
+    }
+
+    override fun getStepWithIngredients(id: Int): LiveData<StepWithIngredientsInfo> {
+        return Transformations.map(recipeDao.getStepWithIngredients(id)){
+            mapper.mapStepIngredientsEntityToIndo(it)
+        }
     }
 
     override suspend fun loadData() {

@@ -29,13 +29,13 @@ interface RecipeDao {
 
     @Transaction
     @Query("SELECT * FROM recipes WHERE recipeId == :id")
-    fun getRecipeWithIngredients(id: Int): RecipeWithIngredients
+    fun getRecipeWithIngredients(id: Int): LiveData<RecipeWithIngredients>
 
     @Transaction
     @Query("SELECT * FROM recipes WHERE recipeId == :id")
-    fun getRecipeWithSteps(id: Int): RecipeWithSteps
+    fun getRecipeWithSteps(id: Int): LiveData<RecipeWithSteps>
 
     @Transaction
     @Query("SELECT * FROM steps WHERE stepId == :id")
-    fun getStepWithIngredients(id: Int): StepWithIngredients
+    fun getStepWithIngredients(id: Int): LiveData<StepWithIngredients>
 }

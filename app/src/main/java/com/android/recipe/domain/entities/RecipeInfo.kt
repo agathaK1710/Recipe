@@ -1,4 +1,4 @@
-package com.android.recipe.domain
+package com.android.recipe.domain.entities
 
 data class RecipeInfo(
     val id: Int,

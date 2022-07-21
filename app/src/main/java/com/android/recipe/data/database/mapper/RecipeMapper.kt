@@ -1,10 +1,14 @@
 package com.android.recipe.data.database.mapper
 
+import com.android.recipe.data.database.entities.IngredientEntity
 import com.android.recipe.data.database.entities.RecipeEntity
+import com.android.recipe.data.database.entities.StepEntity
+import com.android.recipe.data.database.relations.RecipeWithIngredients
+import com.android.recipe.data.database.relations.RecipeWithSteps
+import com.android.recipe.data.database.relations.StepWithIngredients
 import com.android.recipe.data.network.model.NutritionListDto
-import com.android.recipe.data.network.model.RandomRecipeListDto
 import com.android.recipe.data.network.model.RecipeDetailDto
-import com.android.recipe.domain.RecipeInfo
+import com.android.recipe.domain.entities.*
 
 class RecipeMapper {
     fun mapDtoToRecipeEntity(
@@ -39,7 +43,7 @@ class RecipeMapper {
     }
 
 
-    fun mapEntityToInfo(recipeEntity: RecipeEntity) = RecipeInfo(
+    fun mapRecipeEntityToInfo(recipeEntity: RecipeEntity) = RecipeInfo(
         id = recipeEntity.recipeId,
         image = recipeEntity.image,
         likes = recipeEntity.likes,
@@ -55,7 +59,7 @@ class RecipeMapper {
         protein = recipeEntity.protein
     )
 
-    fun mapInfoToEntity(recipeInfo: RecipeInfo) = RecipeEntity(
+    fun mapRecipeInfoToEntity(recipeInfo: RecipeInfo) = RecipeEntity(
         recipeId = recipeInfo.id,
         image = recipeInfo.image,
         likes = recipeInfo.likes,
@@ -70,4 +74,41 @@ class RecipeMapper {
         fat = recipeInfo.fat,
         protein = recipeInfo.protein
     )
+
+    private fun mapIngredientEntityToInfo(ingredientEntity: IngredientEntity) = IngredientInfo(
+        id = ingredientEntity.ingredientId,
+        name = ingredientEntity.name,
+        image = ingredientEntity.image
+    )
+
+    private fun mapStepEntityToInfo(stepEntity: StepEntity) = StepInfo(
+        id = stepEntity.stepId,
+        recipeId = stepEntity.recipeInfoId,
+        description = stepEntity.description,
+        number = stepEntity.number,
+        equipments = stepEntity.equipments
+    )
+
+    fun mapRecipeIngredientEntityToInfo(recipeWithIngredients: RecipeWithIngredients) =
+        RecipeWithIngredientsInfo(
+            recipe = mapRecipeEntityToInfo(recipeWithIngredients.recipe),
+            ingredients = recipeWithIngredients.ingredients.map {
+                mapIngredientEntityToInfo(it)
+            }
+        )
+
+    fun mapRecipeStepsEntityToInfo(recipeWithSteps: RecipeWithSteps) = RecipeWithStepsInfo(
+        recipe = mapRecipeEntityToInfo(recipeWithSteps.recipe),
+        steps = recipeWithSteps.steps.map {
+            mapStepEntityToInfo(it)
+        }
+    )
+
+    fun mapStepIngredientsEntityToIndo(stepWithIngredients: StepWithIngredients) =
+        StepWithIngredientsInfo(
+            step = mapStepEntityToInfo(stepWithIngredients.step),
+            ingredients = stepWithIngredients.ingredients.map {
+                mapIngredientEntityToInfo(it)
+            }
+        )
 }

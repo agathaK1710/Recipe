@@ -1,7 +1,8 @@
-package com.android.recipe.domain
+package com.android.recipe.domain.entities
 
 data class StepInfo(
-    val recipeInfoId: Int,
+    val id: Int,
+    val recipeId: Int,
     val description: String,
     val number: Int,
     val equipments: String

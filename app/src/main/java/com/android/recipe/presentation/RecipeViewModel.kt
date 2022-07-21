@@ -4,10 +4,10 @@ import android.app.Application
 import androidx.lifecycle.AndroidViewModel
 import androidx.lifecycle.viewModelScope
 import com.android.recipe.data.repository.RecipeRepositoryImpl
-import com.android.recipe.domain.AddRecipeUseCase
-import com.android.recipe.domain.GetRecipeInfoUseCase
-import com.android.recipe.domain.GetRecipesListUseCase
-import com.android.recipe.domain.LoadDataUseCase
+import com.android.recipe.domain.usecases.AddRecipeUseCase
+import com.android.recipe.domain.usecases.GetRecipeInfoUseCase
+import com.android.recipe.domain.usecases.GetRecipesListUseCase
+import com.android.recipe.domain.usecases.LoadDataUseCase
 import kotlinx.coroutines.launch
 
 class RecipeViewModel(application: Application) : AndroidViewModel(application) {
