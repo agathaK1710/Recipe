@@ -9,7 +9,7 @@ data class RecipeWithSteps(
     @Embedded val recipe: RecipeEntity,
     @Relation(
         parentColumn = "recipeId",
-        entityColumn = "stepId"
+        entityColumn = "recipeInfoId"
     )
     val steps: List<StepEntity>
 )
