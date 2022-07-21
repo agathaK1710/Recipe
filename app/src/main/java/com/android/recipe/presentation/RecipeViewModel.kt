@@ -1,6 +1,7 @@
 package com.android.recipe.presentation
 
 import android.app.Application
+import android.util.Log
 import androidx.lifecycle.AndroidViewModel
 import androidx.lifecycle.viewModelScope
 import com.android.recipe.data.repository.RecipeRepositoryImpl
@@ -17,6 +18,8 @@ class RecipeViewModel(application: Application) : AndroidViewModel(application) 
     private val getRecipeInfoUseCase = GetRecipeInfoUseCase(repository)
     private val loadDataUseCase = LoadDataUseCase(repository)
     private val addRecipeUseCase = AddRecipeUseCase(repository)
+
+    val recipesList = getRecipesListUseCase()
 
    fun getRecipeInfo(id: Int) = getRecipeInfoUseCase(id)
 

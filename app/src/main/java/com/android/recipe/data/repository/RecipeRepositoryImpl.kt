@@ -1,7 +1,6 @@
 package com.android.recipe.data.repository
 
 import android.app.Application
-import android.util.Log
 import androidx.lifecycle.LiveData
 import androidx.lifecycle.Transformations
 import com.android.recipe.data.database.AppDatabase
@@ -64,19 +63,31 @@ class RecipeRepositoryImpl(
     }
 
     override suspend fun loadData() {
-        try {
-            val randomRecipes = apiService.getRandomRecipes(number = 20).randomRecipesId.map {
-                mapper.mapDtoToRecipeEntity(
-                    apiService.getRecipeInformation(
-                        it.id,
-                        includeNutrition = true
-                    )
+//        try {
+//            val randomRecipes = apiService.getRandomRecipes(number = 20).randomRecipesId.map {
+//                mapper.mapDtoToRecipeEntity(
+//                    apiService.getRecipeInformation(
+//                        it.id,
+//                        includeNutrition = true
+//                    )
+//                )
+//            }
+//            recipeDao.insertRecipeList(randomRecipes)
+//
+//        } catch (e: Exception) {
+//            Log.d("TAG", "Some went wrong")
+//        }
+        val randomRecipes = apiService.getRandomRecipes(number = 20).randomRecipesId.map {
+            mapper.mapDtoToRecipeEntity(
+                apiService.getRecipeInformation(
+                    it.id,
+                    includeNutrition = true
                 )
-            }
-            recipeDao.insertRecipeList(randomRecipes)
+            )
+        }
+        recipeDao.insertRecipesList(randomRecipes)
+        val ingredients = randomRecipes.map {
 
-        } catch (e: Exception) {
-            Log.d("TAG", "Some went wrong")
         }
     }
 }

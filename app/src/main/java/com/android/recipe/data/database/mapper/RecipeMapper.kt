@@ -92,14 +92,14 @@ class RecipeMapper {
     fun mapRecipeIngredientEntityToInfo(recipeWithIngredients: RecipeWithIngredients) =
         RecipeWithIngredientsInfo(
             recipe = mapRecipeEntityToInfo(recipeWithIngredients.recipe),
-            ingredients = recipeWithIngredients.ingredients.map {
+            ingredients = recipeWithIngredients.ingredients?.map {
                 mapIngredientEntityToInfo(it)
             }
         )
 
     fun mapRecipeStepsEntityToInfo(recipeWithSteps: RecipeWithSteps) = RecipeWithStepsInfo(
         recipe = mapRecipeEntityToInfo(recipeWithSteps.recipe),
-        steps = recipeWithSteps.steps.map {
+        steps = recipeWithSteps.steps?.map {
             mapStepEntityToInfo(it)
         }
     )

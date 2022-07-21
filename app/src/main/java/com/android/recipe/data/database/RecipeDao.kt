@@ -2,7 +2,9 @@ package com.android.recipe.data.database
 
 import androidx.lifecycle.LiveData
 import androidx.room.*
+import com.android.recipe.data.database.entities.IngredientEntity
 import com.android.recipe.data.database.entities.RecipeEntity
+import com.android.recipe.data.database.entities.StepEntity
 import com.android.recipe.data.database.relations.RecipeWithIngredients
 import com.android.recipe.data.database.relations.RecipeWithSteps
 import com.android.recipe.data.database.relations.StepWithIngredients
@@ -22,7 +24,7 @@ interface RecipeDao {
     fun editRecipe(recipe: RecipeEntity)
 
     @Insert(onConflict = OnConflictStrategy.REPLACE)
-    suspend fun insertRecipeList(recipes: List<RecipeEntity>)
+    suspend fun insertRecipesList(recipes: List<RecipeEntity>)
 
     @Insert(onConflict = OnConflictStrategy.REPLACE)
     suspend fun insertRecipe(recipe: RecipeEntity)
@@ -38,4 +40,5 @@ interface RecipeDao {
     @Transaction
     @Query("SELECT * FROM steps WHERE stepId == :id")
     fun getStepWithIngredients(id: Int): LiveData<StepWithIngredients>
+
 }
