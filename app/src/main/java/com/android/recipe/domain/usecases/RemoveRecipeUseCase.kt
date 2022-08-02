@@ -6,5 +6,5 @@ import com.android.recipe.domain.entities.RecipeInfo
 class RemoveRecipeUseCase(
     private val repository: RecipeRepository
 ) {
-    operator fun invoke(recipe: RecipeInfo) = repository.removeRecipe(recipe)
+    suspend operator fun invoke(recipe: RecipeInfo) = repository.removeRecipe(recipe)
 }

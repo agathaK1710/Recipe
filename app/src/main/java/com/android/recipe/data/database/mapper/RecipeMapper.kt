@@ -6,8 +6,10 @@ import com.android.recipe.data.database.entities.StepEntity
 import com.android.recipe.data.database.relations.RecipeWithIngredients
 import com.android.recipe.data.database.relations.RecipeWithSteps
 import com.android.recipe.data.database.relations.StepWithIngredients
+import com.android.recipe.data.network.model.IngredientDto
 import com.android.recipe.data.network.model.NutritionListDto
 import com.android.recipe.data.network.model.RecipeDetailDto
+import com.android.recipe.data.network.model.StepDto
 import com.android.recipe.domain.entities.*
 
 class RecipeMapper {
@@ -29,6 +31,20 @@ class RecipeMapper {
         protein = getEnergyValueFromNutritionList(recipeDetailDto.nutrition)["Protein"] ?: 0.0
     )
 
+    fun mapIngredientDtoToEntity(ingredientDto: IngredientDto) = IngredientEntity(
+        ingredientId = ingredientDto.id,
+        name = ingredientDto.name,
+        image = ingredientDto.image
+    )
+
+    fun mapStepDtoToEntity(stepDto: StepDto, recipeId: Int) = StepEntity(
+        recipeInfoId = recipeId,
+        description = stepDto.stepDescription,
+        number = stepDto.number,
+        equipments = stepDto.equipments.joinToString(", ") { it.name }
+    )
+
+
     private fun getEnergyValueFromNutritionList(nutritionListDto: NutritionListDto?): Map<String, Double> {
         val map = HashMap<String, Double>()
         nutritionListDto?.nutrients?.forEach {
@@ -45,6 +61,7 @@ class RecipeMapper {
 
     fun mapRecipeEntityToInfo(recipeEntity: RecipeEntity) = RecipeInfo(
         id = recipeEntity.recipeId,
+        favouriteRecipe = recipeEntity.favouriteRecipe,
         image = recipeEntity.image,
         likes = recipeEntity.likes,
         title = recipeEntity.title,

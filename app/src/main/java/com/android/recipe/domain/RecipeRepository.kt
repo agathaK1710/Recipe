@@ -10,7 +10,7 @@ interface RecipeRepository {
     fun getRecipeList(): LiveData<List<RecipeInfo>>
     fun getRecipeInfo(id: Int): LiveData<RecipeInfo>
     suspend fun addRecipe(recipe: RecipeInfo)
-    fun removeRecipe(recipe: RecipeInfo)
+    suspend fun removeRecipe(recipe: RecipeInfo)
     fun editRecipe(recipe: RecipeInfo)
     fun getRecipeWithIngredients(id: Int): LiveData<RecipeWithIngredientsInfo>
     fun getRecipeWithSteps(id: Int): LiveData<RecipeWithStepsInfo>

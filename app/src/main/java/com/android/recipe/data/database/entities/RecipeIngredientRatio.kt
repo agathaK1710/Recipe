@@ -6,6 +6,6 @@ import androidx.room.Entity
 data class RecipeIngredientRatio(
     val recipeId: Int,
     val ingredientId: Int,
-    val amount: Int?,
+    val amount: Double,
     val unit: String?
 )

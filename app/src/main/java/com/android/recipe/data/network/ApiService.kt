@@ -9,7 +9,6 @@ import retrofit2.http.Path
 import retrofit2.http.Query
 
 interface ApiService {
-
     @GET("complexSearch")
     suspend fun searchRecipeByName(
         @Query(QUERY_PARAM_API_KEY) apiKey: String = API_KEY,
@@ -36,7 +35,7 @@ interface ApiService {
     ): RandomRecipeListDto
 
     companion object{
-        private const val API_KEY = "69d6f243b5f44ddd9852101ec7c475c1"
+        private const val API_KEY = "0910672c438e4f91a8ebad23ebe664ac"
         private const val QUERY_PARAM_API_KEY= "apiKey"
         private const val QUERY_PARAM_NAME= "query"
         private const val QUERY_PARAM_INGREDIENTS= "ingredients"

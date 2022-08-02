@@ -1,11 +1,14 @@
 package com.android.recipe.presentation
 
+import android.content.Context
+import android.net.ConnectivityManager
 import android.os.Bundle
 import androidx.appcompat.app.AppCompatActivity
 import androidx.lifecycle.ViewModelProvider
-import com.android.recipe.R
+import androidx.lifecycle.lifecycleScope
 import com.android.recipe.databinding.ActivityMainBinding
-import com.android.recipe.presentation.adapters.RecipeAdapter
+import kotlinx.coroutines.launch
+
 
 class MainActivity : AppCompatActivity() {
 
@@ -13,16 +16,9 @@ class MainActivity : AppCompatActivity() {
         ActivityMainBinding.inflate(layoutInflater)
     }
 
-    private val viewModel by lazy {
-        ViewModelProvider(this)[RecipeViewModel::class.java]
-    }
-
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(binding.root)
-//        viewModel.getRecipeInfo(632625).observe(this){
-//            Log.d("MainActivity", it.toString())
-//        }
     }
 }
