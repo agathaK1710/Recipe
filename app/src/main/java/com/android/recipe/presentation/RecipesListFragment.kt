@@ -1,17 +1,17 @@
 package com.android.recipe.presentation
 
-import android.content.Context
-import android.net.ConnectivityManager
 import android.os.Bundle
+import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import android.widget.SearchView
+import android.widget.Toast
 import androidx.fragment.app.Fragment
+import androidx.lifecycle.Transformations
 import androidx.lifecycle.ViewModelProvider
-import androidx.lifecycle.lifecycleScope
 import com.android.recipe.databinding.FragmentRecipesListBinding
 import com.android.recipe.presentation.adapters.RecipeAdapter
-import kotlinx.coroutines.launch
 
 class RecipesListFragment : Fragment() {
     private var _binding: FragmentRecipesListBinding? = null
@@ -51,6 +51,30 @@ class RecipesListFragment : Fragment() {
             rvAdapter.submitList(it)
         }
         binding.recipesRV.adapter = rvAdapter
+        binding.search.setOnQueryTextListener(object : SearchView.OnQueryTextListener {
+            override fun onQueryTextSubmit(query: String?): Boolean {
+                return false
+            }
+
+            override fun onQueryTextChange(newText: String?): Boolean {
+                val filteredList = Transformations.map(viewModel.recipesList) {
+                    it.filter {
+                            recipeInfo ->  recipeInfo.title.lowercase().split(" ").contains(newText?.lowercase())
+                    }
+                }
+                Log.d("FL", filteredList.toString())
+                filteredList.observe(viewLifecycleOwner){
+                    if(it.isNotEmpty()) {
+                        rvAdapter.submitList(it)
+                    } else {
+                        viewModel.recipesList.observe(viewLifecycleOwner) {
+                            rvAdapter.submitList(it)
+                        }
+                    }
+                }
+                return false
+            }
+        })
     }
 
     override fun onDestroy() {
