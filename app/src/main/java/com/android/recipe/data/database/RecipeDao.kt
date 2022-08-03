@@ -48,6 +48,6 @@ interface RecipeDao {
     fun getRecipeWithSteps(id: Int): LiveData<RecipeWithSteps>
 
     @Transaction
-    @Query("SELECT * FROM steps WHERE stepId == :id")
-    fun getStepWithIngredients(id: Int): LiveData<StepWithIngredients>
+    @Query("SELECT * FROM steps WHERE name == :name")
+    fun getStepWithIngredients(name: String): LiveData<StepWithIngredients>
 }

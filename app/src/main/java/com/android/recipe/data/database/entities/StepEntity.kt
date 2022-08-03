@@ -5,10 +5,9 @@ import androidx.room.PrimaryKey
 
 @Entity(tableName = "steps")
 data class StepEntity(
-    @PrimaryKey(autoGenerate = true)
-    val stepId: Int = 0,
+    @PrimaryKey
+    val name: String,
     val recipeInfoId: Int,
-    val description: String,
     val number: Int,
-    val equipments: String
+    val equipments: String?
 )

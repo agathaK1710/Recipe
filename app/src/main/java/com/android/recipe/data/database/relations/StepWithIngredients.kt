@@ -10,7 +10,7 @@ import com.android.recipe.data.database.entities.StepIngredientRatio
 data class StepWithIngredients(
     @Embedded val step: StepEntity,
     @Relation(
-        parentColumn = "stepId",
+        parentColumn = "name",
         entityColumn = "ingredientId",
         associateBy = Junction(StepIngredientRatio::class)
     )

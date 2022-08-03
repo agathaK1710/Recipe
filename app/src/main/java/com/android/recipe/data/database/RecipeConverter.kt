@@ -7,16 +7,12 @@ import com.google.gson.reflect.TypeToken
 
 class RecipeConverter {
     @TypeConverter
-    fun fromRecipeInfoList(recipes: List<RecipeEntity>): String {
-        val gson = Gson()
-        val type = object : TypeToken<List<RecipeEntity>>() {}.type
-        return gson.toJson(recipes, type)
+    fun fromIngredientIdList(ids: List<String>): String {
+        return ids.joinToString(", ")
     }
 
     @TypeConverter
-    fun toRecipeInfo(recipes: String): List<RecipeEntity> {
-        val gson = Gson()
-        val type = object : TypeToken<List<RecipeEntity>>() {}.type
-        return gson.fromJson(recipes, type)
+    fun toIngredientIdList(ids: String): List<String> {
+       return ids.split(", ")
     }
 }

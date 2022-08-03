@@ -21,7 +21,6 @@ class RecipeViewModel(application: Application) : AndroidViewModel(application) 
 
     fun getRecipeInfo(id: Int) = getRecipeInfoUseCase(id)
     suspend fun removeRecipe(recipe: RecipeInfo) = removeRecipeUseCase(recipe)
-    suspend fun loadData() = loadDataUseCase()
 
 //    init {
 //        viewModelScope.launch{

@@ -1,8 +1,6 @@
 package com.android.recipe.data.repository
 
 import android.app.Application
-import android.content.Context
-import android.net.ConnectivityManager
 import android.util.Log
 import androidx.lifecycle.LiveData
 import androidx.lifecycle.Transformations
@@ -62,8 +60,8 @@ class RecipeRepositoryImpl(
         }
     }
 
-    override fun getStepWithIngredients(id: Int): LiveData<StepWithIngredientsInfo> {
-        return Transformations.map(recipeDao.getStepWithIngredients(id)) {
+    override fun getStepWithIngredients(name: String): LiveData<StepWithIngredientsInfo> {
+        return Transformations.map(recipeDao.getStepWithIngredients(name)) {
             mapper.mapStepIngredientsEntityToIndo(it)
         }
     }
@@ -71,7 +69,6 @@ class RecipeRepositoryImpl(
     override suspend fun loadData() {
         try {
             val randomRecipesId = apiService.getRandomRecipes(number = 1).randomRecipesId
-            Log.d("RTYH", randomRecipesId.size.toString())
             val randomRecipes = randomRecipesId.map {
                 mapper.mapDtoToRecipeEntity(
                     apiService.getRecipeInformation(
@@ -80,57 +77,53 @@ class RecipeRepositoryImpl(
                     )
                 )
             }
-            Log.d("TAG", randomRecipes.toString())
-            recipeDao.insertRecipesList(randomRecipes)
+           recipeDao.insertRecipesList(randomRecipes)
 
-//            for (randomRecipe in randomRecipesId) {
-//                val recipeInformation = apiService.getRecipeInformation(
-//                    randomRecipe.id,
-//                    includeNutrition = true
-//                )
-//
-//                val ingredients = recipeInformation.extendedIngredients
-//
-//                recipeDao.insertIngredientsList(ingredients.map {
-//                    mapper.mapIngredientDtoToEntity(
-//                        it
-//                    )
-//                })
-//
-//                for (ingredient in ingredients) {
-//                    recipeDao.insertRecipeIngredientRatio(
-//                        RecipeIngredientRatio(
-//                            randomRecipe.id,
-//                            ingredient.id,
-//                            ingredient.amount,
-//                            ingredient.unit
-//                        )
-//                    )
-//                }
-//
-//                val steps = recipeInformation.analyzedInstructions[0].steps
-//                Log.d("steps", steps.toString())
-//
-//                recipeDao.insertStepsList(
-//                    steps.map {
-//                        mapper.mapStepDtoToEntity(it, randomRecipe.id)
-//                    }
-//                )
-//
-//                for (step in steps) {
-//                    for (ingredient in step.ingredients) {
-//                        recipeDao.insertStepIngredientRatio(
-//                            StepIngredientRatio(
-//                                randomRecipe.id,
-//                                ingredient.id
-//                            )
-//                        )
-//                    }
-//                }
-//            }
+            for (randomRecipe in randomRecipesId) {
+                val recipeInformation = apiService.getRecipeInformation(
+                    randomRecipe.id,
+                    includeNutrition = true
+                )
+
+                val ingredients = recipeInformation.extendedIngredients
+                recipeDao.insertIngredientsList(ingredients.map {
+                    mapper.mapIngredientDtoToEntity(
+                        it
+                    )
+                })
+
+                for (ingredient in ingredients) {
+                    recipeDao.insertRecipeIngredientRatio(
+                        RecipeIngredientRatio(
+                            randomRecipe.id,
+                            ingredient.id,
+                            ingredient.amount,
+                            ingredient.unit
+                        )
+                    )
+                }
+
+                val steps = recipeInformation.analyzedInstructions[0].steps
+                recipeDao.insertStepsList(
+                    steps.map {
+                        mapper.mapStepDtoToEntity(it, randomRecipe.id)
+                    }
+                )
+
+                for (step in steps) {
+                    for (ingredient in step.ingredients) {
+                        recipeDao.insertStepIngredientRatio(
+                            StepIngredientRatio(
+                                step.stepDescription,
+                                ingredient.id
+                            )
+                        )
+                    }
+                }
+            }
 
         } catch (e: Exception) {
-            Log.d("TAG", e.message.toString())
+            Log.e("Error", e.message.toString())
         }
     }
 }

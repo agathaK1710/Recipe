@@ -39,9 +39,9 @@ class RecipeMapper {
 
     fun mapStepDtoToEntity(stepDto: StepDto, recipeId: Int) = StepEntity(
         recipeInfoId = recipeId,
-        description = stepDto.stepDescription,
+        name = stepDto.stepDescription,
         number = stepDto.number,
-        equipments = stepDto.equipments.joinToString(", ") { it.name }
+        equipments = stepDto.equipment?.joinToString(", ") { it.name }
     )
 
 
@@ -99,9 +99,8 @@ class RecipeMapper {
     )
 
     private fun mapStepEntityToInfo(stepEntity: StepEntity) = StepInfo(
-        id = stepEntity.stepId,
         recipeId = stepEntity.recipeInfoId,
-        description = stepEntity.description,
+        description = stepEntity.name,
         number = stepEntity.number,
         equipments = stepEntity.equipments
     )

@@ -14,6 +14,6 @@ interface RecipeRepository {
     fun editRecipe(recipe: RecipeInfo)
     fun getRecipeWithIngredients(id: Int): LiveData<RecipeWithIngredientsInfo>
     fun getRecipeWithSteps(id: Int): LiveData<RecipeWithStepsInfo>
-    fun getStepWithIngredients(id: Int): LiveData<StepWithIngredientsInfo>
+    fun getStepWithIngredients(name: String): LiveData<StepWithIngredientsInfo>
     suspend fun loadData()
 }
