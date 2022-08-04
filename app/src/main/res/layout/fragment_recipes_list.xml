@@ -8,18 +8,6 @@
     android:orientation="vertical"
     tools:context=".presentation.RecipesListFragment">
 
-    <SearchView
-        android:id="@+id/search"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:iconifiedByDefault="false"
-        android:inputType="textAutoCorrect|textAutoComplete"
-        android:queryHint="@string/search_recipes"
-        android:background="@drawable/rounded"
-        android:layout_margin="5dp"
-        />
-
-
     <androidx.recyclerview.widget.RecyclerView
         android:id="@+id/recipesRV"
         android:layout_width="match_parent"

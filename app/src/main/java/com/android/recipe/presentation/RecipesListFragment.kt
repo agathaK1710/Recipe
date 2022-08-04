@@ -1,14 +1,15 @@
 package com.android.recipe.presentation
 
 import android.os.Bundle
-import android.view.LayoutInflater
-import android.view.View
-import android.view.ViewGroup
-import android.widget.SearchView
+import android.view.*
+import androidx.appcompat.widget.SearchView
+import androidx.core.view.MenuHost
+import androidx.core.view.MenuProvider
 import androidx.fragment.app.Fragment
+import androidx.lifecycle.Lifecycle
 import androidx.lifecycle.Transformations
 import androidx.lifecycle.ViewModelProvider
-import androidx.recyclerview.widget.GridLayoutManager
+import com.android.recipe.R
 import com.android.recipe.databinding.FragmentRecipesListBinding
 import com.android.recipe.presentation.adapters.RecipeAdapter
 
@@ -55,30 +56,49 @@ class RecipesListFragment : Fragment() {
     }
 
     private fun searchRecipe() {
-        binding.search.setOnQueryTextListener(object : SearchView.OnQueryTextListener {
-            override fun onQueryTextSubmit(query: String?): Boolean {
-                return false
+        val menuHost: MenuHost = requireActivity()
+        menuHost.addMenuProvider(object : MenuProvider {
+            override fun onCreateMenu(menu: Menu, menuInflater: MenuInflater) {
+                menuInflater.inflate(R.menu.menu, menu)
             }
 
-            override fun onQueryTextChange(newText: String?): Boolean {
-                val filteredList = Transformations.map(viewModel.recipesList) {
-                    it.filter { recipeInfo ->
-                        recipeInfo.title.lowercase().split(" ").contains(newText?.lowercase())
+            override fun onMenuItemSelected(menuItem: MenuItem): Boolean {
+                return when (menuItem.itemId) {
+                    R.id.actionSearch -> {
+                        val searchView = menuItem.actionView as SearchView
+                        searchView.setOnQueryTextListener(object : SearchView.OnQueryTextListener {
+                            override fun onQueryTextSubmit(query: String?): Boolean {
+                                return false
+                            }
+
+                            override fun onQueryTextChange(newText: String?): Boolean {
+                                val filteredList = Transformations.map(viewModel.recipesList) {
+                                    it.filter { recipeInfo ->
+                                        recipeInfo.title.lowercase().split(" ")
+                                            .contains(newText?.lowercase())
+                                    }
+                                }
+                                filteredList.observe(viewLifecycleOwner) {
+                                    if (it.isNotEmpty()) {
+                                        rvAdapter.submitList(it)
+                                    } else {
+                                        viewModel.recipesList.observe(viewLifecycleOwner) {
+                                            rvAdapter.submitList(it)
+                                        }
+                                    }
+                                }
+                                return false
+                            }
+                        })
+                        return true
                     }
+                    else -> false
                 }
-                filteredList.observe(viewLifecycleOwner) {
-                    if (it.isNotEmpty()) {
-                        rvAdapter.submitList(it)
-                    } else {
-                        viewModel.recipesList.observe(viewLifecycleOwner) {
-                            rvAdapter.submitList(it)
-                        }
-                    }
-                }
-                return false
             }
-        })
+        }, viewLifecycleOwner, Lifecycle.State.RESUMED)
     }
+
+
 
     override fun onDestroy() {
         super.onDestroy()
