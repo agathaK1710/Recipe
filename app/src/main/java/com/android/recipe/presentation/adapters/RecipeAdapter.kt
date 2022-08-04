@@ -13,6 +13,7 @@ import com.squareup.picasso.Picasso
 
 
 class RecipeAdapter : ListAdapter<RecipeInfo, RecipeViewHolder>(RecipeInfoDiffCallBack()) {
+    var onClickListener: ((RecipeInfo) -> Unit)? = null
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): RecipeViewHolder {
         val view = RecipeItemBinding.inflate(
             LayoutInflater.from(parent.context),
@@ -45,6 +46,9 @@ class RecipeAdapter : ListAdapter<RecipeInfo, RecipeViewHolder>(RecipeInfoDiffCa
                     invisibleContainer.visibility = View.VISIBLE
                     arrowBtn.setImageResource(R.drawable.arrow_less)
                 }
+            }
+            itemView.setOnClickListener {
+                onClickListener?.invoke(item)
             }
         }
     }

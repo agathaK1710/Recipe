@@ -19,7 +19,7 @@ interface RecipeDao {
     suspend fun deleteRecipe(recipe: RecipeEntity)
 
     @Update(onConflict = OnConflictStrategy.REPLACE)
-    fun editRecipe(recipe: RecipeEntity)
+    suspend fun editRecipe(recipe: RecipeEntity)
 
     @Insert(onConflict = OnConflictStrategy.REPLACE)
     suspend fun insertRecipesList(recipes: List<RecipeEntity>)

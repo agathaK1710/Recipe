@@ -9,5 +9,14 @@
         android:id="@+id/recipesListFragment"
         android:name="com.android.recipe.presentation.RecipesListFragment"
         android:label="fragment_recipes_list"
-        tools:layout="@layout/fragment_recipes_list" />
+        tools:layout="@layout/fragment_recipes_list" >
+        <action
+            android:id="@+id/action_recipesListFragment_to_recipeDetailFragment"
+            app:destination="@id/recipeDetailFragment" />
+    </fragment>
+    <fragment
+        android:id="@+id/recipeDetailFragment"
+        android:name="com.android.recipe.presentation.RecipeDetailFragment"
+        android:label="fragment_recipe_detail"
+        tools:layout="@layout/fragment_recipe_detail" />
 </navigation>

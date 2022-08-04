@@ -2,6 +2,7 @@ package com.android.recipe.presentation
 
 import android.os.Bundle
 import android.view.*
+import android.widget.Toast
 import androidx.appcompat.widget.SearchView
 import androidx.core.view.MenuHost
 import androidx.core.view.MenuProvider
@@ -9,9 +10,14 @@ import androidx.fragment.app.Fragment
 import androidx.lifecycle.Lifecycle
 import androidx.lifecycle.Transformations
 import androidx.lifecycle.ViewModelProvider
+import androidx.lifecycle.lifecycleScope
+import androidx.navigation.fragment.findNavController
+import androidx.recyclerview.widget.ItemTouchHelper
+import androidx.recyclerview.widget.RecyclerView
 import com.android.recipe.R
 import com.android.recipe.databinding.FragmentRecipesListBinding
 import com.android.recipe.presentation.adapters.RecipeAdapter
+import kotlinx.coroutines.launch
 
 class RecipesListFragment : Fragment() {
     private var _binding: FragmentRecipesListBinding? = null
@@ -51,6 +57,10 @@ class RecipesListFragment : Fragment() {
         viewModel.recipesList.observe(viewLifecycleOwner) {
             rvAdapter.submitList(it)
         }
+        rvAdapter.onClickListener = {
+            findNavController().navigate(R.id.action_recipesListFragment_to_recipeDetailFragment)
+        }
+
         binding.recipesRV.adapter = rvAdapter
         searchRecipe()
     }
@@ -98,7 +108,14 @@ class RecipesListFragment : Fragment() {
         }, viewLifecycleOwner, Lifecycle.State.RESUMED)
     }
 
-
+    private fun addToFavourites(position: Int){
+        viewModel.recipesList.observe(viewLifecycleOwner){
+            val recipe = it[position]
+            lifecycleScope.launch{
+                viewModel.editRecipe(recipe)
+            }
+        }
+    }
 
     override fun onDestroy() {
         super.onDestroy()

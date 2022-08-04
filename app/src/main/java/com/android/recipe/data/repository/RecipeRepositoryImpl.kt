@@ -25,8 +25,8 @@ class RecipeRepositoryImpl(
     private val recipeDao = AppDatabase.getInstance(application).recipeDao()
 
     override fun getRecipeList(): LiveData<List<RecipeInfo>> {
-        return Transformations.map(recipeDao.getRecipeList()) {
-            it.map {
+        return Transformations.map(recipeDao.getRecipeList()) { list ->
+            list.map {
                 mapper.mapRecipeEntityToInfo(it)
             }
         }
@@ -46,8 +46,9 @@ class RecipeRepositoryImpl(
         recipeDao.deleteRecipe(mapper.mapRecipeInfoToEntity(recipe))
     }
 
-    override fun editRecipe(recipe: RecipeInfo) {
-        recipeDao.editRecipe(mapper.mapRecipeInfoToEntity(recipe))
+    override suspend fun editRecipe(recipe: RecipeInfo) {
+        val newRecipe = recipe.copy(favouriteRecipe = 1)
+        recipeDao.editRecipe(mapper.mapRecipeInfoToEntity(newRecipe))
     }
 
     override fun getRecipeWithIngredients(id: Int): LiveData<RecipeWithIngredientsInfo> {

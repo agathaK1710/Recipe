@@ -6,5 +6,5 @@ import com.android.recipe.domain.entities.RecipeInfo
 class EditRecipeUseCase(
     private val repository: RecipeRepository
 ) {
-     operator fun invoke(recipe: RecipeInfo) = repository.editRecipe(recipe)
+     suspend operator fun invoke(recipe: RecipeInfo) = repository.editRecipe(recipe)
 }
