@@ -1,15 +1,14 @@
 package com.android.recipe.presentation
 
 import android.os.Bundle
-import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import android.widget.SearchView
-import android.widget.Toast
 import androidx.fragment.app.Fragment
 import androidx.lifecycle.Transformations
 import androidx.lifecycle.ViewModelProvider
+import androidx.recyclerview.widget.GridLayoutManager
 import com.android.recipe.databinding.FragmentRecipesListBinding
 import com.android.recipe.presentation.adapters.RecipeAdapter
 
@@ -21,6 +20,8 @@ class RecipesListFragment : Fragment() {
     private val viewModel by lazy {
         ViewModelProvider(this)[RecipeViewModel::class.java]
     }
+
+    private var rvAdapter = RecipeAdapter()
 
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?,
@@ -46,11 +47,14 @@ class RecipesListFragment : Fragment() {
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
-        val rvAdapter = RecipeAdapter()
         viewModel.recipesList.observe(viewLifecycleOwner) {
             rvAdapter.submitList(it)
         }
         binding.recipesRV.adapter = rvAdapter
+        searchRecipe()
+    }
+
+    private fun searchRecipe() {
         binding.search.setOnQueryTextListener(object : SearchView.OnQueryTextListener {
             override fun onQueryTextSubmit(query: String?): Boolean {
                 return false
@@ -58,13 +62,12 @@ class RecipesListFragment : Fragment() {
 
             override fun onQueryTextChange(newText: String?): Boolean {
                 val filteredList = Transformations.map(viewModel.recipesList) {
-                    it.filter {
-                            recipeInfo ->  recipeInfo.title.lowercase().split(" ").contains(newText?.lowercase())
+                    it.filter { recipeInfo ->
+                        recipeInfo.title.lowercase().split(" ").contains(newText?.lowercase())
                     }
                 }
-                Log.d("FL", filteredList.toString())
-                filteredList.observe(viewLifecycleOwner){
-                    if(it.isNotEmpty()) {
+                filteredList.observe(viewLifecycleOwner) {
+                    if (it.isNotEmpty()) {
                         rvAdapter.submitList(it)
                     } else {
                         viewModel.recipesList.observe(viewLifecycleOwner) {

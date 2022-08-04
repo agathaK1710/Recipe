@@ -14,6 +14,8 @@ import com.android.recipe.domain.entities.RecipeInfo
 import com.android.recipe.domain.entities.RecipeWithIngredientsInfo
 import com.android.recipe.domain.entities.RecipeWithStepsInfo
 import com.android.recipe.domain.entities.StepWithIngredientsInfo
+import kotlinx.coroutines.Dispatchers
+import kotlinx.coroutines.withContext
 
 class RecipeRepositoryImpl(
     private val application: Application,
@@ -66,7 +68,7 @@ class RecipeRepositoryImpl(
         }
     }
 
-    override suspend fun loadData() {
+    override suspend fun loadData(): Unit = withContext(Dispatchers.IO) {
         try {
             val randomRecipesId = apiService.getRandomRecipes(number = 1).randomRecipesId
             val randomRecipes = randomRecipesId.map {

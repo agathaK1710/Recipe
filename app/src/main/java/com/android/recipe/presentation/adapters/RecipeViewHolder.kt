@@ -8,5 +8,8 @@ class RecipeViewHolder(itemView: RecipeItemBinding): RecyclerView.ViewHolder(ite
     val title = itemView.tvTitle
     val servingsNum = itemView.tvServings
     val readyTime = itemView.tvReadyInMinutes
+    val arrowBtn = itemView.btnArrow
+    val invisibleContainer = itemView.invisibleContainer
+    val cardView = itemView.cardView
     //val healthScore = itemView.pbHealthScore
 }
