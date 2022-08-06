@@ -5,7 +5,6 @@ import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import android.widget.SearchView
-import androidx.activity.OnBackPressedCallback
 import androidx.fragment.app.Fragment
 import androidx.lifecycle.Transformations
 import androidx.lifecycle.ViewModelProvider
@@ -55,7 +54,11 @@ class RecipesListFragment : Fragment() {
             rvAdapter.submitList(it)
         }
         rvAdapter.onClickListener = {
-            findNavController().navigate(R.id.action_recipesListFragment_to_recipeDetailFragment)
+            findNavController().navigate(
+                RecipesListFragmentDirections.actionRecipesListFragmentToRecipeDetailFragment(
+                    it.id
+                )
+            )
         }
 
         binding.recipesRV.adapter = rvAdapter
@@ -87,50 +90,6 @@ class RecipesListFragment : Fragment() {
             }
         })
     }
-
-
-//    private fun searchRecipe() {
-//        val menuHost: MenuHost = requireActivity()
-//        menuHost.addMenuProvider(object : MenuProvider {
-//            override fun onCreateMenu(menu: Menu, menuInflater: MenuInflater) {
-//                menuInflater.inflate(R.menu.menu, menu)
-//            }
-//
-//            override fun onMenuItemSelected(menuItem: MenuItem): Boolean {
-//                return when (menuItem.itemId) {
-//                    R.id.actionSearch -> {
-//                        val searchView = menuItem.actionView as SearchView
-//                        searchView.setOnQueryTextListener(object : SearchView.OnQueryTextListener {
-//                            override fun onQueryTextSubmit(query: String?): Boolean {
-//                                return false
-//                            }
-//
-//                            override fun onQueryTextChange(newText: String?): Boolean {
-//                                val filteredList = Transformations.map(viewModel.recipesList) {
-//                                    it.filter { recipeInfo ->
-//                                        recipeInfo.title.lowercase().split(" ")
-//                                            .contains(newText?.lowercase())
-//                                    }
-//                                }
-//                                filteredList.observe(viewLifecycleOwner) {
-//                                    if (it.isNotEmpty()) {
-//                                        rvAdapter.submitList(it)
-//                                    } else {
-//                                        viewModel.recipesList.observe(viewLifecycleOwner) {
-//                                            rvAdapter.submitList(it)
-//                                        }
-//                                    }
-//                                }
-//                                return false
-//                            }
-//                        })
-//                        return true
-//                    }
-//                    else -> false
-//                }
-//            }
-//        }, viewLifecycleOwner, Lifecycle.State.RESUMED)
-//    }
 
     private fun addToFavourites(position: Int) {
         viewModel.recipesList.observe(viewLifecycleOwner) {

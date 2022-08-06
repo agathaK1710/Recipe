@@ -8,4 +8,7 @@
     <string name="show_description">Show description</string>
     <string name="popular_recipes">Popular recipes</string>
     <string name="cook_today">What do you want to cook today?</string>
+    <string name="min">min</string>
+    <string name="kcal">kcal</string>
+    <string name="ingredients">Ingredients</string>
 </resources>
