@@ -3,111 +3,78 @@
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
     android:id="@+id/cardView"
-    android:layout_width="match_parent"
-    android:layout_height="wrap_content"
-    android:layout_marginBottom="10dp"
+    android:layout_width="200dp"
+    android:layout_height="250dp"
+    android:layout_marginStart="10dp"
     app:cardBackgroundColor="@color/grey"
     app:cardCornerRadius="15dp">
 
-    <LinearLayout
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:orientation="vertical">
-
         <androidx.constraintlayout.widget.ConstraintLayout
             android:id="@+id/container"
+            android:background="@color/peach"
             android:layout_width="match_parent"
-            android:layout_height="wrap_content">
-
-            <androidx.constraintlayout.widget.Guideline
-                android:id="@+id/guideline"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:orientation="vertical"
-                app:layout_constraintHorizontal_weight="0.5" />
+            android:layout_height="match_parent">
 
             <ImageView
                 android:id="@+id/ivRecipe"
                 android:layout_width="match_parent"
-                android:layout_height="250dp"
+                android:layout_height="160dp"
+                android:layout_margin="8dp"
                 android:contentDescription="@string/recipe_image"
                 android:scaleType="centerCrop"
                 app:layout_constraintEnd_toEndOf="parent"
                 app:layout_constraintStart_toStartOf="parent"
                 app:layout_constraintTop_toTopOf="parent"
-                android:layout_margin="8dp"
                 tools:src="@tools:sample/backgrounds/scenic" />
 
             <TextView
                 android:id="@+id/tvTitle"
-                android:layout_width="wrap_content"
+                android:layout_width="0dp"
                 android:layout_height="wrap_content"
                 android:layout_marginStart="@dimen/margin_start"
                 android:layout_marginTop="7dp"
-                android:fontFamily="@font/the_students_teacher_regular"
+                android:layout_marginEnd="8dp"
+                android:fontFamily="@font/lato_light"
                 android:textAppearance="?attr/textAppearanceBody2"
                 android:textSize="@dimen/list_title_recipe"
                 android:textStyle="bold"
                 app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintEnd_toStartOf="@+id/roundedShape"
                 app:layout_constraintTop_toBottomOf="@+id/ivRecipe"
                 tools:text="Pasta" />
 
-            <ImageButton
-                android:id="@+id/btnArrow"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_marginTop="7dp"
-                android:background="?android:selectableItemBackground"
-                android:src="@drawable/arrow_more"
-                app:layout_constraintEnd_toEndOf="@+id/container"
-                app:layout_constraintHorizontal_bias="0.95"
+            <ImageView
+                android:id="@+id/roundedShape"
+                android:layout_width="55dp"
+                android:layout_height="25dp"
+                android:src="@drawable/rounded"
                 app:layout_constraintStart_toEndOf="@+id/tvTitle"
-                app:layout_constraintTop_toBottomOf="@+id/ivRecipe"
+                app:layout_constraintEnd_toEndOf="@+id/container"
                 app:layout_constraintBottom_toBottomOf="@+id/container"
-                android:contentDescription="@string/show_description" />
-        </androidx.constraintlayout.widget.ConstraintLayout>
+                android:layout_marginEnd="8dp"
+                android:layout_marginBottom="8dp"/>
 
-        <androidx.constraintlayout.widget.ConstraintLayout
-            android:id="@+id/invisibleContainer"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:visibility="gone">
-
-            <TextView
-                android:id="@+id/tvReadyInMinutes"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_marginStart="@dimen/margin_start"
-                android:fontFamily="@font/the_students_teacher_regular"
-                android:textSize="@dimen/description_size"
-                app:layout_constraintStart_toStartOf="parent"
-                app:layout_constraintTop_toTopOf="@+id/invisibleContainer"
-                tools:text="5 min" />
-
-            <TextView
-                android:id="@+id/tvServingsLabel"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_marginStart="@dimen/margin_start"
-                android:fontFamily="@font/the_students_teacher_regular"
-                android:text="@string/servings"
-                android:textSize="@dimen/description_size"
-                app:layout_constraintStart_toStartOf="parent"
-                app:layout_constraintTop_toBottomOf="@+id/tvReadyInMinutes" />
-
-            <TextView
-                android:id="@+id/tvServings"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
+            <ImageView
+                android:id="@+id/readHeart"
+                android:layout_width="17dp"
+                android:layout_height="17dp"
+                android:src="@drawable/read_heart"
                 android:layout_marginStart="5dp"
+                app:layout_constraintStart_toStartOf="@+id/roundedShape"
+                app:layout_constraintBottom_toBottomOf="@+id/roundedShape"
+                app:layout_constraintTop_toTopOf="@+id/roundedShape"/>
 
-                android:fontFamily="@font/the_students_teacher_regular"
-                android:textSize="@dimen/description_size"
-                app:layout_constraintStart_toEndOf="@+id/tvServingsLabel"
-                app:layout_constraintTop_toBottomOf="@+id/tvReadyInMinutes" />
+            <TextView
+                android:id="@+id/tvLikes"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                app:layout_constraintStart_toEndOf="@+id/readHeart"
+                app:layout_constraintBottom_toBottomOf="@+id/roundedShape"
+                app:layout_constraintTop_toTopOf="@+id/roundedShape"
+                android:layout_marginStart="3dp"
+                tools:text="55"/>
+
+
 
         </androidx.constraintlayout.widget.ConstraintLayout>
-    </LinearLayout>
-
-
 </com.google.android.material.card.MaterialCardView>
