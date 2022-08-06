@@ -18,7 +18,7 @@ import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.withContext
 
 class RecipeRepositoryImpl(
-    private val application: Application,
+    application: Application,
 ) : RecipeRepository {
     private val apiService = ApiFactory.apiService
     private val mapper = RecipeMapper()

@@ -18,17 +18,21 @@ class RecipeViewModel(application: Application) : AndroidViewModel(application) 
     private val addRecipeUseCase = AddRecipeUseCase(repository)
     private val removeRecipeUseCase = RemoveRecipeUseCase(repository)
     private val editRecipeUseCase = EditRecipeUseCase(repository)
+    private val getRecipeWithIngredientsUseCase = GetRecipeWithIngredientsUseCase(repository)
+    private val getRecipeWithStepsUseCase = GetRecipeWithStepsUseCase(repository)
 
     val recipesList = getRecipesListUseCase()
+
 
     fun getRecipeInfo(id: Int) = getRecipeInfoUseCase(id)
     suspend fun editRecipe(recipe: RecipeInfo) = editRecipeUseCase(recipe)
     suspend fun removeRecipe(recipe: RecipeInfo) = removeRecipeUseCase(recipe)
+    fun getRecipeWithIngredients(id: Int) = getRecipeWithIngredientsUseCase(id)
+    fun getRecipeWithSteps(id: Int) = getRecipeWithStepsUseCase(id)
 
 //    init {
 //        viewModelScope.launch{
 //            loadDataUseCase()
 //        }
 //    }
-
 }
