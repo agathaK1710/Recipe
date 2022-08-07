@@ -1,6 +1,7 @@
 package com.android.recipe.presentation
 
 import android.content.Context
+import android.opengl.Visibility
 import android.os.Bundle
 import android.view.LayoutInflater
 import android.view.View
@@ -32,7 +33,7 @@ class RecipeDetailFragment : Fragment() {
 
     override fun onAttach(context: Context) {
         super.onAttach(context)
-        (activity as MainActivity).goneTabLayout()
+        (activity as MainActivity).setVisibility(View.GONE)
     }
 
 
@@ -71,7 +72,7 @@ class RecipeDetailFragment : Fragment() {
             tvReadyInMinutes.text = recipe.readyInMinutes.toString()
             tvHealthScore.text = recipe.healthScore.toString()
             pbHeathScore.progress = recipe.healthScore
-            tvCalories.text = recipe.calories.toString()
+            tvCalories.text = recipe.calories.toInt().toString()
             Picasso.get().load(recipe.image).into(ivRecipeImage)
             tvServings.text = recipe.servings.toString()
             tvEquipment.text = "spoon"

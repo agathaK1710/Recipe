@@ -1,5 +1,6 @@
 package com.android.recipe.presentation
 
+import android.opengl.Visibility
 import android.os.Bundle
 import android.view.View
 import androidx.appcompat.app.AppCompatActivity
@@ -28,7 +29,7 @@ class MainActivity : AppCompatActivity() {
 
     private fun setUpTabLayout() {
         val icons =
-            arrayListOf(R.drawable.home, R.drawable.search, R.drawable.heart, R.drawable.person)
+            arrayListOf(R.drawable.home, R.drawable.heart, R.drawable.person)
         binding.viewPager.adapter = ViewPagerAdapter(supportFragmentManager, lifecycle)
         val tabLayoutMediator =
             TabLayoutMediator(binding.tabLayout, binding.viewPager) { tab, position ->
@@ -59,11 +60,7 @@ class MainActivity : AppCompatActivity() {
         tabLayoutMediator.attach()
     }
 
-    fun goneTabLayout(){
-        binding.tabLayout.visibility = View.GONE
-    }
-
-    fun visibleTabLayout(){
-        binding.tabLayout.visibility = View.VISIBLE
+    fun setVisibility(visible: Int){
+        binding.tabLayout.visibility = visible
     }
 }

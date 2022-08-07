@@ -62,7 +62,7 @@ class RecipesListFragment : Fragment() {
         }
 
         binding.recipesRV.adapter = rvAdapter
-        (activity as MainActivity).visibleTabLayout()
+        (activity as MainActivity).setVisibility(View.VISIBLE)
         searchRecipe()
     }
 
