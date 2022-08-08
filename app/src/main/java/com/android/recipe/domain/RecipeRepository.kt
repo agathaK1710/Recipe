@@ -1,19 +1,17 @@
 package com.android.recipe.domain
 
 import androidx.lifecycle.LiveData
-import com.android.recipe.domain.entities.RecipeInfo
-import com.android.recipe.domain.entities.RecipeWithIngredientsInfo
-import com.android.recipe.domain.entities.RecipeWithStepsInfo
-import com.android.recipe.domain.entities.StepWithIngredientsInfo
+import com.android.recipe.domain.entities.*
 
 interface RecipeRepository {
     fun getRecipeList(): LiveData<List<RecipeInfo>>
-    fun getRecipeInfo(id: Int): LiveData<RecipeInfo>
+    suspend fun getRecipeInfo(id: Int): RecipeInfo
+    suspend fun getIngredientInfo(id: Int): IngredientInfo
+    fun getIngredientWithAmountList(recipeId: Int): LiveData<List<IngredientWithAmountInfo>>
     suspend fun addRecipe(recipe: RecipeInfo)
     suspend fun removeRecipe(recipe: RecipeInfo)
     suspend fun editRecipe(recipe: RecipeInfo)
-    fun getRecipeWithIngredients(id: Int): LiveData<RecipeWithIngredientsInfo>
-    fun getRecipeWithSteps(id: Int): LiveData<RecipeWithStepsInfo>
-    fun getStepWithIngredients(name: String): LiveData<StepWithIngredientsInfo>
+    suspend fun getRecipeWithSteps(id: Int): RecipeWithStepsInfo
+    suspend fun getStepWithIngredients(name: String): StepWithIngredientsInfo
     suspend fun loadData()
 }

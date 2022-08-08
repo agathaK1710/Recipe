@@ -2,8 +2,9 @@ package com.android.recipe.domain.usecases
 
 import com.android.recipe.domain.RecipeRepository
 
-class GetRecipeWithStepsUseCase(
+class GetIngredientWithAmountUseCase(
     private val repository: RecipeRepository
 ) {
-    suspend operator fun invoke(id: Int) = repository.getRecipeWithSteps(id)
+    operator fun invoke(recipeId: Int) =
+        repository.getIngredientWithAmountList(recipeId)
 }

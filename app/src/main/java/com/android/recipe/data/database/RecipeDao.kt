@@ -3,7 +3,6 @@ package com.android.recipe.data.database
 import androidx.lifecycle.LiveData
 import androidx.room.*
 import com.android.recipe.data.database.entities.*
-import com.android.recipe.data.database.relations.RecipeWithIngredients
 import com.android.recipe.data.database.relations.RecipeWithSteps
 import com.android.recipe.data.database.relations.StepWithIngredients
 
@@ -13,7 +12,13 @@ interface RecipeDao {
     fun getRecipeList(): LiveData<List<RecipeEntity>>
 
     @Query("SELECT * FROM recipes WHERE recipeId == :id LIMIT 1")
-    fun getRecipeById(id: Int): LiveData<RecipeEntity>
+    suspend fun getRecipeById(id: Int): RecipeEntity
+
+    @Query("SELECT * FROM ingredients WHERE ingredientId == :id LIMIT 1")
+    suspend fun getIngredientById(id: Int): IngredientEntity
+
+    @Query("SELECT * FROM recipeWithIngredients WHERE recipeId == :recipeId")
+    fun getIngredientWithAmountList(recipeId: Int): LiveData<List<RecipeIngredientRatio>>
 
     @Delete
     suspend fun deleteRecipe(recipe: RecipeEntity)
@@ -39,15 +44,15 @@ interface RecipeDao {
     @Insert
     suspend fun insertStepIngredientRatio(stepIngredientRatio: StepIngredientRatio)
 
-    @Transaction
-    @Query("SELECT * FROM recipes WHERE recipeId == :id")
-    fun getRecipeWithIngredients(id: Int): LiveData<RecipeWithIngredients>
+//    @Transaction
+//    @Query("SELECT * FROM recipes WHERE recipeId == :id")
+//    fun getRecipeWithIngredients(id: Int): RecipeWithIngredients
 
     @Transaction
     @Query("SELECT * FROM recipes WHERE recipeId == :id")
-    fun getRecipeWithSteps(id: Int): LiveData<RecipeWithSteps>
+    fun getRecipeWithSteps(id: Int): RecipeWithSteps
 
     @Transaction
     @Query("SELECT * FROM steps WHERE name == :name")
-    fun getStepWithIngredients(name: String): LiveData<StepWithIngredients>
+    fun getStepWithIngredients(name: String): StepWithIngredients
 }

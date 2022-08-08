@@ -2,6 +2,7 @@ package com.android.recipe.data.repository
 
 import android.app.Application
 import android.util.Log
+import androidx.lifecycle.Lifecycle
 import androidx.lifecycle.LiveData
 import androidx.lifecycle.Transformations
 import com.android.recipe.data.database.AppDatabase
@@ -10,10 +11,7 @@ import com.android.recipe.data.database.entities.StepIngredientRatio
 import com.android.recipe.data.database.mapper.RecipeMapper
 import com.android.recipe.data.network.ApiFactory
 import com.android.recipe.domain.RecipeRepository
-import com.android.recipe.domain.entities.RecipeInfo
-import com.android.recipe.domain.entities.RecipeWithIngredientsInfo
-import com.android.recipe.domain.entities.RecipeWithStepsInfo
-import com.android.recipe.domain.entities.StepWithIngredientsInfo
+import com.android.recipe.domain.entities.*
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.withContext
 
@@ -32,10 +30,8 @@ class RecipeRepositoryImpl(
         }
     }
 
-    override fun getRecipeInfo(id: Int): LiveData<RecipeInfo> {
-        return Transformations.map(recipeDao.getRecipeById(id)) {
-            mapper.mapRecipeEntityToInfo(it)
-        }
+    override suspend fun getRecipeInfo(id: Int): RecipeInfo {
+        return mapper.mapRecipeEntityToInfo(recipeDao.getRecipeById(id))
     }
 
     override suspend fun addRecipe(recipe: RecipeInfo) {
@@ -51,22 +47,25 @@ class RecipeRepositoryImpl(
         recipeDao.editRecipe(mapper.mapRecipeInfoToEntity(newRecipe))
     }
 
-    override fun getRecipeWithIngredients(id: Int): LiveData<RecipeWithIngredientsInfo> {
-        return Transformations.map(recipeDao.getRecipeWithIngredients(id)) {
-            mapper.mapRecipeIngredientEntityToInfo(it)
+    override suspend fun getRecipeWithSteps(id: Int): RecipeWithStepsInfo {
+        return mapper.mapRecipeStepsEntityToInfo(recipeDao.getRecipeWithSteps(id))
+
+    }
+
+    override suspend fun getStepWithIngredients(name: String): StepWithIngredientsInfo {
+        return mapper.mapStepIngredientsEntityToIndo(recipeDao.getStepWithIngredients(name))
+    }
+
+    override fun getIngredientWithAmountList(recipeId: Int): LiveData<List<IngredientWithAmountInfo>> {
+        return Transformations.map(recipeDao.getIngredientWithAmountList(recipeId)) { list ->
+            list.map {
+                mapper.mapRecipeIngredientEntityToInfo(it)
+            }
         }
     }
 
-    override fun getRecipeWithSteps(id: Int): LiveData<RecipeWithStepsInfo> {
-        return Transformations.map(recipeDao.getRecipeWithSteps(id)) {
-            mapper.mapRecipeStepsEntityToInfo(it)
-        }
-    }
-
-    override fun getStepWithIngredients(name: String): LiveData<StepWithIngredientsInfo> {
-        return Transformations.map(recipeDao.getStepWithIngredients(name)) {
-            mapper.mapStepIngredientsEntityToIndo(it)
-        }
+    override suspend fun getIngredientInfo(id: Int): IngredientInfo {
+        return mapper.mapIngredientEntityToInfo(recipeDao.getIngredientById(id))
     }
 
     override suspend fun loadData(): Unit = withContext(Dispatchers.IO) {
@@ -80,7 +79,7 @@ class RecipeRepositoryImpl(
                     )
                 )
             }
-           recipeDao.insertRecipesList(randomRecipes)
+            recipeDao.insertRecipesList(randomRecipes)
 
             for (randomRecipe in randomRecipesId) {
                 val recipeInformation = apiService.getRecipeInformation(

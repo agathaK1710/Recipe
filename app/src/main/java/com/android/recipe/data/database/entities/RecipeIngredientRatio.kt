@@ -7,5 +7,5 @@ data class RecipeIngredientRatio(
     val recipeId: Int,
     val ingredientId: Int,
     val amount: Double,
-    val unit: String?
+    val unit: String
 )

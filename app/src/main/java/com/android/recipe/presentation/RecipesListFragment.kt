@@ -50,9 +50,10 @@ class RecipesListFragment : Fragment() {
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
-        viewModel.recipesList.observe(viewLifecycleOwner) {
+        viewModel.recipesList.observe(viewLifecycleOwner){
             rvAdapter.submitList(it)
         }
+
         rvAdapter.onClickListener = {
             findNavController().navigate(
                 RecipesListFragmentDirections.actionRecipesListFragmentToRecipeDetailFragment(

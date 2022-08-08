@@ -14,5 +14,5 @@ data class RecipeWithIngredients(
         entityColumn = "ingredientId",
         associateBy = Junction(RecipeIngredientRatio::class)
     )
-    val ingredients: List<IngredientEntity>?
+    val ingredients: List<IngredientEntity>
 )

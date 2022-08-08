@@ -2,6 +2,7 @@ package com.android.recipe.data.database.mapper
 
 import com.android.recipe.data.database.entities.IngredientEntity
 import com.android.recipe.data.database.entities.RecipeEntity
+import com.android.recipe.data.database.entities.RecipeIngredientRatio
 import com.android.recipe.data.database.entities.StepEntity
 import com.android.recipe.data.database.relations.RecipeWithIngredients
 import com.android.recipe.data.database.relations.RecipeWithSteps
@@ -92,7 +93,9 @@ class RecipeMapper {
         protein = recipeInfo.protein
     )
 
-    private fun mapIngredientEntityToInfo(ingredientEntity: IngredientEntity) = IngredientInfo(
+    fun mapIngredientEntityToInfo(
+        ingredientEntity: IngredientEntity
+    ) = IngredientInfo(
         id = ingredientEntity.ingredientId,
         name = ingredientEntity.name,
         image = ingredientEntity.image
@@ -105,12 +108,14 @@ class RecipeMapper {
         equipments = stepEntity.equipments
     )
 
-    fun mapRecipeIngredientEntityToInfo(recipeWithIngredients: RecipeWithIngredients) =
-        RecipeWithIngredientsInfo(
-            recipe = mapRecipeEntityToInfo(recipeWithIngredients.recipe),
-            ingredients = recipeWithIngredients.ingredients?.map {
-                mapIngredientEntityToInfo(it)
-            }
+    fun mapRecipeIngredientEntityToInfo(
+        recipeWithIngredients: RecipeIngredientRatio
+    ) =
+        IngredientWithAmountInfo(
+            recipeId = recipeWithIngredients.ingredientId,
+            ingredientId = recipeWithIngredients.ingredientId,
+            amount = recipeWithIngredients.amount,
+            unit = recipeWithIngredients.unit
         )
 
     fun mapRecipeStepsEntityToInfo(recipeWithSteps: RecipeWithSteps) = RecipeWithStepsInfo(
@@ -120,10 +125,20 @@ class RecipeMapper {
         }
     )
 
-    fun mapStepIngredientsEntityToIndo(stepWithIngredients: StepWithIngredients) =
+    fun mapStepIngredientsEntityToIndo(
+        stepWithIngredients: StepWithIngredients
+    ) =
         StepWithIngredientsInfo(
             step = mapStepEntityToInfo(stepWithIngredients.step),
             ingredients = stepWithIngredients.ingredients.map {
+                mapIngredientEntityToInfo(it)
+            }
+        )
+
+    fun mapRecipeWithIngredientsEntityToIfo(recipeWithIngredients: RecipeWithIngredients) =
+        RecipeWithIngredientsInfo(
+            recipe = mapRecipeEntityToInfo(recipeWithIngredients.recipe),
+            ingredients = recipeWithIngredients.ingredients.map {
                 mapIngredientEntityToInfo(it)
             }
         )

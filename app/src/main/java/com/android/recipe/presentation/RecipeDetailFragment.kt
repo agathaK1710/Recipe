@@ -1,31 +1,29 @@
 package com.android.recipe.presentation
 
 import android.content.Context
-import android.opengl.Visibility
 import android.os.Bundle
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import androidx.activity.OnBackPressedCallback
 import androidx.fragment.app.Fragment
-import androidx.lifecycle.ViewModelProvider
-import androidx.lifecycle.lifecycleScope
+import androidx.lifecycle.*
 import androidx.navigation.fragment.findNavController
 import androidx.navigation.fragment.navArgs
 import com.android.recipe.databinding.FragmentRecipeDetailBinding
 import com.android.recipe.domain.entities.RecipeInfo
+import com.android.recipe.presentation.adapters.RecipeDetailAdapter
 import com.squareup.picasso.Picasso
-import kotlinx.coroutines.async
-import kotlinx.coroutines.launch
+import kotlinx.coroutines.*
 
 class RecipeDetailFragment : Fragment() {
-
     private var _binding: FragmentRecipeDetailBinding? = null
     private val binding: FragmentRecipeDetailBinding
         get() = _binding ?: throw RuntimeException("FragmentRecipeDetailBinding is null")
 
     private val args by navArgs<RecipeDetailFragmentArgs>()
-
+    private val detailAdapter = RecipeDetailAdapter()
+    private lateinit var ingredients: List<Deferred<Ingredient>>
 
     private val viewModel by lazy {
         ViewModelProvider(this)[RecipeViewModel::class.java]
@@ -35,7 +33,6 @@ class RecipeDetailFragment : Fragment() {
         super.onAttach(context)
         (activity as MainActivity).setVisibility(View.GONE)
     }
-
 
 
     override fun onCreateView(
@@ -55,11 +52,30 @@ class RecipeDetailFragment : Fragment() {
                     findNavController().popBackStack()
                 }
             })
-        val recipe = viewModel.getRecipeInfo(args.id)
-        recipe.observe(viewLifecycleOwner){
-            setViews(it)
+        lifecycleScope.launch {
+            setViews(viewModel.getRecipeInfo(args.id))
         }
+
+
+        viewModel.getIngredientWithAmountList(args.id).observe(viewLifecycleOwner) { list ->
+            ingredients = list.map { ingredientWithAmount ->
+                lifecycleScope.async {
+                    val ingredientInfo = viewModel.getIngredientInfo(ingredientWithAmount.ingredientId)
+                    Ingredient(
+                        name = ingredientInfo.name,
+                        image = ingredientInfo.image,
+                        amount = ingredientWithAmount.amount,
+                        unit = ingredientWithAmount.unit
+                    )
+                }
+            }
+            lifecycleScope.launch {
+                detailAdapter.submitList(ingredients.awaitAll())
+            }
+        }
+        binding.rvIngredients.adapter = detailAdapter
     }
+
 
     override fun onDestroy() {
         super.onDestroy()
