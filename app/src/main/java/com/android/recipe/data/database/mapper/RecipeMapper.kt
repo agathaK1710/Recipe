@@ -42,7 +42,7 @@ class RecipeMapper {
         recipeInfoId = recipeId,
         name = stepDto.stepDescription,
         number = stepDto.number,
-        equipments = stepDto.equipment?.joinToString(", ") { it.name }
+        equipments = stepDto.equipment.joinToString(", ") { it.name }
     )
 
 
@@ -101,7 +101,7 @@ class RecipeMapper {
         image = ingredientEntity.image
     )
 
-    private fun mapStepEntityToInfo(stepEntity: StepEntity) = StepInfo(
+    fun mapStepEntityToInfo(stepEntity: StepEntity) = StepInfo(
         recipeId = stepEntity.recipeInfoId,
         description = stepEntity.name,
         number = stepEntity.number,

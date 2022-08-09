@@ -8,6 +8,7 @@ interface RecipeRepository {
     suspend fun getRecipeInfo(id: Int): RecipeInfo
     suspend fun getIngredientInfo(id: Int): IngredientInfo
     fun getIngredientWithAmountList(recipeId: Int): LiveData<List<IngredientWithAmountInfo>>
+    fun getStepsListByRecipeId(recipeId: Int): LiveData<List<StepInfo>>
     suspend fun addRecipe(recipe: RecipeInfo)
     suspend fun removeRecipe(recipe: RecipeInfo)
     suspend fun editRecipe(recipe: RecipeInfo)

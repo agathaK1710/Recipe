@@ -2,7 +2,6 @@ package com.android.recipe.data.repository
 
 import android.app.Application
 import android.util.Log
-import androidx.lifecycle.Lifecycle
 import androidx.lifecycle.LiveData
 import androidx.lifecycle.Transformations
 import com.android.recipe.data.database.AppDatabase
@@ -68,9 +67,17 @@ class RecipeRepositoryImpl(
         return mapper.mapIngredientEntityToInfo(recipeDao.getIngredientById(id))
     }
 
+    override fun getStepsListByRecipeId(recipeId: Int): LiveData<List<StepInfo>> {
+        return Transformations.map(recipeDao.getStepsListByRecipeId(recipeId)) { list ->
+            list.map {
+                mapper.mapStepEntityToInfo(it)
+            }
+        }
+    }
+
     override suspend fun loadData(): Unit = withContext(Dispatchers.IO) {
         try {
-            val randomRecipesId = apiService.getRandomRecipes(number = 1).randomRecipesId
+            val randomRecipesId = apiService.getRandomRecipes(number = 2).randomRecipesId
             val randomRecipes = randomRecipesId.map {
                 mapper.mapDtoToRecipeEntity(
                     apiService.getRecipeInformation(
@@ -88,11 +95,11 @@ class RecipeRepositoryImpl(
                 )
 
                 val ingredients = recipeInformation.extendedIngredients
-                recipeDao.insertIngredientsList(ingredients.map {
+                ingredients.map {
                     mapper.mapIngredientDtoToEntity(
                         it
                     )
-                })
+                }.let { recipeDao.insertIngredientsList(it) }
 
                 for (ingredient in ingredients) {
                     recipeDao.insertRecipeIngredientRatio(
@@ -106,11 +113,13 @@ class RecipeRepositoryImpl(
                 }
 
                 val steps = recipeInformation.analyzedInstructions[0].steps
+
                 recipeDao.insertStepsList(
                     steps.map {
                         mapper.mapStepDtoToEntity(it, randomRecipe.id)
                     }
                 )
+
 
                 for (step in steps) {
                     for (ingredient in step.ingredients) {

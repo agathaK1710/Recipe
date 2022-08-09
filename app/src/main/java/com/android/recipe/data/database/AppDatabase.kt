@@ -7,7 +7,7 @@ import androidx.room.RoomDatabase
 import com.android.recipe.data.database.entities.*
 
 @Database(
-    version = 7,
+    version = 1,
     entities = [
         IngredientEntity::class,
         RecipeEntity::class,

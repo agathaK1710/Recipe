@@ -9,5 +9,5 @@ data class StepEntity(
     val name: String,
     val recipeInfoId: Int,
     val number: Int,
-    val equipments: String?
+    val equipments: String
 )

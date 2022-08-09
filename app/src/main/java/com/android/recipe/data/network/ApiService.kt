@@ -35,7 +35,7 @@ interface ApiService {
     ): RandomRecipeListDto
 
     companion object{
-        private const val API_KEY = "0910672c438e4f91a8ebad23ebe664ac"
+        private const val API_KEY = "dd0a22d093894fa9a2496d8fdba0ffbf"
         private const val QUERY_PARAM_API_KEY= "apiKey"
         private const val QUERY_PARAM_NAME= "query"
         private const val QUERY_PARAM_INGREDIENTS= "ingredients"

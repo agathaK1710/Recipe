@@ -22,6 +22,8 @@ class RecipeViewModel(application: Application) : AndroidViewModel(application) 
     private val getIngredientWithAmountListUseCase = GetIngredientWithAmountUseCase(repository)
     private val getRecipeWithStepsUseCase = GetRecipeWithStepsUseCase(repository)
     private val getIngredientInfoUseCase = GetIngredientInfoUseCase(repository)
+    private val getStepsListByRecipeIdUseCase = GetStepsListByRecipeIdUseCase(repository)
+    private val getStepWithIngredientsUseCase = GetStepWithIngredientsUseCase(repository)
     val recipesList = getRecipesListUseCase()
 
 
@@ -31,10 +33,12 @@ class RecipeViewModel(application: Application) : AndroidViewModel(application) 
     suspend fun removeRecipe(recipe: RecipeInfo) = removeRecipeUseCase(recipe)
     fun getIngredientWithAmountList(recipeId: Int) =
         getIngredientWithAmountListUseCase(recipeId)
+    fun getStepsListByRecipeId(id: Int) = getStepsListByRecipeIdUseCase(id)
+    suspend fun getStepWithIngredients(name: String) = getStepWithIngredientsUseCase(name)
 
-//    init {
-//        viewModelScope.launch {
-//            loadDataUseCase()
-//        }
-//    }
+    init {
+        viewModelScope.launch {
+            loadDataUseCase()
+        }
+    }
 }

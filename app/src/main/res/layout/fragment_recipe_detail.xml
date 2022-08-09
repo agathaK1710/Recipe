@@ -9,7 +9,7 @@
     <androidx.cardview.widget.CardView
         android:id="@+id/cardView2"
         android:layout_width="match_parent"
-        android:layout_height="400dp"
+        android:layout_height="390dp"
         android:layout_margin="@dimen/margin_start_top"
         app:cardCornerRadius="@dimen/corner_radius"
         app:layout_constraintEnd_toEndOf="parent"
@@ -17,15 +17,13 @@
         app:layout_constraintTop_toTopOf="parent">
 
         <androidx.constraintlayout.widget.ConstraintLayout
-            android:layout_width="402dp"
-            android:layout_height="410dp">
+            android:layout_width="match_parent"
+            android:layout_height="390dp">
 
             <TextView
                 android:id="@+id/tvTitle"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
+                style="@style/MyTextView"
                 android:layout_margin="@dimen/margin_start_top"
-                android:fontFamily="@font/lato_light"
                 android:textColor="@color/black"
                 android:textSize="@dimen/title"
                 app:layout_constraintStart_toStartOf="parent"
@@ -48,7 +46,6 @@
                 android:id="@+id/ivTime"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-
                 android:layout_marginTop="@dimen/top_for_icons"
                 android:src="@drawable/clock"
                 app:layout_constraintEnd_toStartOf="@+id/guideline1"
@@ -71,8 +68,7 @@
                 android:layout_width="wrap_content"
                 android:layout_height="15dp"
                 android:layout_marginTop="30dp"
-                android:max="15"
-
+                android:max="50"
                 app:layout_constraintEnd_toStartOf="@+id/guideline3"
                 app:layout_constraintStart_toStartOf="@+id/guideline2"
                 app:layout_constraintTop_toBottomOf="@+id/ivRecipeImage"
@@ -85,35 +81,27 @@
                 android:layout_marginTop="@dimen/top_for_icons"
                 android:src="@drawable/energy"
                 app:layout_constraintEnd_toEndOf="parent"
-
                 app:layout_constraintStart_toStartOf="@+id/guideline3"
                 app:layout_constraintTop_toBottomOf="@+id/ivRecipeImage" />
 
             <TextView
                 android:id="@+id/tvReadyInMinutes"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:fontFamily="@font/lato_light"
+                style="@style/MyTextView"
                 app:layout_constraintEnd_toStartOf="@+id/guideline4"
                 app:layout_constraintTop_toBottomOf="@+id/ivTime"
                 tools:text="59" />
 
             <TextView
                 android:id="@+id/min"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
+                style="@style/MyTextView"
                 android:layout_marginStart="2dp"
-                android:fontFamily="@font/lato_light"
                 android:text="@string/min"
                 app:layout_constraintStart_toEndOf="@+id/tvReadyInMinutes"
                 app:layout_constraintTop_toBottomOf="@+id/ivTime" />
 
             <TextView
                 android:id="@+id/tvHealthScore"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:fontFamily="@font/lato_light"
-
+                style="@style/MyTextView"
                 app:layout_constraintEnd_toStartOf="@+id/guideline3"
                 app:layout_constraintStart_toStartOf="@+id/guideline2"
                 app:layout_constraintTop_toBottomOf="@+id/ivCalories"
@@ -121,10 +109,7 @@
 
             <TextView
                 android:id="@+id/tvServings"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:fontFamily="@font/lato_light"
-
+                style="@style/MyTextView"
                 app:layout_constraintEnd_toStartOf="@+id/guideline2"
                 app:layout_constraintStart_toStartOf="@+id/guideline1"
                 app:layout_constraintTop_toBottomOf="@+id/ivServings"
@@ -132,19 +117,15 @@
 
             <TextView
                 android:id="@+id/tvCalories"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:fontFamily="@font/lato_light"
+                style="@style/MyTextView"
                 app:layout_constraintEnd_toStartOf="@+id/guideline5"
                 app:layout_constraintTop_toBottomOf="@+id/ivCalories"
                 tools:text="59" />
 
             <TextView
                 android:id="@+id/kcal"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
+                style="@style/MyTextView"
                 android:layout_marginStart="2dp"
-                android:fontFamily="@font/lato_light"
                 android:text="@string/kcal"
                 app:layout_constraintStart_toStartOf="@+id/guideline5"
                 app:layout_constraintTop_toBottomOf="@+id/ivCalories" />
@@ -200,13 +181,11 @@
 
     <TextView
         android:id="@+id/ingredients"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
+        style="@style/MyTextView"
         android:layout_marginStart="20dp"
-        android:fontFamily="@font/lato_light"
+        android:layout_marginBottom="@dimen/margin_start_top"
         android:text="@string/ingredients"
         android:textColor="@color/black"
-        android:layout_marginBottom="@dimen/margin_start_top"
         android:textSize="@dimen/title"
         app:layout_constraintBottom_toTopOf="@+id/rvIngredients"
         app:layout_constraintStart_toStartOf="parent" />
@@ -222,12 +201,10 @@
         tools:listitem="@layout/ingredient_item" />
 
     <TextView
-        android:id="@+id/textView2"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
+        android:id="@+id/equipment"
+        style="@style/MyTextView"
         android:layout_marginStart="20dp"
         android:layout_marginTop="20dp"
-        android:fontFamily="@font/lato_light"
         android:text="@string/equipments"
         android:textColor="@color/black"
         android:textSize="@dimen/title"
@@ -236,15 +213,13 @@
 
     <TextView
         android:id="@+id/tvEquipment"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
+        style="@style/MyTextView"
         android:layout_marginStart="20dp"
         android:layout_marginTop="10dp"
         android:layout_marginEnd="20dp"
-        app:layout_constraintBottom_toTopOf="@+id/ingredients"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/textView2" />
+        app:layout_constraintTop_toBottomOf="@+id/equipment" />
 
     <Button
         android:id="@+id/button"

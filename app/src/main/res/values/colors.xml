@@ -7,4 +7,7 @@
     <color name="turquoise">#014E3C</color>
     <color name="peach">#EFC699</color>
     <color name="red">#C30000</color>
+    <color name="light_purple">#DBBCEB</color>
+    <color name="light_peach">#EBD4BC</color>
+    <color name="light_green">#C2F8C8</color>
 </resources>

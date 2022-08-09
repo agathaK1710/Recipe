@@ -55,25 +55,12 @@ class RecipeDetailFragment : Fragment() {
         lifecycleScope.launch {
             setViews(viewModel.getRecipeInfo(args.id))
         }
-
-
-        viewModel.getIngredientWithAmountList(args.id).observe(viewLifecycleOwner) { list ->
-            ingredients = list.map { ingredientWithAmount ->
-                lifecycleScope.async {
-                    val ingredientInfo = viewModel.getIngredientInfo(ingredientWithAmount.ingredientId)
-                    Ingredient(
-                        name = ingredientInfo.name,
-                        image = ingredientInfo.image,
-                        amount = ingredientWithAmount.amount,
-                        unit = ingredientWithAmount.unit
-                    )
-                }
-            }
-            lifecycleScope.launch {
-                detailAdapter.submitList(ingredients.awaitAll())
-            }
-        }
         binding.rvIngredients.adapter = detailAdapter
+        binding.button.setOnClickListener {
+            findNavController().navigate(
+                RecipeDetailFragmentDirections.actionRecipeDetailFragmentToStepFragment(args.id)
+            )
+        }
     }
 
 
@@ -92,6 +79,23 @@ class RecipeDetailFragment : Fragment() {
             Picasso.get().load(recipe.image).into(ivRecipeImage)
             tvServings.text = recipe.servings.toString()
             tvEquipment.text = "spoon"
+        }
+        viewModel.getIngredientWithAmountList(args.id).observe(viewLifecycleOwner) { list ->
+            ingredients = list.map { ingredientWithAmount ->
+                lifecycleScope.async {
+                    val ingredientInfo =
+                        viewModel.getIngredientInfo(ingredientWithAmount.ingredientId)
+                    Ingredient(
+                        name = ingredientInfo.name,
+                        image = "https://spoonacular.com/cdn/ingredients_100x100/${ingredientInfo.image}",
+                        amount = ingredientWithAmount.amount,
+                        unit = ingredientWithAmount.unit
+                    )
+                }
+            }
+            lifecycleScope.launch {
+                detailAdapter.submitList(ingredients.awaitAll())
+            }
         }
     }
 }

@@ -17,6 +17,9 @@ interface RecipeDao {
     @Query("SELECT * FROM ingredients WHERE ingredientId == :id LIMIT 1")
     suspend fun getIngredientById(id: Int): IngredientEntity
 
+    @Query("SELECT * FROM steps WHERE recipeInfoId == :id")
+    fun getStepsListByRecipeId(id: Int): LiveData<List<StepEntity>>
+
     @Query("SELECT * FROM recipeWithIngredients WHERE recipeId == :recipeId")
     fun getIngredientWithAmountList(recipeId: Int): LiveData<List<RecipeIngredientRatio>>
 

@@ -7,5 +7,5 @@ data class StepDto(
     @SerializedName("step")
     val stepDescription: String,
     val ingredients: List<IngredientDto>,
-    val equipment: List<EquipmentDto>?
+    val equipment: List<EquipmentDto>
 )
