@@ -25,6 +25,9 @@
         <action
             android:id="@+id/action_recipeDetailFragment_to_stepFragment"
             app:destination="@id/stepFragment" />
+        <argument
+            android:name="isNavigation"
+            app:argType="boolean" />
     </fragment>
     <fragment
         android:id="@+id/stepFragment"
@@ -34,5 +37,8 @@
         <argument
             android:name="recipeId"
             app:argType="integer" />
+        <argument
+            android:name="isNavigation"
+            app:argType="boolean" />
     </fragment>
 </navigation>

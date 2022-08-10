@@ -40,7 +40,11 @@ class StepFragment : Fragment() {
         requireActivity().onBackPressedDispatcher
             .addCallback(viewLifecycleOwner, object : OnBackPressedCallback(true) {
                 override fun handleOnBackPressed() {
-                    findNavController().popBackStack()
+                    if (arguments?.getBoolean("isNavigation") == true) {
+                        findNavController().popBackStack()
+                    } else{
+                        parentFragmentManager.popBackStack()
+                    }
                 }
             })
         getStepList()

@@ -1,15 +1,22 @@
 package com.android.recipe.presentation.fragments
 
+import android.app.SearchManager
+import android.content.Context
 import android.os.Bundle
+import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import android.widget.SearchView
+import androidx.core.content.ContextCompat.getSystemService
+import androidx.cursoradapter.widget.CursorAdapter
+import androidx.cursoradapter.widget.SimpleCursorAdapter
 import androidx.fragment.app.Fragment
 import androidx.lifecycle.Transformations
 import androidx.lifecycle.ViewModelProvider
 import androidx.lifecycle.lifecycleScope
 import androidx.navigation.fragment.findNavController
+import com.android.recipe.R
 import com.android.recipe.databinding.FragmentRecipesListBinding
 import com.android.recipe.presentation.MainActivity
 import com.android.recipe.presentation.RecipeViewModel
@@ -51,18 +58,19 @@ class RecipesListFragment : Fragment() {
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
-        viewModel.recipesList.observe(viewLifecycleOwner){
-            rvAdapter.submitList(it)
-        }
-
         rvAdapter.onClickListener = {
             findNavController().navigate(
                 RecipesListFragmentDirections.actionRecipesListFragmentToRecipeDetailFragment(
-                    it.id
+                    it.id,
+                    true
                 )
             )
         }
 
+        viewModel.recipesList.observe(viewLifecycleOwner){
+            rvAdapter.submitList(it)
+            Log.d("list", rvAdapter.currentList.map { it.title }.toString())
+        }
         binding.recipesRV.adapter = rvAdapter
         (activity as MainActivity).setVisibility(View.VISIBLE)
         searchRecipe()

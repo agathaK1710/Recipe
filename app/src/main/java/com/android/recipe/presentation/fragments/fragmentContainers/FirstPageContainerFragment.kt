@@ -21,9 +21,6 @@ class FirstPageContainerFragment : Fragment() {
         inflater: LayoutInflater, container: ViewGroup?,
         savedInstanceState: Bundle?
     ): View? {
-//        lifecycleScope.launch(Dispatchers.IO) {
-//            viewModel.loadData()
-//        }
         return inflater.inflate(R.layout.fragment_first_page_container, container, false)
     }
 }

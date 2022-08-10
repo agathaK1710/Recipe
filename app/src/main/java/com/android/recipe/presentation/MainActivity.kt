@@ -62,5 +62,6 @@ class MainActivity : AppCompatActivity() {
 
     fun setVisibility(visible: Int){
         binding.tabLayout.visibility = visible
+        binding.viewPager.visibility = visible
     }
 }

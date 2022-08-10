@@ -8,7 +8,7 @@ import com.android.recipe.data.database.relations.StepWithIngredients
 
 @Dao
 interface RecipeDao {
-    @Query("SELECT * FROM recipes")
+    @Query("SELECT * FROM recipes ORDER BY likes")
     fun getRecipesList(): LiveData<List<RecipeEntity>>
 
     @Query("SELECT * FROM recipes WHERE recipeId == :id LIMIT 1")

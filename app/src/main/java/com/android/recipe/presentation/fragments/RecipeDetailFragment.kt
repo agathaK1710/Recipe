@@ -9,6 +9,7 @@ import android.view.ViewGroup
 import android.widget.ImageView
 import androidx.activity.OnBackPressedCallback
 import androidx.fragment.app.Fragment
+import androidx.fragment.app.commit
 import androidx.lifecycle.*
 import androidx.navigation.fragment.findNavController
 import androidx.navigation.fragment.navArgs
@@ -55,19 +56,38 @@ class RecipeDetailFragment : Fragment() {
         requireActivity().onBackPressedDispatcher
             .addCallback(viewLifecycleOwner, object : OnBackPressedCallback(true) {
                 override fun handleOnBackPressed() {
-                    findNavController().popBackStack()
+                    if (arguments?.getBoolean("isNavigation") == true) {
+                        findNavController().popBackStack()
+                    } else{
+                        parentFragmentManager.popBackStack()
+                    }
                 }
             })
         lifecycleScope.launch {
             setViews(viewModel.getRecipeInfo(args.id))
         }
         binding.rvIngredients.adapter = detailAdapter
+
         binding.button.setOnClickListener {
-            findNavController().navigate(
-               RecipeDetailFragmentDirections.actionRecipeDetailFragmentToStepFragment(
-                    args.id
+            if (arguments?.getBoolean("isNavigation") == false) {
+                val stepFragment = StepFragment()
+                val args = Bundle().apply {
+                    putInt("recipeId", it.id)
+                    putBoolean("isNavigation", false)
+                }
+                stepFragment.arguments = args
+                parentFragmentManager.commit {
+                    replace(R.id.fragment_container, stepFragment)
+                    addToBackStack(null)
+                }
+            } else {
+                findNavController().navigate(
+                    RecipeDetailFragmentDirections.actionRecipeDetailFragmentToStepFragment(
+                        args.id,
+                        true
+                    )
                 )
-            )
+            }
         }
     }
 
@@ -87,9 +107,13 @@ class RecipeDetailFragment : Fragment() {
             Picasso.get().load(recipe.image).into(ivRecipeImage)
             tvServings.text = recipe.servings.toString()
             tvDishTypes.text = recipe.dishTypes
+            if (recipe.favouriteRecipe == 1) {
+                ivHeart.setImageResource(R.drawable.read_heart)
+            } else {
+                ivHeart.setImageResource(R.drawable.heart)
+            }
             ivHeart.setOnClickListener {
-                Log.d("fav", recipe.favouriteRecipe.toString())
-                if(recipe.favouriteRecipe == 0) {
+                if (recipe.favouriteRecipe == 0) {
                     (it as ImageView).setImageResource(R.drawable.read_heart)
                     addToFavourites(recipe)
                 } else {
@@ -118,14 +142,14 @@ class RecipeDetailFragment : Fragment() {
     }
 
     private fun removeAtFavourites(recipe: RecipeInfo) {
-        lifecycleScope.launch{
+        lifecycleScope.launch {
             recipe.favouriteRecipe = 0
             viewModel.editRecipe(recipe)
         }
     }
 
     private fun addToFavourites(recipe: RecipeInfo) {
-        lifecycleScope.launch{
+        lifecycleScope.launch {
             recipe.favouriteRecipe = 1
             viewModel.editRecipe(recipe)
         }
