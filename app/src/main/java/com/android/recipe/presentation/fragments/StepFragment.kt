@@ -1,4 +1,4 @@
-package com.android.recipe.presentation
+package com.android.recipe.presentation.fragments
 
 import android.os.Bundle
 import android.view.LayoutInflater
@@ -11,6 +11,8 @@ import androidx.lifecycle.lifecycleScope
 import androidx.navigation.fragment.findNavController
 import androidx.navigation.fragment.navArgs
 import com.android.recipe.databinding.FragmentStepBinding
+import com.android.recipe.presentation.RecipeViewModel
+import com.android.recipe.presentation.Step
 import com.android.recipe.presentation.adapters.StepAdapter
 import kotlinx.coroutines.*
 

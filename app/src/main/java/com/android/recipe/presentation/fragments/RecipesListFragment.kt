@@ -1,4 +1,4 @@
-package com.android.recipe.presentation
+package com.android.recipe.presentation.fragments
 
 import android.os.Bundle
 import android.view.LayoutInflater
@@ -10,8 +10,9 @@ import androidx.lifecycle.Transformations
 import androidx.lifecycle.ViewModelProvider
 import androidx.lifecycle.lifecycleScope
 import androidx.navigation.fragment.findNavController
-import com.android.recipe.R
 import com.android.recipe.databinding.FragmentRecipesListBinding
+import com.android.recipe.presentation.MainActivity
+import com.android.recipe.presentation.RecipeViewModel
 import com.android.recipe.presentation.adapters.RecipeAdapter
 import kotlinx.coroutines.launch
 

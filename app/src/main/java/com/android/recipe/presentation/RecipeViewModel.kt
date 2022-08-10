@@ -6,8 +6,6 @@ import androidx.lifecycle.viewModelScope
 import com.android.recipe.data.repository.RecipeRepositoryImpl
 import com.android.recipe.domain.entities.RecipeInfo
 import com.android.recipe.domain.usecases.*
-import kotlinx.coroutines.Dispatchers
-import kotlinx.coroutines.async
 import kotlinx.coroutines.launch
 
 class RecipeViewModel(application: Application) : AndroidViewModel(application) {
@@ -24,8 +22,9 @@ class RecipeViewModel(application: Application) : AndroidViewModel(application) 
     private val getIngredientInfoUseCase = GetIngredientInfoUseCase(repository)
     private val getStepsListByRecipeIdUseCase = GetStepsListByRecipeIdUseCase(repository)
     private val getStepWithIngredientsUseCase = GetStepWithIngredientsUseCase(repository)
+    private val getFavouriteRecipesUseCase = GetFavouriteRecipesUseCase(repository)
     val recipesList = getRecipesListUseCase()
-
+    val favouriteRecipesList = getFavouriteRecipesUseCase()
 
     suspend fun getRecipeInfo(id: Int) = getRecipeInfoUseCase(id)
     suspend fun getIngredientInfo(id: Int) = getIngredientInfoUseCase(id)
@@ -33,12 +32,8 @@ class RecipeViewModel(application: Application) : AndroidViewModel(application) 
     suspend fun removeRecipe(recipe: RecipeInfo) = removeRecipeUseCase(recipe)
     fun getIngredientWithAmountList(recipeId: Int) =
         getIngredientWithAmountListUseCase(recipeId)
+
     fun getStepsListByRecipeId(id: Int) = getStepsListByRecipeIdUseCase(id)
     suspend fun getStepWithIngredients(name: String) = getStepWithIngredientsUseCase(name)
-
-    init {
-        viewModelScope.launch {
-            loadDataUseCase()
-        }
-    }
+    suspend fun loadData() = loadDataUseCase()
 }

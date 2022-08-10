@@ -16,4 +16,6 @@
     <string name="step">Step</string>
     <string name="ingredients_dt">Ingredients:</string>
     <string name="equipments_dt">Equipments:</string>
+    <string name="dish_types">Dish types</string>
+    <string name="my_favourite_recipes">My favourite recipes</string>
 </resources>

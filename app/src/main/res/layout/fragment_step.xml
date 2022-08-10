@@ -4,7 +4,7 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    tools:context=".presentation.StepFragment">
+    tools:context=".presentation.fragments.StepFragment">
 
     <TextView
         android:id="@+id/recipePreparation"
@@ -12,7 +12,7 @@
         android:layout_margin="@dimen/margin_start_top"
         android:text="@string/recipe_preparation"
         android:textColor="@color/black"
-        android:textSize="30sp"
+        android:textSize="@dimen/size_title"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent" />
 

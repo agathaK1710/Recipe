@@ -1,6 +1,5 @@
 package com.android.recipe.presentation.adapters
 
-import android.content.Context
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
@@ -31,7 +30,7 @@ class StepAdapter(
                 container.setBackgroundResource(R.drawable.rounded_peach)
             }
             if(p0 % 3 == 0){
-                container.setBackgroundResource(R.drawable.rounded_green)
+                container.setBackgroundResource(R.drawable.rounded_blue)
             }
         }
         return stepView.root

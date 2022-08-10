@@ -4,10 +4,9 @@ import androidx.fragment.app.Fragment
 import androidx.fragment.app.FragmentManager
 import androidx.lifecycle.Lifecycle
 import androidx.viewpager2.adapter.FragmentStateAdapter
-import com.android.recipe.presentation.BlankFragment
-import com.android.recipe.presentation.ContainerFragment
-import com.android.recipe.presentation.RecipeDetailFragment
-import com.android.recipe.presentation.RecipesListFragment
+import com.android.recipe.presentation.fragments.BlankFragment
+import com.android.recipe.presentation.fragments.fragmentContainers.FirstPageContainerFragment
+import com.android.recipe.presentation.fragments.fragmentContainers.SecondPageContainerFragment
 
 class ViewPagerAdapter(fragmentManager: FragmentManager, lifecycle: Lifecycle) :
     FragmentStateAdapter(fragmentManager, lifecycle) {
@@ -15,8 +14,8 @@ class ViewPagerAdapter(fragmentManager: FragmentManager, lifecycle: Lifecycle) :
 
     override fun createFragment(position: Int): Fragment {
         return when (position) {
-            0 -> ContainerFragment()
-            1 -> BlankFragment()
+            0 -> FirstPageContainerFragment()
+            1 -> SecondPageContainerFragment()
             2 -> BlankFragment()
             else -> {
                 BlankFragment()

@@ -2,7 +2,7 @@ package com.android.recipe.domain.entities
 
 data class RecipeInfo(
     val id: Int,
-    val favouriteRecipe: Int,
+    var favouriteRecipe: Int,
     val title: String,
     val likes: Int,
     val image: String,

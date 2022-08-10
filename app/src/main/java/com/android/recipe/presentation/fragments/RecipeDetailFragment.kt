@@ -1,17 +1,23 @@
-package com.android.recipe.presentation
+package com.android.recipe.presentation.fragments
 
 import android.content.Context
 import android.os.Bundle
+import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import android.widget.ImageView
 import androidx.activity.OnBackPressedCallback
 import androidx.fragment.app.Fragment
 import androidx.lifecycle.*
 import androidx.navigation.fragment.findNavController
 import androidx.navigation.fragment.navArgs
+import com.android.recipe.R
 import com.android.recipe.databinding.FragmentRecipeDetailBinding
 import com.android.recipe.domain.entities.RecipeInfo
+import com.android.recipe.presentation.Ingredient
+import com.android.recipe.presentation.MainActivity
+import com.android.recipe.presentation.RecipeViewModel
 import com.android.recipe.presentation.adapters.RecipeDetailAdapter
 import com.squareup.picasso.Picasso
 import kotlinx.coroutines.*
@@ -58,7 +64,9 @@ class RecipeDetailFragment : Fragment() {
         binding.rvIngredients.adapter = detailAdapter
         binding.button.setOnClickListener {
             findNavController().navigate(
-                RecipeDetailFragmentDirections.actionRecipeDetailFragmentToStepFragment(args.id)
+               RecipeDetailFragmentDirections.actionRecipeDetailFragmentToStepFragment(
+                    args.id
+                )
             )
         }
     }
@@ -78,7 +86,17 @@ class RecipeDetailFragment : Fragment() {
             tvCalories.text = recipe.calories.toInt().toString()
             Picasso.get().load(recipe.image).into(ivRecipeImage)
             tvServings.text = recipe.servings.toString()
-            tvEquipment.text = "spoon"
+            tvDishTypes.text = recipe.dishTypes
+            ivHeart.setOnClickListener {
+                Log.d("fav", recipe.favouriteRecipe.toString())
+                if(recipe.favouriteRecipe == 0) {
+                    (it as ImageView).setImageResource(R.drawable.read_heart)
+                    addToFavourites(recipe)
+                } else {
+                    (it as ImageView).setImageResource(R.drawable.heart)
+                    removeAtFavourites(recipe)
+                }
+            }
         }
         viewModel.getIngredientWithAmountList(args.id).observe(viewLifecycleOwner) { list ->
             ingredients = list.map { ingredientWithAmount ->
@@ -96,6 +114,20 @@ class RecipeDetailFragment : Fragment() {
             lifecycleScope.launch {
                 detailAdapter.submitList(ingredients.awaitAll())
             }
+        }
+    }
+
+    private fun removeAtFavourites(recipe: RecipeInfo) {
+        lifecycleScope.launch{
+            recipe.favouriteRecipe = 0
+            viewModel.editRecipe(recipe)
+        }
+    }
+
+    private fun addToFavourites(recipe: RecipeInfo) {
+        lifecycleScope.launch{
+            recipe.favouriteRecipe = 1
+            viewModel.editRecipe(recipe)
         }
     }
 }

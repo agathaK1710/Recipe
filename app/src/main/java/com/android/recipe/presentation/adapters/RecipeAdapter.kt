@@ -2,6 +2,7 @@ package com.android.recipe.presentation.adapters
 
 import android.view.LayoutInflater
 import android.view.ViewGroup
+import androidx.core.view.marginEnd
 import androidx.recyclerview.widget.ListAdapter
 import com.android.recipe.databinding.RecipeItemBinding
 import com.android.recipe.domain.entities.RecipeInfo
@@ -16,6 +17,9 @@ class RecipeAdapter : ListAdapter<RecipeInfo, RecipeViewHolder>(RecipeInfoDiffCa
             parent,
             false
         )
+        val params: ViewGroup.MarginLayoutParams = view.root.layoutParams as ViewGroup.MarginLayoutParams
+        params.width = (parent.width / 2) - parent.marginEnd
+        view.root.layoutParams = params
         return RecipeViewHolder(view)
     }
 

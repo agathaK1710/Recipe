@@ -1,4 +1,4 @@
-package com.android.recipe.presentation
+package com.android.recipe.presentation.fragments
 
 import android.os.Bundle
 import androidx.fragment.app.Fragment

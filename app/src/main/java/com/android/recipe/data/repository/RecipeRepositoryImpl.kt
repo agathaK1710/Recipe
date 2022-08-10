@@ -21,8 +21,16 @@ class RecipeRepositoryImpl(
     private val mapper = RecipeMapper()
     private val recipeDao = AppDatabase.getInstance(application).recipeDao()
 
-    override fun getRecipeList(): LiveData<List<RecipeInfo>> {
-        return Transformations.map(recipeDao.getRecipeList()) { list ->
+    override fun getRecipesList(): LiveData<List<RecipeInfo>> {
+        return Transformations.map(recipeDao.getRecipesList()) { list ->
+            list.map {
+                mapper.mapRecipeEntityToInfo(it)
+            }
+        }
+    }
+
+    override fun getFavouriteRecipesList(): LiveData<List<RecipeInfo>> {
+        return Transformations.map(recipeDao.getFavouriteRecipesList()) { list ->
             list.map {
                 mapper.mapRecipeEntityToInfo(it)
             }
@@ -42,8 +50,7 @@ class RecipeRepositoryImpl(
     }
 
     override suspend fun editRecipe(recipe: RecipeInfo) {
-        val newRecipe = recipe.copy(favouriteRecipe = 1)
-        recipeDao.editRecipe(mapper.mapRecipeInfoToEntity(newRecipe))
+        recipeDao.editRecipe(mapper.mapRecipeInfoToEntity(recipe))
     }
 
     override suspend fun getRecipeWithSteps(id: Int): RecipeWithStepsInfo {
@@ -95,11 +102,11 @@ class RecipeRepositoryImpl(
                 )
 
                 val ingredients = recipeInformation.extendedIngredients
-                ingredients.map {
+                recipeDao.insertIngredientsList(ingredients.map {
                     mapper.mapIngredientDtoToEntity(
                         it
                     )
-                }.let { recipeDao.insertIngredientsList(it) }
+                })
 
                 for (ingredient in ingredients) {
                     recipeDao.insertRecipeIngredientRatio(
@@ -113,13 +120,11 @@ class RecipeRepositoryImpl(
                 }
 
                 val steps = recipeInformation.analyzedInstructions[0].steps
-
                 recipeDao.insertStepsList(
                     steps.map {
                         mapper.mapStepDtoToEntity(it, randomRecipe.id)
                     }
                 )
-
 
                 for (step in steps) {
                     for (ingredient in step.ingredients) {

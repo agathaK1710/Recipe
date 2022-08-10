@@ -2,8 +2,8 @@ package com.android.recipe.domain.usecases
 
 import com.android.recipe.domain.RecipeRepository
 
-class GetRecipesListUseCase(
+class GetFavouriteRecipesUseCase(
     private val repository: RecipeRepository
 ) {
-    operator fun invoke() = repository.getRecipesList()
+    operator fun invoke() = repository.getFavouriteRecipesList()
 }

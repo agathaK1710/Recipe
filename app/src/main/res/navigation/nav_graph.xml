@@ -7,7 +7,7 @@
 
     <fragment
         android:id="@+id/recipesListFragment"
-        android:name="com.android.recipe.presentation.RecipesListFragment"
+        android:name="com.android.recipe.presentation.fragments.RecipesListFragment"
         android:label="fragment_recipes_list"
         tools:layout="@layout/fragment_recipes_list" >
         <action
@@ -16,7 +16,7 @@
     </fragment>
     <fragment
         android:id="@+id/recipeDetailFragment"
-        android:name="com.android.recipe.presentation.RecipeDetailFragment"
+        android:name="com.android.recipe.presentation.fragments.RecipeDetailFragment"
         android:label="fragment_recipe_detail"
         tools:layout="@layout/fragment_recipe_detail" >
         <argument
@@ -28,7 +28,7 @@
     </fragment>
     <fragment
         android:id="@+id/stepFragment"
-        android:name="com.android.recipe.presentation.StepFragment"
+        android:name="com.android.recipe.presentation.fragments.StepFragment"
         android:label="fragment_step"
         tools:layout="@layout/fragment_step" >
         <argument

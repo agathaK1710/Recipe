@@ -9,7 +9,7 @@ import com.android.recipe.data.database.relations.StepWithIngredients
 @Dao
 interface RecipeDao {
     @Query("SELECT * FROM recipes")
-    fun getRecipeList(): LiveData<List<RecipeEntity>>
+    fun getRecipesList(): LiveData<List<RecipeEntity>>
 
     @Query("SELECT * FROM recipes WHERE recipeId == :id LIMIT 1")
     suspend fun getRecipeById(id: Int): RecipeEntity
@@ -22,6 +22,9 @@ interface RecipeDao {
 
     @Query("SELECT * FROM recipeWithIngredients WHERE recipeId == :recipeId")
     fun getIngredientWithAmountList(recipeId: Int): LiveData<List<RecipeIngredientRatio>>
+
+    @Query("SELECT * FROM recipes WHERE favouriteRecipe == 1")
+    fun getFavouriteRecipesList(): LiveData<List<RecipeEntity>>
 
     @Delete
     suspend fun deleteRecipe(recipe: RecipeEntity)
