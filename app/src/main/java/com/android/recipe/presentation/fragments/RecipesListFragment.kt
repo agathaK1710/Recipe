@@ -1,27 +1,24 @@
 package com.android.recipe.presentation.fragments
 
-import android.app.SearchManager
-import android.content.Context
 import android.os.Bundle
 import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import android.widget.SearchView
-import androidx.core.content.ContextCompat.getSystemService
-import androidx.cursoradapter.widget.CursorAdapter
-import androidx.cursoradapter.widget.SimpleCursorAdapter
+import androidx.core.content.ContextCompat
+import androidx.core.graphics.BlendModeColorFilterCompat
+import androidx.core.graphics.BlendModeCompat
 import androidx.fragment.app.Fragment
 import androidx.lifecycle.Transformations
 import androidx.lifecycle.ViewModelProvider
-import androidx.lifecycle.lifecycleScope
 import androidx.navigation.fragment.findNavController
 import com.android.recipe.R
 import com.android.recipe.databinding.FragmentRecipesListBinding
 import com.android.recipe.presentation.MainActivity
 import com.android.recipe.presentation.RecipeViewModel
+import com.android.recipe.presentation.adapters.CuisineAdapter
 import com.android.recipe.presentation.adapters.RecipeAdapter
-import kotlinx.coroutines.launch
 
 class RecipesListFragment : Fragment() {
     private var _binding: FragmentRecipesListBinding? = null
@@ -72,6 +69,18 @@ class RecipesListFragment : Fragment() {
             Log.d("list", rvAdapter.currentList.map { it.title }.toString())
         }
         binding.recipesRV.adapter = rvAdapter
+        val cuisineList = listOf(
+            Cuisine(R.drawable.chinese,"Chinese"),
+            Cuisine(R.drawable.british,"British"),
+            Cuisine(R.drawable.american,"American"),
+            Cuisine(R.drawable.italian,"Italian"),
+            Cuisine(R.drawable.mexican,"Mexican"),
+            Cuisine(R.drawable.french,"French"),
+            Cuisine(R.drawable.german,"German"),
+            Cuisine(R.drawable.spanish,"Spanish")
+        )
+        binding.cuisineRV.adapter = CuisineAdapter(cuisineList)
+
         (activity as MainActivity).setVisibility(View.VISIBLE)
         searchRecipe()
     }
@@ -100,15 +109,6 @@ class RecipesListFragment : Fragment() {
                 return false
             }
         })
-    }
-
-    private fun addToFavourites(position: Int) {
-        viewModel.recipesList.observe(viewLifecycleOwner) {
-            val recipe = it[position]
-            lifecycleScope.launch {
-                viewModel.editRecipe(recipe)
-            }
-        }
     }
 
     override fun onDestroy() {

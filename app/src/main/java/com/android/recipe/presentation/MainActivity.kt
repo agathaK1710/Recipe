@@ -1,17 +1,19 @@
 package com.android.recipe.presentation
 
-import android.opengl.Visibility
 import android.os.Bundle
-import android.view.View
 import androidx.appcompat.app.AppCompatActivity
 import androidx.core.content.ContextCompat
 import androidx.core.graphics.BlendModeColorFilterCompat
 import androidx.core.graphics.BlendModeCompat
+import androidx.lifecycle.ViewModelProvider
+import androidx.lifecycle.lifecycleScope
 import com.android.recipe.R
 import com.android.recipe.databinding.ActivityMainBinding
 import com.android.recipe.presentation.adapters.ViewPagerAdapter
 import com.google.android.material.tabs.TabLayout
 import com.google.android.material.tabs.TabLayoutMediator
+import kotlinx.coroutines.Dispatchers
+import kotlinx.coroutines.launch
 
 
 class MainActivity : AppCompatActivity() {
@@ -20,11 +22,18 @@ class MainActivity : AppCompatActivity() {
         ActivityMainBinding.inflate(layoutInflater)
     }
 
+    private val viewModel by lazy {
+        ViewModelProvider(this)[RecipeViewModel::class.java]
+    }
+
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(binding.root)
         setUpTabLayout()
+//        lifecycleScope.launch(Dispatchers.IO){
+//            viewModel.loadData()
+//        }
     }
 
     private fun setUpTabLayout() {
@@ -62,6 +71,5 @@ class MainActivity : AppCompatActivity() {
 
     fun setVisibility(visible: Int){
         binding.tabLayout.visibility = visible
-        binding.viewPager.visibility = visible
     }
 }

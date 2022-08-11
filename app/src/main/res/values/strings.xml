@@ -18,4 +18,5 @@
     <string name="equipments_dt">Equipments:</string>
     <string name="dish_types">Dish types</string>
     <string name="my_favourite_recipes">My favourite recipes</string>
+    <string name="recipes">Recipes</string>
 </resources>

@@ -2,7 +2,6 @@ package com.android.recipe.presentation.fragments
 
 import android.content.Context
 import android.os.Bundle
-import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
@@ -10,7 +9,9 @@ import android.widget.ImageView
 import androidx.activity.OnBackPressedCallback
 import androidx.fragment.app.Fragment
 import androidx.fragment.app.commit
-import androidx.lifecycle.*
+import androidx.lifecycle.ViewModelProvider
+import androidx.lifecycle.lifecycleScope
+import androidx.lifecycle.observe
 import androidx.navigation.fragment.findNavController
 import androidx.navigation.fragment.navArgs
 import com.android.recipe.R
@@ -29,8 +30,8 @@ class RecipeDetailFragment : Fragment() {
         get() = _binding ?: throw RuntimeException("FragmentRecipeDetailBinding is null")
 
     private val args by navArgs<RecipeDetailFragmentArgs>()
-    private val detailAdapter = RecipeDetailAdapter()
     private lateinit var ingredients: List<Deferred<Ingredient>>
+    private val detailAdapter = RecipeDetailAdapter()
 
     private val viewModel by lazy {
         ViewModelProvider(this)[RecipeViewModel::class.java]
@@ -46,7 +47,6 @@ class RecipeDetailFragment : Fragment() {
         inflater: LayoutInflater, container: ViewGroup?,
         savedInstanceState: Bundle?
     ): View {
-
         _binding = FragmentRecipeDetailBinding.inflate(inflater, container, false)
         return binding.root
     }
@@ -58,13 +58,33 @@ class RecipeDetailFragment : Fragment() {
                 override fun handleOnBackPressed() {
                     if (arguments?.getBoolean("isNavigation") == true) {
                         findNavController().popBackStack()
-                    } else{
+                    } else {
                         parentFragmentManager.popBackStack()
                     }
                 }
             })
-        lifecycleScope.launch {
+        lifecycleScope.launch(Dispatchers.Main) {
             setViews(viewModel.getRecipeInfo(args.id))
+        }
+        viewModel.getIngredientWithAmountList(args.id).observe(viewLifecycleOwner) { list ->
+            ingredients = list.map { ingredientWithAmount ->
+                lifecycleScope.async(Dispatchers.IO) {
+                    val ingredientInfo =
+                        viewModel.getIngredientInfo(ingredientWithAmount.ingredientId)
+                    Ingredient(
+                        name = ingredientInfo.name,
+                        image = "https://spoonacular.com/cdn/ingredients_100x100/${ingredientInfo.image}",
+                        amount = ingredientWithAmount.amount,
+                        unit = ingredientWithAmount.unit
+                    )
+                }
+            }
+            val detailAdapter = RecipeDetailAdapter()
+            lifecycleScope.launch(Dispatchers.IO) {
+                detailAdapter.ingredients = ingredients.awaitAll()
+
+            }
+
         }
         binding.rvIngredients.adapter = detailAdapter
 
@@ -122,34 +142,17 @@ class RecipeDetailFragment : Fragment() {
                 }
             }
         }
-        viewModel.getIngredientWithAmountList(args.id).observe(viewLifecycleOwner) { list ->
-            ingredients = list.map { ingredientWithAmount ->
-                lifecycleScope.async {
-                    val ingredientInfo =
-                        viewModel.getIngredientInfo(ingredientWithAmount.ingredientId)
-                    Ingredient(
-                        name = ingredientInfo.name,
-                        image = "https://spoonacular.com/cdn/ingredients_100x100/${ingredientInfo.image}",
-                        amount = ingredientWithAmount.amount,
-                        unit = ingredientWithAmount.unit
-                    )
-                }
-            }
-            lifecycleScope.launch {
-                detailAdapter.submitList(ingredients.awaitAll())
-            }
-        }
     }
 
     private fun removeAtFavourites(recipe: RecipeInfo) {
-        lifecycleScope.launch {
+        lifecycleScope.launch(Dispatchers.IO) {
             recipe.favouriteRecipe = 0
             viewModel.editRecipe(recipe)
         }
     }
 
     private fun addToFavourites(recipe: RecipeInfo) {
-        lifecycleScope.launch {
+        lifecycleScope.launch(Dispatchers.IO) {
             recipe.favouriteRecipe = 1
             viewModel.editRecipe(recipe)
         }
