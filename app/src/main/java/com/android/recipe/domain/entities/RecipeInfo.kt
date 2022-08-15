@@ -14,5 +14,6 @@ data class RecipeInfo(
     val calories: Double,
     val carbs: Double,
     val fat: Double,
-    val protein: Double
+    val protein: Double,
+    val cuisine: String
 )

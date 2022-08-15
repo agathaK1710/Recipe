@@ -10,9 +10,9 @@ import retrofit2.http.Query
 
 interface ApiService {
     @GET("complexSearch")
-    suspend fun searchRecipeByName(
+    suspend fun searchRecipeByCuisine(
         @Query(QUERY_PARAM_API_KEY) apiKey: String = API_KEY,
-        @Query(QUERY_PARAM_NAME) name: String
+        @Query(QUERY_PARAM_CUISINE) cuisine: String
     ): RecipeListDto
 
     @GET("findByIngredients")
@@ -42,5 +42,6 @@ interface ApiService {
         private const val QUERY_PARAM_NUMBER = "number"
         private const val QUERY_PARAM_ID = "id"
         private const val QUERY_PARAM_NUTRITION ="includeNutrition"
+        private const val QUERY_PARAM_CUISINE="cuisine"
     }
 }

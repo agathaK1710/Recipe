@@ -11,6 +11,7 @@ import com.android.recipe.presentation.fragments.Cuisine
 
 class CuisineAdapter(private val cuisines: List<Cuisine>) :
     RecyclerView.Adapter<CuisineViewHolder>() {
+    var onClickListener: ((Cuisine)-> Unit)? = null
     private var index = -1
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): CuisineViewHolder {
         val view = CuisineItemBinding.inflate(LayoutInflater.from(parent.context), parent, false)
@@ -24,6 +25,7 @@ class CuisineAdapter(private val cuisines: List<Cuisine>) :
             title.text = cuisine.name
             icon.setOnClickListener {
                 index = holder.adapterPosition
+                onClickListener?.invoke(cuisine)
                 notifyDataSetChanged()
             }
             if (index == position) {

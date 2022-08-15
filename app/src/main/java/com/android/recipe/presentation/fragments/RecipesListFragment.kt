@@ -3,18 +3,16 @@ package com.android.recipe.presentation.fragments
 import android.os.Bundle
 import android.util.Log
 import android.view.LayoutInflater
+import android.view.MotionEvent
 import android.view.View
 import android.view.ViewGroup
-import android.widget.SearchView
-import androidx.core.content.ContextCompat
-import androidx.core.graphics.BlendModeColorFilterCompat
-import androidx.core.graphics.BlendModeCompat
 import androidx.fragment.app.Fragment
-import androidx.lifecycle.Transformations
 import androidx.lifecycle.ViewModelProvider
 import androidx.navigation.fragment.findNavController
+import androidx.recyclerview.widget.RecyclerView
 import com.android.recipe.R
 import com.android.recipe.databinding.FragmentRecipesListBinding
+import com.android.recipe.domain.entities.RecipeInfo
 import com.android.recipe.presentation.MainActivity
 import com.android.recipe.presentation.RecipeViewModel
 import com.android.recipe.presentation.adapters.CuisineAdapter
@@ -28,8 +26,6 @@ class RecipesListFragment : Fragment() {
     private val viewModel by lazy {
         ViewModelProvider(this)[RecipeViewModel::class.java]
     }
-
-    private var rvAdapter = RecipeAdapter()
 
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?,
@@ -55,6 +51,50 @@ class RecipesListFragment : Fragment() {
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
+        (activity as MainActivity).setVisibility(View.VISIBLE)
+    }
+
+    override fun onResume() {
+        super.onResume()
+        setupRV()
+    }
+
+    private fun setupRV() {
+        val cuisines = resources.getStringArray(R.array.cuisine_list)
+        val cuisineList = listOf(
+            Cuisine(R.drawable.chinese, cuisines[0]),
+            Cuisine(R.drawable.british, cuisines[1]),
+            Cuisine(R.drawable.american, cuisines[2]),
+            Cuisine(R.drawable.italian, cuisines[3]),
+            Cuisine(R.drawable.mexican, cuisines[4]),
+            Cuisine(R.drawable.french, cuisines[5]),
+            Cuisine(R.drawable.german, cuisines[6]),
+            Cuisine(R.drawable.spanish, cuisines[7])
+        )
+        val cuisineAdapter = CuisineAdapter(cuisineList)
+        val rvAdapter = RecipeAdapter()
+        binding.recipesRV.adapter = rvAdapter
+        cuisineAdapter.onClickListener = {
+            viewModel.getRecipesByCuisine(it.name).observe(viewLifecycleOwner) { list ->
+                rvAdapter.submitList(list)
+            }
+        }
+        binding.cuisineRV.adapter = cuisineAdapter
+        val listener = object : RecyclerView.OnItemTouchListener {
+            override fun onInterceptTouchEvent(rv: RecyclerView, e: MotionEvent): Boolean {
+                when (e.action) {
+                    MotionEvent.ACTION_DOWN -> rv.parent
+                        .requestDisallowInterceptTouchEvent(true)
+                }
+                return false
+            }
+
+            override fun onTouchEvent(rv: RecyclerView, e: MotionEvent) {}
+            override fun onRequestDisallowInterceptTouchEvent(disallowIntercept: Boolean) {}
+        }
+
+        binding.recipesRV.addOnItemTouchListener(listener)
+        binding.cuisineRV.addOnItemTouchListener(listener)
         rvAdapter.onClickListener = {
             findNavController().navigate(
                 RecipesListFragmentDirections.actionRecipesListFragmentToRecipeDetailFragment(
@@ -63,53 +103,33 @@ class RecipesListFragment : Fragment() {
                 )
             )
         }
-
-        viewModel.recipesList.observe(viewLifecycleOwner){
-            rvAdapter.submitList(it)
-            Log.d("list", rvAdapter.currentList.map { it.title }.toString())
-        }
-        binding.recipesRV.adapter = rvAdapter
-        val cuisineList = listOf(
-            Cuisine(R.drawable.chinese,"Chinese"),
-            Cuisine(R.drawable.british,"British"),
-            Cuisine(R.drawable.american,"American"),
-            Cuisine(R.drawable.italian,"Italian"),
-            Cuisine(R.drawable.mexican,"Mexican"),
-            Cuisine(R.drawable.french,"French"),
-            Cuisine(R.drawable.german,"German"),
-            Cuisine(R.drawable.spanish,"Spanish")
-        )
-        binding.cuisineRV.adapter = CuisineAdapter(cuisineList)
-
-        (activity as MainActivity).setVisibility(View.VISIBLE)
-        searchRecipe()
     }
 
-    private fun searchRecipe() {
-        binding.search.setOnQueryTextListener(object : SearchView.OnQueryTextListener {
-            override fun onQueryTextSubmit(query: String?): Boolean {
-                return false
-            }
-
-            override fun onQueryTextChange(newText: String?): Boolean {
-                val filteredList = Transformations.map(viewModel.recipesList) {
-                    it.filter { recipeInfo ->
-                        recipeInfo.title.lowercase().split(" ").contains(newText?.lowercase())
-                    }
-                }
-                filteredList.observe(viewLifecycleOwner) {
-                    if (it.isNotEmpty()) {
-                        rvAdapter.submitList(it)
-                    } else {
-                        viewModel.recipesList.observe(viewLifecycleOwner) {
-                            rvAdapter.submitList(it)
-                        }
-                    }
-                }
-                return false
-            }
-        })
-    }
+//    private fun searchRecipe(list: LiveData<List<RecipeInfo>>) {
+//        binding.search.setOnQueryTextListener(object : SearchView.OnQueryTextListener {
+//            override fun onQueryTextSubmit(query: String?): Boolean {
+//                return false
+//            }
+//
+//            override fun onQueryTextChange(newText: String?): Boolean {
+//                val filteredList = Transformations.map(list) {
+//                    it.filter { recipeInfo ->
+//                        recipeInfo.title.lowercase().split(" ").contains(newText?.lowercase())
+//                    }
+//                }
+//                filteredList.observe(viewLifecycleOwner) {
+//                    if (it.isNotEmpty()) {
+//                        rvAdapter.submitList(it)
+//                    } else {
+//                        list.observe(viewLifecycleOwner) {
+//                            rvAdapter.submitList(it)
+//                        }
+//                    }
+//                }
+//                return false
+//            }
+//        })
+//    }
 
     override fun onDestroy() {
         super.onDestroy()

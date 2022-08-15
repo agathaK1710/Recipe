@@ -5,5 +5,5 @@ import com.android.recipe.domain.RecipeRepository
 class GetRecipesListUseCase(
     private val repository: RecipeRepository
 ) {
-    operator fun invoke() = repository.getRecipesList()
+    operator fun invoke(cuisine: String) = repository.getRecipesList(cuisine)
 }

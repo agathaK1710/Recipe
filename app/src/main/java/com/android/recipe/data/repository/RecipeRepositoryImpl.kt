@@ -21,8 +21,8 @@ class RecipeRepositoryImpl(
     private val mapper = RecipeMapper()
     private val recipeDao = AppDatabase.getInstance(application).recipeDao()
 
-    override fun getRecipesList(): LiveData<List<RecipeInfo>> {
-        return Transformations.map(recipeDao.getRecipesList()) { list ->
+    override fun getRecipesList(cuisine: String): LiveData<List<RecipeInfo>> {
+        return Transformations.map(recipeDao.getRecipesList(cuisine)) { list ->
             list.map {
                 mapper.mapRecipeEntityToInfo(it)
             }
@@ -82,10 +82,9 @@ class RecipeRepositoryImpl(
         }
     }
 
-    override suspend fun loadData(): Unit = withContext(Dispatchers.IO) {
+    override suspend fun loadData(cuisine:String): Unit = withContext(Dispatchers.IO) {
         try {
-            val randomRecipesId = apiService.getRandomRecipes(number = 2).randomRecipesId
-            val randomRecipes = randomRecipesId.map {
+            val recipes = apiService.searchRecipeByCuisine(cuisine = cuisine).recipes.map {
                 mapper.mapDtoToRecipeEntity(
                     apiService.getRecipeInformation(
                         it.id,
@@ -93,11 +92,13 @@ class RecipeRepositoryImpl(
                     )
                 )
             }
-            recipeDao.insertRecipesList(randomRecipes)
-
-            for (randomRecipe in randomRecipesId) {
+            recipeDao.insertRecipesList(recipes)
+            val recipeIds = recipes.map {
+                it.recipeId
+            }
+            for (id in recipeIds) {
                 val recipeInformation = apiService.getRecipeInformation(
-                    randomRecipe.id,
+                    id,
                     includeNutrition = true
                 )
 
@@ -111,7 +112,7 @@ class RecipeRepositoryImpl(
                 for (ingredient in ingredients) {
                     recipeDao.insertRecipeIngredientRatio(
                         RecipeIngredientRatio(
-                            randomRecipe.id,
+                            id,
                             ingredient.id,
                             ingredient.amount,
                             ingredient.unit
@@ -122,7 +123,7 @@ class RecipeRepositoryImpl(
                 val steps = recipeInformation.analyzedInstructions[0].steps
                 recipeDao.insertStepsList(
                     steps.map {
-                        mapper.mapStepDtoToEntity(it, randomRecipe.id)
+                        mapper.mapStepDtoToEntity(it, id)
                     }
                 )
 

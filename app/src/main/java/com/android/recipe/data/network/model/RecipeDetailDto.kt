@@ -15,5 +15,6 @@ data class RecipeDetailDto(
     val dishTypes: List<String>,
     val instructions: String,
     val analyzedInstructions: List<InstructionDto>,
-    val nutrition: NutritionListDto?
+    val nutrition: NutritionListDto?,
+    val cuisines: List<String>
 )

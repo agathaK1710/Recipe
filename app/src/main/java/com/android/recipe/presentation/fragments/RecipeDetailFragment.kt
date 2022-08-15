@@ -31,7 +31,6 @@ class RecipeDetailFragment : Fragment() {
 
     private val args by navArgs<RecipeDetailFragmentArgs>()
     private lateinit var ingredients: List<Deferred<Ingredient>>
-    private val detailAdapter = RecipeDetailAdapter()
 
     private val viewModel by lazy {
         ViewModelProvider(this)[RecipeViewModel::class.java]
@@ -53,41 +52,15 @@ class RecipeDetailFragment : Fragment() {
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
-        requireActivity().onBackPressedDispatcher
-            .addCallback(viewLifecycleOwner, object : OnBackPressedCallback(true) {
-                override fun handleOnBackPressed() {
-                    if (arguments?.getBoolean("isNavigation") == true) {
-                        findNavController().popBackStack()
-                    } else {
-                        parentFragmentManager.popBackStack()
-                    }
-                }
-            })
+        setUpRV()
         lifecycleScope.launch(Dispatchers.Main) {
             setViews(viewModel.getRecipeInfo(args.id))
         }
-        viewModel.getIngredientWithAmountList(args.id).observe(viewLifecycleOwner) { list ->
-            ingredients = list.map { ingredientWithAmount ->
-                lifecycleScope.async(Dispatchers.IO) {
-                    val ingredientInfo =
-                        viewModel.getIngredientInfo(ingredientWithAmount.ingredientId)
-                    Ingredient(
-                        name = ingredientInfo.name,
-                        image = "https://spoonacular.com/cdn/ingredients_100x100/${ingredientInfo.image}",
-                        amount = ingredientWithAmount.amount,
-                        unit = ingredientWithAmount.unit
-                    )
-                }
-            }
-            val detailAdapter = RecipeDetailAdapter()
-            lifecycleScope.launch(Dispatchers.IO) {
-                detailAdapter.ingredients = ingredients.awaitAll()
+        setStepBtnClickListener()
+        setOnBackPressed()
+    }
 
-            }
-
-        }
-        binding.rvIngredients.adapter = detailAdapter
-
+    private fun setStepBtnClickListener() {
         binding.button.setOnClickListener {
             if (arguments?.getBoolean("isNavigation") == false) {
                 val stepFragment = StepFragment()
@@ -109,6 +82,41 @@ class RecipeDetailFragment : Fragment() {
                 )
             }
         }
+    }
+
+    private fun setUpRV() {
+        viewModel.getIngredientWithAmountList(args.id).observe(viewLifecycleOwner) { list ->
+            ingredients = list.map { ingredientWithAmount ->
+                lifecycleScope.async(Dispatchers.IO) {
+                    val ingredientInfo =
+                        viewModel.getIngredientInfo(ingredientWithAmount.ingredientId)
+                    Ingredient(
+                        name = ingredientInfo.name,
+                        image = "https://spoonacular.com/cdn/ingredients_250x250/${ingredientInfo.image}",
+                        amount = ingredientWithAmount.amount,
+                        unit = ingredientWithAmount.unit
+                    )
+                }
+            }
+            lifecycleScope.launch {
+                val detailAdapter = RecipeDetailAdapter(ingredients.awaitAll())
+                binding.rvIngredients.adapter = detailAdapter
+            }
+
+        }
+    }
+
+    private fun setOnBackPressed() {
+        requireActivity().onBackPressedDispatcher
+            .addCallback(viewLifecycleOwner, object : OnBackPressedCallback(true) {
+                override fun handleOnBackPressed() {
+                    if (arguments?.getBoolean("isNavigation") == true) {
+                        findNavController().popBackStack()
+                    } else {
+                        parentFragmentManager.popBackStack()
+                    }
+                }
+            })
     }
 
 

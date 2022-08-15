@@ -19,4 +19,14 @@
     <string name="dish_types">Dish types</string>
     <string name="my_favourite_recipes">My favourite recipes</string>
     <string name="recipes">Recipes</string>
+    <string-array name="cuisine_list">
+        <item>Chinese</item>
+        <item>British</item>
+        <item>American</item>
+        <item>Italian</item>
+        <item>Mexican</item>
+        <item>French</item>
+        <item>German</item>
+        <item>Spanish</item>
+    </string-array>
 </resources>

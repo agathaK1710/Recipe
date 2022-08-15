@@ -30,7 +30,8 @@ class RecipeMapper {
         calories = getEnergyValueFromNutritionList(recipeDetailDto.nutrition)["Calories"] ?: 0.0,
         carbs = getEnergyValueFromNutritionList(recipeDetailDto.nutrition)["Carbohydrates"] ?: 0.0,
         fat = getEnergyValueFromNutritionList(recipeDetailDto.nutrition)["Fat"] ?: 0.0,
-        protein = getEnergyValueFromNutritionList(recipeDetailDto.nutrition)["Protein"] ?: 0.0
+        protein = getEnergyValueFromNutritionList(recipeDetailDto.nutrition)["Protein"] ?: 0.0,
+        cuisine = recipeDetailDto.cuisines.joinToString(", ")
     )
 
     fun mapIngredientDtoToEntity(ingredientDto: IngredientDto) = IngredientEntity(
@@ -75,7 +76,8 @@ class RecipeMapper {
         calories = recipeEntity.calories,
         carbs = recipeEntity.carbs,
         fat = recipeEntity.fat,
-        protein = recipeEntity.protein
+        protein = recipeEntity.protein,
+        cuisine = recipeEntity.cuisine
     )
 
     fun mapRecipeInfoToEntity(recipeInfo: RecipeInfo) = RecipeEntity(
@@ -92,7 +94,8 @@ class RecipeMapper {
         calories = recipeInfo.calories,
         carbs = recipeInfo.carbs,
         fat = recipeInfo.fat,
-        protein = recipeInfo.protein
+        protein = recipeInfo.protein,
+        cuisine = recipeInfo.cuisine
     )
 
     fun mapIngredientEntityToInfo(

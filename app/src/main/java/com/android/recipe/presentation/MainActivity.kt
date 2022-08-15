@@ -31,8 +31,11 @@ class MainActivity : AppCompatActivity() {
         super.onCreate(savedInstanceState)
         setContentView(binding.root)
         setUpTabLayout()
-//        lifecycleScope.launch(Dispatchers.IO){
-//            viewModel.loadData()
+
+//        lifecycleScope.launch(Dispatchers.IO) {
+//            resources.getStringArray(R.array.cuisine_list).forEach {
+//                viewModel.loadData(it)
+//            }
 //        }
     }
 
@@ -69,7 +72,7 @@ class MainActivity : AppCompatActivity() {
         tabLayoutMediator.attach()
     }
 
-    fun setVisibility(visible: Int){
+    fun setVisibility(visible: Int) {
         binding.tabLayout.visibility = visible
     }
 }
