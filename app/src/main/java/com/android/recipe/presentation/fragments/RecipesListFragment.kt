@@ -1,5 +1,6 @@
 package com.android.recipe.presentation.fragments
 
+import android.content.Context
 import android.os.Bundle
 import android.util.Log
 import android.view.LayoutInflater
@@ -14,20 +15,34 @@ import com.android.recipe.R
 import com.android.recipe.databinding.FragmentRecipesListBinding
 import com.android.recipe.domain.entities.RecipeInfo
 import com.android.recipe.presentation.MainActivity
+import com.android.recipe.presentation.RecipeApp
 import com.android.recipe.presentation.RecipeViewModel
+import com.android.recipe.presentation.ViewModelFactory
 import com.android.recipe.presentation.adapters.CuisineAdapter
 import com.android.recipe.presentation.adapters.CuisineViewHolder
 import com.android.recipe.presentation.adapters.RecipeAdapter
+import javax.inject.Inject
 
 class RecipesListFragment : Fragment() {
     private var _binding: FragmentRecipesListBinding? = null
     private val binding: FragmentRecipesListBinding
         get() = _binding ?: throw RuntimeException("FragmentRecipesListBinding is null")
 
-    private val viewModel by lazy {
-        ViewModelProvider(this)[RecipeViewModel::class.java]
+    @Inject
+    lateinit var viewModelFactory: ViewModelFactory
+
+    private val component by lazy {
+        (requireActivity().application as RecipeApp).component
     }
 
+    private val viewModel by lazy {
+        ViewModelProvider(this, viewModelFactory)[RecipeViewModel::class.java]
+    }
+
+    override fun onAttach(context: Context) {
+        component.inject(this)
+        super.onAttach(context)
+    }
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?,
         savedInstanceState: Bundle?
@@ -77,7 +92,7 @@ class RecipesListFragment : Fragment() {
         binding.recipesRV.adapter = rvAdapter
         viewModel.getRecipesByCuisine(cuisines[0]).observe(viewLifecycleOwner) { list ->
             rvAdapter.submitList(list)
-            
+
         }
         cuisineAdapter.onClickListener = {
             viewModel.getRecipesByCuisine(it.name).observe(viewLifecycleOwner) { list ->

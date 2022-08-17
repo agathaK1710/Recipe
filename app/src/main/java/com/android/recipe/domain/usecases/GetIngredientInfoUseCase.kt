@@ -1,8 +1,9 @@
 package com.android.recipe.domain.usecases
 
 import com.android.recipe.domain.RecipeRepository
+import javax.inject.Inject
 
-class GetIngredientInfoUseCase(
+class GetIngredientInfoUseCase @Inject constructor(
     private val repository: RecipeRepository
 ) {
     suspend operator fun invoke(id: Int) = repository.getIngredientInfo(id)

@@ -5,9 +5,11 @@ import com.android.recipe.data.database.relations.StepWithIngredients
 import com.android.recipe.data.network.model.StepDto
 import com.android.recipe.domain.entities.StepInfo
 import com.android.recipe.domain.entities.StepWithIngredientsInfo
+import javax.inject.Inject
 
-class StepMapper {
-    private val ingredientMapper = IngredientMapper()
+class StepMapper  @Inject constructor(
+    private val ingredientMapper: IngredientMapper
+){
     fun mapStepDtoToEntity(stepDto: StepDto, recipeId: Int) = StepEntity(
         recipeInfoId = recipeId,
         name = stepDto.stepDescription,

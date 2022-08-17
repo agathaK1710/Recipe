@@ -8,9 +8,12 @@ import com.android.recipe.data.network.model.RecipeDetailDto
 import com.android.recipe.domain.entities.IngredientWithAmountInfo
 import com.android.recipe.domain.entities.RecipeInfo
 import com.android.recipe.domain.entities.RecipeWithStepsInfo
+import javax.inject.Inject
 
-class RecipeMapper {
-    private val stepMapper = StepMapper()
+class RecipeMapper @Inject constructor(
+    private val stepMapper: StepMapper
+) {
+
     fun mapDtoToRecipeEntity(
         recipeDetailDto: RecipeDetailDto,
     ) = RecipeEntity(

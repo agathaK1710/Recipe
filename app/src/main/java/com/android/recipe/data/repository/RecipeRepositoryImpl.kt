@@ -1,10 +1,9 @@
 package com.android.recipe.data.repository
 
-import android.app.Application
 import android.util.Log
 import androidx.lifecycle.LiveData
 import androidx.lifecycle.Transformations
-import com.android.recipe.data.database.AppDatabase
+import com.android.recipe.data.database.RecipeDao
 import com.android.recipe.data.database.entities.RecipeIngredientRatio
 import com.android.recipe.data.database.entities.StepIngredientRatio
 import com.android.recipe.data.database.mapper.IngredientMapper
@@ -15,15 +14,15 @@ import com.android.recipe.domain.RecipeRepository
 import com.android.recipe.domain.entities.*
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.withContext
+import javax.inject.Inject
 
-class RecipeRepositoryImpl(
-    application: Application,
+class RecipeRepositoryImpl @Inject constructor(
+    private val recipeMapper: RecipeMapper,
+    private val stepMapper: StepMapper,
+    private val ingredientMapper: IngredientMapper,
+    private val recipeDao: RecipeDao
 ) : RecipeRepository {
     private val apiService = ApiFactory.apiService
-    private val recipeMapper = RecipeMapper()
-    private val stepMapper = StepMapper()
-    private val ingredientMapper = IngredientMapper()
-    private val recipeDao = AppDatabase.getInstance(application).recipeDao()
 
     override fun getRecipesList(cuisine: String): LiveData<List<RecipeInfo>> {
         return Transformations.map(recipeDao.getRecipesList(cuisine)) { list ->

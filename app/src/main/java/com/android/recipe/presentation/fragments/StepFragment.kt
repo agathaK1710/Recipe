@@ -1,5 +1,6 @@
 package com.android.recipe.presentation.fragments
 
+import android.content.Context
 import android.os.Bundle
 import android.view.LayoutInflater
 import android.view.View
@@ -11,10 +12,13 @@ import androidx.lifecycle.lifecycleScope
 import androidx.navigation.fragment.findNavController
 import androidx.navigation.fragment.navArgs
 import com.android.recipe.databinding.FragmentStepBinding
+import com.android.recipe.presentation.RecipeApp
 import com.android.recipe.presentation.RecipeViewModel
 import com.android.recipe.presentation.Step
+import com.android.recipe.presentation.ViewModelFactory
 import com.android.recipe.presentation.adapters.StepAdapter
 import kotlinx.coroutines.*
+import javax.inject.Inject
 
 
 class StepFragment : Fragment() {
@@ -22,9 +26,21 @@ class StepFragment : Fragment() {
     private val binding: FragmentStepBinding
         get() = _binding ?: throw RuntimeException("FragmentStepBinding is null")
 
+    @Inject
+    lateinit var viewModelFactory: ViewModelFactory
+
+    private val component by lazy {
+        (requireActivity().application as RecipeApp).component
+    }
+
     private val args by navArgs<StepFragmentArgs>()
     private val viewModel by lazy {
-        ViewModelProvider(this)[RecipeViewModel::class.java]
+        ViewModelProvider(this, viewModelFactory)[RecipeViewModel::class.java]
+    }
+
+    override fun onAttach(context: Context) {
+        component.inject(this)
+        super.onAttach(context)
     }
 
     override fun onCreateView(

@@ -2,27 +2,30 @@ package com.android.recipe.presentation
 
 import android.app.Application
 import androidx.lifecycle.AndroidViewModel
+import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
 import com.android.recipe.data.repository.RecipeRepositoryImpl
 import com.android.recipe.domain.entities.RecipeInfo
 import com.android.recipe.domain.usecases.*
 import kotlinx.coroutines.launch
+import javax.inject.Inject
 
-class RecipeViewModel(application: Application) : AndroidViewModel(application) {
-    private val repository = RecipeRepositoryImpl(application)
+class RecipeViewModel @Inject constructor(
+    private val application: Application,
+    private val getRecipesListUseCase: GetRecipesListUseCase,
+    private val getRecipeInfoUseCase: GetRecipeInfoUseCase,
+    private val loadDataUseCase: LoadDataUseCase,
+    private val addRecipeUseCase: AddRecipeUseCase,
+    private val removeRecipeUseCase: RemoveRecipeUseCase,
+    private val editRecipeUseCase: EditRecipeUseCase,
+    private val getIngredientWithAmountListUseCase: GetIngredientWithAmountUseCase,
+    private val getRecipeWithStepsUseCase: GetRecipeWithStepsUseCase,
+    private val getIngredientInfoUseCase: GetIngredientInfoUseCase,
+    private val getStepsListByRecipeIdUseCase: GetStepsListByRecipeIdUseCase,
+    private val getStepWithIngredientsUseCase: GetStepWithIngredientsUseCase,
+    private val getFavouriteRecipesUseCase: GetFavouriteRecipesUseCase
+) : ViewModel() {
 
-    private val getRecipesListUseCase = GetRecipesListUseCase(repository)
-    private val getRecipeInfoUseCase = GetRecipeInfoUseCase(repository)
-    private val loadDataUseCase = LoadDataUseCase(repository)
-    private val addRecipeUseCase = AddRecipeUseCase(repository)
-    private val removeRecipeUseCase = RemoveRecipeUseCase(repository)
-    private val editRecipeUseCase = EditRecipeUseCase(repository)
-    private val getIngredientWithAmountListUseCase = GetIngredientWithAmountUseCase(repository)
-    private val getRecipeWithStepsUseCase = GetRecipeWithStepsUseCase(repository)
-    private val getIngredientInfoUseCase = GetIngredientInfoUseCase(repository)
-    private val getStepsListByRecipeIdUseCase = GetStepsListByRecipeIdUseCase(repository)
-    private val getStepWithIngredientsUseCase = GetStepWithIngredientsUseCase(repository)
-    private val getFavouriteRecipesUseCase = GetFavouriteRecipesUseCase(repository)
     val favouriteRecipesList = getFavouriteRecipesUseCase()
 
     suspend fun getRecipeInfo(id: Int) = getRecipeInfoUseCase(id)
@@ -31,9 +34,10 @@ class RecipeViewModel(application: Application) : AndroidViewModel(application) 
     suspend fun removeRecipe(recipe: RecipeInfo) = removeRecipeUseCase(recipe)
     fun getIngredientWithAmountList(recipeId: Int) =
         getIngredientWithAmountListUseCase(recipeId)
+
     fun getRecipesByCuisine(cuisine: String) = getRecipesListUseCase(cuisine)
 
     fun getStepsListByRecipeId(id: Int) = getStepsListByRecipeIdUseCase(id)
     suspend fun getStepWithIngredients(name: String) = getStepWithIngredientsUseCase(name)
-    suspend fun loadData(cuisine:String) = loadDataUseCase(cuisine)
+    suspend fun loadData(cuisine: String) = loadDataUseCase(cuisine)
 }

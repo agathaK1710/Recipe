@@ -17,12 +17,11 @@ import androidx.navigation.fragment.navArgs
 import com.android.recipe.R
 import com.android.recipe.databinding.FragmentRecipeDetailBinding
 import com.android.recipe.domain.entities.RecipeInfo
-import com.android.recipe.presentation.Ingredient
-import com.android.recipe.presentation.MainActivity
-import com.android.recipe.presentation.RecipeViewModel
+import com.android.recipe.presentation.*
 import com.android.recipe.presentation.adapters.RecipeDetailAdapter
 import com.squareup.picasso.Picasso
 import kotlinx.coroutines.*
+import javax.inject.Inject
 
 class RecipeDetailFragment : Fragment() {
     private var _binding: FragmentRecipeDetailBinding? = null
@@ -32,11 +31,19 @@ class RecipeDetailFragment : Fragment() {
     private val args by navArgs<RecipeDetailFragmentArgs>()
     private lateinit var ingredients: List<Deferred<Ingredient>>
 
+    @Inject
+    lateinit var viewModelFactory: ViewModelFactory
+
+    private val component by lazy {
+        (requireActivity().application as RecipeApp).component
+    }
+
     private val viewModel by lazy {
-        ViewModelProvider(this)[RecipeViewModel::class.java]
+        ViewModelProvider(this, viewModelFactory)[RecipeViewModel::class.java]
     }
 
     override fun onAttach(context: Context) {
+        component.inject(this)
         super.onAttach(context)
         (activity as MainActivity).setVisibility(View.GONE)
     }
