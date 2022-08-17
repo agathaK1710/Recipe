@@ -16,6 +16,7 @@ import com.android.recipe.domain.entities.RecipeInfo
 import com.android.recipe.presentation.MainActivity
 import com.android.recipe.presentation.RecipeViewModel
 import com.android.recipe.presentation.adapters.CuisineAdapter
+import com.android.recipe.presentation.adapters.CuisineViewHolder
 import com.android.recipe.presentation.adapters.RecipeAdapter
 
 class RecipesListFragment : Fragment() {
@@ -74,6 +75,10 @@ class RecipesListFragment : Fragment() {
         val cuisineAdapter = CuisineAdapter(cuisineList)
         val rvAdapter = RecipeAdapter()
         binding.recipesRV.adapter = rvAdapter
+        viewModel.getRecipesByCuisine(cuisines[0]).observe(viewLifecycleOwner) { list ->
+            rvAdapter.submitList(list)
+            
+        }
         cuisineAdapter.onClickListener = {
             viewModel.getRecipesByCuisine(it.name).observe(viewLifecycleOwner) { list ->
                 rvAdapter.submitList(list)

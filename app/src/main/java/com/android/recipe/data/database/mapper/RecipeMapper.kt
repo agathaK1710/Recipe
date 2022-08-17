@@ -1,19 +1,16 @@
 package com.android.recipe.data.database.mapper
 
-import com.android.recipe.data.database.entities.IngredientEntity
 import com.android.recipe.data.database.entities.RecipeEntity
 import com.android.recipe.data.database.entities.RecipeIngredientRatio
-import com.android.recipe.data.database.entities.StepEntity
-import com.android.recipe.data.database.relations.RecipeWithIngredients
 import com.android.recipe.data.database.relations.RecipeWithSteps
-import com.android.recipe.data.database.relations.StepWithIngredients
-import com.android.recipe.data.network.model.IngredientDto
-import com.android.recipe.data.network.model.NutritionListDto
+import com.android.recipe.data.network.model.NutritionListDto.Nutrition.*
 import com.android.recipe.data.network.model.RecipeDetailDto
-import com.android.recipe.data.network.model.StepDto
-import com.android.recipe.domain.entities.*
+import com.android.recipe.domain.entities.IngredientWithAmountInfo
+import com.android.recipe.domain.entities.RecipeInfo
+import com.android.recipe.domain.entities.RecipeWithStepsInfo
 
 class RecipeMapper {
+    private val stepMapper = StepMapper()
     fun mapDtoToRecipeEntity(
         recipeDetailDto: RecipeDetailDto,
     ) = RecipeEntity(
@@ -27,39 +24,15 @@ class RecipeMapper {
         servings = recipeDetailDto.servings,
         dishTypes = recipeDetailDto.dishTypes.joinToString(", "),
         instructions = recipeDetailDto.instructions,
-        calories = getEnergyValueFromNutritionList(recipeDetailDto.nutrition)["Calories"] ?: 0.0,
-        carbs = getEnergyValueFromNutritionList(recipeDetailDto.nutrition)["Carbohydrates"] ?: 0.0,
-        fat = getEnergyValueFromNutritionList(recipeDetailDto.nutrition)["Fat"] ?: 0.0,
-        protein = getEnergyValueFromNutritionList(recipeDetailDto.nutrition)["Protein"] ?: 0.0,
+        calories = recipeDetailDto.nutrition.getNutrientAmount(CALORIES),
+        fat = recipeDetailDto.nutrition.getNutrientAmount(FAT),
+        protein = recipeDetailDto.nutrition.getNutrientAmount(PROTEIN),
+        carbs = recipeDetailDto.nutrition.getNutrientAmount(CARBOHYDRATES),
         cuisine = recipeDetailDto.cuisines.joinToString(", ")
     )
 
-    fun mapIngredientDtoToEntity(ingredientDto: IngredientDto) = IngredientEntity(
-        ingredientId = ingredientDto.id,
-        name = ingredientDto.name,
-        image = ingredientDto.image
-    )
-
-    fun mapStepDtoToEntity(stepDto: StepDto, recipeId: Int) = StepEntity(
-        recipeInfoId = recipeId,
-        name = stepDto.stepDescription,
-        number = stepDto.number,
-        equipments = stepDto.equipment.joinToString(", ") { it.name }
-    )
 
 
-    private fun getEnergyValueFromNutritionList(nutritionListDto: NutritionListDto?): Map<String, Double> {
-        val map = HashMap<String, Double>()
-        nutritionListDto?.nutrients?.forEach {
-            when (it.name) {
-                "Calories" -> map["Calories"] = it.amount
-                "Fat" -> map["Fat"] = it.amount
-                "Protein" -> map["Protein"] = it.amount
-                "Carbohydrates" -> map["Carbohydrates"] = it.amount
-            }
-        }
-        return map
-    }
 
 
     fun mapRecipeEntityToInfo(recipeEntity: RecipeEntity) = RecipeInfo(
@@ -98,21 +71,6 @@ class RecipeMapper {
         cuisine = recipeInfo.cuisine
     )
 
-    fun mapIngredientEntityToInfo(
-        ingredientEntity: IngredientEntity
-    ) = IngredientInfo(
-        id = ingredientEntity.ingredientId,
-        name = ingredientEntity.name,
-        image = ingredientEntity.image
-    )
-
-    fun mapStepEntityToInfo(stepEntity: StepEntity) = StepInfo(
-        recipeId = stepEntity.recipeInfoId,
-        description = stepEntity.name,
-        number = stepEntity.number,
-        equipments = stepEntity.equipments
-    )
-
     fun mapRecipeIngredientEntityToInfo(
         recipeWithIngredients: RecipeIngredientRatio
     ) =
@@ -126,25 +84,7 @@ class RecipeMapper {
     fun mapRecipeStepsEntityToInfo(recipeWithSteps: RecipeWithSteps) = RecipeWithStepsInfo(
         recipe = mapRecipeEntityToInfo(recipeWithSteps.recipe),
         steps = recipeWithSteps.steps?.map {
-            mapStepEntityToInfo(it)
+            stepMapper.mapStepEntityToInfo(it)
         }
     )
-
-    fun mapStepIngredientsEntityToIndo(
-        stepWithIngredients: StepWithIngredients
-    ) =
-        StepWithIngredientsInfo(
-            step = mapStepEntityToInfo(stepWithIngredients.step),
-            ingredients = stepWithIngredients.ingredients.map {
-                mapIngredientEntityToInfo(it)
-            }
-        )
-
-    fun mapRecipeWithIngredientsEntityToIfo(recipeWithIngredients: RecipeWithIngredients) =
-        RecipeWithIngredientsInfo(
-            recipe = mapRecipeEntityToInfo(recipeWithIngredients.recipe),
-            ingredients = recipeWithIngredients.ingredients.map {
-                mapIngredientEntityToInfo(it)
-            }
-        )
 }

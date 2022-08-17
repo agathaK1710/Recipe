@@ -1,5 +1,6 @@
 package com.android.recipe.presentation.adapters
 
+import android.util.Log
 import android.view.LayoutInflater
 import android.view.ViewGroup
 import androidx.core.content.ContextCompat
@@ -11,7 +12,7 @@ import com.android.recipe.presentation.fragments.Cuisine
 
 class CuisineAdapter(private val cuisines: List<Cuisine>) :
     RecyclerView.Adapter<CuisineViewHolder>() {
-    var onClickListener: ((Cuisine)-> Unit)? = null
+    var onClickListener: ((Cuisine) -> Unit)? = null
     private var index = -1
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): CuisineViewHolder {
         val view = CuisineItemBinding.inflate(LayoutInflater.from(parent.context), parent, false)
@@ -24,24 +25,24 @@ class CuisineAdapter(private val cuisines: List<Cuisine>) :
             icon.setImageResource(cuisine.image)
             title.text = cuisine.name
             icon.setOnClickListener {
-                index = holder.adapterPosition
+                index = adapterPosition
                 onClickListener?.invoke(cuisine)
                 notifyDataSetChanged()
             }
             if (index == position) {
-                title.setTextColor(ContextCompat.getColor(title.context, R.color.blue))
-                DrawableCompat.setTint(
-                    icon.drawable.mutate(),
-                    ContextCompat.getColor(icon.context, R.color.blue)
-                )
+                setViewColors(R.color.blue)
             } else {
-                title.setTextColor(ContextCompat.getColor(title.context, R.color.dark_grey))
-                DrawableCompat.setTint(
-                    icon.drawable.mutate(),
-                    ContextCompat.getColor(icon.context, R.color.dark_grey)
-                )
+                setViewColors(R.color.dark_grey)
             }
         }
+    }
+
+    private fun CuisineViewHolder.setViewColors(color: Int) {
+        title.setTextColor(ContextCompat.getColor(title.context, color))
+        DrawableCompat.setTint(
+            icon.drawable.mutate(),
+            ContextCompat.getColor(icon.context, color)
+        )
     }
 
     override fun getItemCount() = cuisines.size

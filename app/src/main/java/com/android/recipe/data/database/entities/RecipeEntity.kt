@@ -6,8 +6,8 @@ import androidx.room.PrimaryKey
 @Entity(tableName = "recipes")
 data class RecipeEntity(
     @PrimaryKey
-    val recipeId: Int,
-    val favouriteRecipe: Int,
+    val recipeId: Int, //todo id
+    val favouriteRecipe: Int, //todo extract this information to another table?
     val image: String,
     val title: String,
     val likes: Int,

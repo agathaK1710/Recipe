@@ -11,10 +11,10 @@ interface RecipeDao {
     @Query("SELECT * FROM recipes WHERE cuisine LIKE '%' || :cuisine || '%'ORDER BY likes DESC")
     fun getRecipesList(cuisine: String): LiveData<List<RecipeEntity>>
 
-    @Query("SELECT * FROM recipes WHERE recipeId == :id LIMIT 1")
+    @Query("SELECT * FROM recipes WHERE recipeId == :id")
     suspend fun getRecipeById(id: Int): RecipeEntity
 
-    @Query("SELECT * FROM ingredients WHERE ingredientId == :id LIMIT 1")
+    @Query("SELECT * FROM ingredients WHERE ingredientId == :id")
     suspend fun getIngredientById(id: Int): IngredientEntity
 
     @Query("SELECT * FROM steps WHERE recipeInfoId == :id")
