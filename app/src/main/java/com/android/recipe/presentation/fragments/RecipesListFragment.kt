@@ -43,6 +43,7 @@ class RecipesListFragment : Fragment() {
         component.inject(this)
         super.onAttach(context)
     }
+
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?,
         savedInstanceState: Bundle?
@@ -67,12 +68,8 @@ class RecipesListFragment : Fragment() {
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
-        (activity as MainActivity).setVisibility(View.VISIBLE)
-    }
-
-    override fun onResume() {
-        super.onResume()
         setupRV()
+        (activity as MainActivity).setVisibility(View.VISIBLE)
     }
 
     private fun setupRV() {
@@ -87,17 +84,22 @@ class RecipesListFragment : Fragment() {
             Cuisine(R.drawable.german, cuisines[6]),
             Cuisine(R.drawable.spanish, cuisines[7])
         )
-        val cuisineAdapter = CuisineAdapter(cuisineList)
-        val rvAdapter = RecipeAdapter()
-        binding.recipesRV.adapter = rvAdapter
-        viewModel.getRecipesByCuisine(cuisines[0]).observe(viewLifecycleOwner) { list ->
-            rvAdapter.submitList(list)
 
+        val rvAdapter = RecipeAdapter()
+        val cuisineAdapter = viewModel.cuisineAdapter.value ?: CuisineAdapter(cuisineList)
+        binding.recipesRV.adapter = rvAdapter
+        viewModel.name.value?.let {
+            viewModel.getRecipesByCuisine(it).observe(viewLifecycleOwner) { list ->
+                rvAdapter.submitList(list)
+            }
         }
         cuisineAdapter.onClickListener = {
             viewModel.getRecipesByCuisine(it.name).observe(viewLifecycleOwner) { list ->
                 rvAdapter.submitList(list)
+                viewModel.name.value = it.name
+                viewModel.isClicked.value = it.isClicked
             }
+            viewModel.cuisineAdapter.value = cuisineAdapter
         }
         binding.cuisineRV.adapter = cuisineAdapter
         val listener = object : RecyclerView.OnItemTouchListener {

@@ -2,5 +2,6 @@ package com.android.recipe.presentation.fragments
 
 data class Cuisine(
     val image: Int,
-    val name: String
+    val name: String,
+    var isClicked: Boolean = false
 )

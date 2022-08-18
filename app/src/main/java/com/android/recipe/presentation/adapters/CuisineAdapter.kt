@@ -1,6 +1,5 @@
 package com.android.recipe.presentation.adapters
 
-import android.util.Log
 import android.view.LayoutInflater
 import android.view.ViewGroup
 import androidx.core.content.ContextCompat
@@ -26,12 +25,14 @@ class CuisineAdapter(private val cuisines: List<Cuisine>) :
             title.text = cuisine.name
             icon.setOnClickListener {
                 index = adapterPosition
+                cuisine.isClicked = true
                 onClickListener?.invoke(cuisine)
                 notifyDataSetChanged()
             }
-            if (index == position) {
+            if (index == position && cuisine.isClicked) {
                 setViewColors(R.color.blue)
             } else {
+                cuisine.isClicked = false
                 setViewColors(R.color.dark_grey)
             }
         }
