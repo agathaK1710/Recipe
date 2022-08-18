@@ -57,7 +57,7 @@ class FavouritesFragment : Fragment() {
             }
             recipeDetailFragment.arguments = args
             parentFragmentManager.commit {
-                replace(R.id.fragment_container, recipeDetailFragment)
+                replace(R.id.fragment_container2, recipeDetailFragment)
                 addToBackStack(null)
             }
         }

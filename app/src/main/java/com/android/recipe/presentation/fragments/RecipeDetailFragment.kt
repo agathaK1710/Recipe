@@ -77,7 +77,7 @@ class RecipeDetailFragment : Fragment() {
                 }
                 stepFragment.arguments = args
                 parentFragmentManager.commit {
-                    replace(R.id.fragment_container, stepFragment)
+                    replace(R.id.fragment_container2, stepFragment)
                     addToBackStack(null)
                 }
             } else {
