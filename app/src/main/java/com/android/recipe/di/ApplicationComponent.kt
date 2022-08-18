@@ -2,10 +2,7 @@ package com.android.recipe.di
 
 import android.app.Application
 import com.android.recipe.presentation.MainActivity
-import com.android.recipe.presentation.fragments.FavouritesFragment
-import com.android.recipe.presentation.fragments.RecipeDetailFragment
-import com.android.recipe.presentation.fragments.RecipesListFragment
-import com.android.recipe.presentation.fragments.StepFragment
+import com.android.recipe.presentation.fragments.*
 import dagger.BindsInstance
 import dagger.Component
 
@@ -19,6 +16,7 @@ interface ApplicationComponent {
     fun inject(fragment: RecipeDetailFragment)
     fun inject(fragment: RecipesListFragment)
     fun inject(fragment: FavouritesFragment)
+    fun inject(fragment: ProfileFragment)
 
     @Component.Factory
     interface ApplicationFactory {

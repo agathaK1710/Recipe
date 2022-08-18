@@ -6,14 +6,11 @@ import androidx.core.content.ContextCompat
 import androidx.core.graphics.BlendModeColorFilterCompat
 import androidx.core.graphics.BlendModeCompat
 import androidx.lifecycle.ViewModelProvider
-import androidx.lifecycle.lifecycleScope
 import com.android.recipe.R
 import com.android.recipe.databinding.ActivityMainBinding
 import com.android.recipe.presentation.adapters.ViewPagerAdapter
 import com.google.android.material.tabs.TabLayout
 import com.google.android.material.tabs.TabLayoutMediator
-import kotlinx.coroutines.Dispatchers
-import kotlinx.coroutines.launch
 import javax.inject.Inject
 
 
@@ -50,7 +47,7 @@ class MainActivity : AppCompatActivity() {
 
     private fun setUpTabLayout() {
         val icons =
-            arrayListOf(R.drawable.home, R.drawable.heart, R.drawable.person)
+            arrayListOf(R.drawable.home, R.drawable.heart, R.drawable.chef)
         binding.viewPager.adapter = ViewPagerAdapter(supportFragmentManager, lifecycle)
         val tabLayoutMediator =
             TabLayoutMediator(binding.tabLayout, binding.viewPager) { tab, position ->

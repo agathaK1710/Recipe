@@ -19,6 +19,9 @@
     <string name="dish_types">Dish types</string>
     <string name="my_favourite_recipes">My favourite recipes</string>
     <string name="recipes">Recipes</string>
+    <string name="my_recipes">My recipes</string>
+    <string name="create_recipe">Create recipe</string>
+    <string name="click_here_to_upload_photo">Tap here \nto upload a photo</string>
     <string-array name="cuisine_list">
         <item>Chinese</item>
         <item>British</item>

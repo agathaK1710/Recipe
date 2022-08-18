@@ -97,7 +97,6 @@ class RecipesListFragment : Fragment() {
             viewModel.getRecipesByCuisine(it.name).observe(viewLifecycleOwner) { list ->
                 rvAdapter.submitList(list)
                 viewModel.name.value = it.name
-                viewModel.isClicked.value = it.isClicked
             }
             viewModel.cuisineAdapter.value = cuisineAdapter
         }

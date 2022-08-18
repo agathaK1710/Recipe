@@ -29,7 +29,6 @@ class RecipeViewModel @Inject constructor(
 ) : ViewModel() {
 
     val name: MutableLiveData<String> = MutableLiveData()
-    val isClicked: MutableLiveData<Boolean> = MutableLiveData()
     val cuisineAdapter = MutableLiveData<CuisineAdapter>()
 
     val favouriteRecipesList = getFavouriteRecipesUseCase()
