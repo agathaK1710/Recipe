@@ -28,7 +28,7 @@ class RecipeViewModel @Inject constructor(
     getFavouriteRecipesUseCase: GetFavouriteRecipesUseCase
 ) : ViewModel() {
 
-    val name: MutableLiveData<String> = MutableLiveData()
+    val name = MutableLiveData<String>()
     val cuisineAdapter = MutableLiveData<CuisineAdapter>()
 
     val favouriteRecipesList = getFavouriteRecipesUseCase()

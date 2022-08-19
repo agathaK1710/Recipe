@@ -25,14 +25,12 @@ class CuisineAdapter(private val cuisines: List<Cuisine>) :
             title.text = cuisine.name
             icon.setOnClickListener {
                 index = adapterPosition
-                cuisine.isClicked = true
                 onClickListener?.invoke(cuisine)
                 notifyDataSetChanged()
             }
-            if (index == position && cuisine.isClicked) {
+            if (index == position) {
                 setViewColors(R.color.blue)
             } else {
-                cuisine.isClicked = false
                 setViewColors(R.color.dark_grey)
             }
         }

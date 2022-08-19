@@ -9,6 +9,7 @@ import androidx.lifecycle.ViewModelProvider
 import com.android.recipe.R
 import com.android.recipe.databinding.ActivityMainBinding
 import com.android.recipe.presentation.adapters.ViewPagerAdapter
+import com.android.recipe.presentation.fragments.RegistrationFragment
 import com.google.android.material.tabs.TabLayout
 import com.google.android.material.tabs.TabLayoutMediator
 import javax.inject.Inject
@@ -37,6 +38,10 @@ class MainActivity : AppCompatActivity() {
         super.onCreate(savedInstanceState)
         setContentView(binding.root)
         setUpTabLayout()
+        supportFragmentManager.beginTransaction()
+            .add(R.id.mainFragmentContainer, RegistrationFragment())
+            .commit()
+
 
 //        lifecycleScope.launch(Dispatchers.IO) {
 //            resources.getStringArray(R.array.cuisine_list).forEach {

@@ -22,6 +22,14 @@
     <string name="my_recipes">My recipes</string>
     <string name="create_recipe">Create recipe</string>
     <string name="click_here_to_upload_photo">Tap here \nto upload a photo</string>
+    <string name="registration">Registration</string>
+    <string name="username">Username</string>
+    <string name="email">Email</string>
+    <string name="password">Password</string>
+    <string name="sign_in">Sign in</string>
+    <string name="repeat_password">Repeat password</string>
+    <string name="sign_up">Sign up</string>
+    <string name="log_in">Log in</string>
     <string-array name="cuisine_list">
         <item>Chinese</item>
         <item>British</item>

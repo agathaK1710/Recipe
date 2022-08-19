@@ -11,5 +11,6 @@
     <color name="light_peach">#F4E0CB</color>
     <color name="light_green">#C2F8C8</color>
     <color name="light_blue">#C0C8F6</color>
-    <color name="blue">#3F51B5</color>
+    <color name="blue">#25379C</color>
+    <color name="medium_blue">#565F8F</color>
 </resources>
