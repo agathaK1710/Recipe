@@ -6,12 +6,15 @@ import androidx.core.content.ContextCompat
 import androidx.core.graphics.BlendModeColorFilterCompat
 import androidx.core.graphics.BlendModeCompat
 import androidx.lifecycle.ViewModelProvider
+import androidx.lifecycle.lifecycleScope
 import com.android.recipe.R
 import com.android.recipe.databinding.ActivityMainBinding
 import com.android.recipe.presentation.adapters.ViewPagerAdapter
 import com.android.recipe.presentation.fragments.RegistrationFragment
 import com.google.android.material.tabs.TabLayout
 import com.google.android.material.tabs.TabLayoutMediator
+import kotlinx.coroutines.Dispatchers
+import kotlinx.coroutines.launch
 import javax.inject.Inject
 
 
@@ -29,7 +32,7 @@ class MainActivity : AppCompatActivity() {
     }
 
     private val viewModel by lazy {
-        ViewModelProvider(this)[RecipeViewModel::class.java]
+        ViewModelProvider(this, viewModelFactory)[RecipeViewModel::class.java]
     }
 
 
@@ -38,16 +41,16 @@ class MainActivity : AppCompatActivity() {
         super.onCreate(savedInstanceState)
         setContentView(binding.root)
         setUpTabLayout()
-        supportFragmentManager.beginTransaction()
-            .add(R.id.mainFragmentContainer, RegistrationFragment())
-            .commit()
+//        supportFragmentManager.beginTransaction()
+//            .add(R.id.mainFragmentContainer, RegistrationFragment())
+//            .commit()
 
 
-//        lifecycleScope.launch(Dispatchers.IO) {
-//            resources.getStringArray(R.array.cuisine_list).forEach {
-//                viewModel.loadData(it)
-//            }
-//        }
+        lifecycleScope.launch(Dispatchers.IO) {
+            resources.getStringArray(R.array.cuisine_list).forEach {
+                viewModel.loadData(it)
+            }
+        }
     }
 
     private fun setUpTabLayout() {

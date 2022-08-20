@@ -1,4 +1,4 @@
-package com.android.recipe.presentation.fragments
+package com.android.recipe.presentation
 
 data class Cuisine(
     val image: Int,

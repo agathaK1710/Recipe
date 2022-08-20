@@ -30,6 +30,11 @@
     <string name="repeat_password">Repeat password</string>
     <string name="sign_up">Sign up</string>
     <string name="log_in">Log in</string>
+    <string name="upload_new_picture">Upload new\n picture</string>
+    <string name="delete_image">Delete image</string>
+    <string name="save_changes">Save changes</string>
+    <string name="no_image_available">No image available</string>
+    <string name="recipe">Recipe</string>
     <string-array name="cuisine_list">
         <item>Chinese</item>
         <item>British</item>

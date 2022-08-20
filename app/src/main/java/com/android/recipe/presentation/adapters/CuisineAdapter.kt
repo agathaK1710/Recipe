@@ -7,7 +7,7 @@ import androidx.core.graphics.drawable.DrawableCompat
 import androidx.recyclerview.widget.RecyclerView
 import com.android.recipe.R
 import com.android.recipe.databinding.CuisineItemBinding
-import com.android.recipe.presentation.fragments.Cuisine
+import com.android.recipe.presentation.Cuisine
 
 class CuisineAdapter(private val cuisines: List<Cuisine>) :
     RecyclerView.Adapter<CuisineViewHolder>() {

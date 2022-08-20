@@ -19,6 +19,7 @@ interface ApplicationComponent {
     fun inject(fragment: ProfileFragment)
     fun inject(fragment: RegistrationFragment)
     fun inject(fragment: LoginFragment)
+    fun inject(fragment: EditFragment)
 
     @Component.Factory
     interface ApplicationFactory {

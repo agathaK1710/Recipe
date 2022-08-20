@@ -11,5 +11,5 @@ interface ViewModelModule {
     @Binds
     @IntoMap
     @ViewModelKey(RecipeViewModel::class)
-    fun bindViewModule(viewModel: RecipeViewModel): ViewModel
+    fun bindRecipeViewModule(viewModel: RecipeViewModel): ViewModel
 }

@@ -2,7 +2,6 @@ package com.android.recipe.presentation.fragments
 
 import android.content.Context
 import android.os.Bundle
-import android.util.Log
 import android.view.LayoutInflater
 import android.view.MotionEvent
 import android.view.View
@@ -13,13 +12,8 @@ import androidx.navigation.fragment.findNavController
 import androidx.recyclerview.widget.RecyclerView
 import com.android.recipe.R
 import com.android.recipe.databinding.FragmentRecipesListBinding
-import com.android.recipe.domain.entities.RecipeInfo
-import com.android.recipe.presentation.MainActivity
-import com.android.recipe.presentation.RecipeApp
-import com.android.recipe.presentation.RecipeViewModel
-import com.android.recipe.presentation.ViewModelFactory
+import com.android.recipe.presentation.*
 import com.android.recipe.presentation.adapters.CuisineAdapter
-import com.android.recipe.presentation.adapters.CuisineViewHolder
 import com.android.recipe.presentation.adapters.RecipeAdapter
 import javax.inject.Inject
 
