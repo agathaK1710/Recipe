@@ -9,7 +9,6 @@ import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import androidx.fragment.app.Fragment
-import androidx.fragment.app.setFragmentResult
 import androidx.fragment.app.setFragmentResultListener
 import androidx.lifecycle.ViewModelProvider
 import com.android.recipe.R
@@ -18,6 +17,7 @@ import com.android.recipe.presentation.RecipeApp
 import com.android.recipe.presentation.RecipeViewModel
 import com.android.recipe.presentation.ViewModelFactory
 import com.android.recipe.presentation.adapters.RecipeAdapter
+import com.android.recipe.presentation.fragments.fragmentContainers.MainContainerFragment
 import javax.inject.Inject
 
 
@@ -44,7 +44,6 @@ class ProfileFragment : Fragment() {
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
-
         setFragmentResultListener(REQUEST_KEY) { _, bundle ->
             bundle.getString(URI_STRING)?.let { Log.d(URI_STRING, it) }
             uri = Uri.parse(bundle.getString(URI_STRING))
@@ -82,6 +81,14 @@ class ProfileFragment : Fragment() {
         }
     }
 
+    override fun onResume() {
+        super.onResume()
+        setTabLayout()
+    }
+
+    private fun setTabLayout() {
+        MainContainerFragment.getInstance().setVisibility(View.VISIBLE)
+    }
 
     override fun onDestroy() {
         super.onDestroy()

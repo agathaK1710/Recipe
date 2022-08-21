@@ -11,11 +11,11 @@ import androidx.lifecycle.ViewModelProvider
 import androidx.recyclerview.widget.GridLayoutManager
 import com.android.recipe.R
 import com.android.recipe.databinding.FragmentFavouritesBinding
-import com.android.recipe.presentation.MainActivity
 import com.android.recipe.presentation.RecipeApp
 import com.android.recipe.presentation.RecipeViewModel
 import com.android.recipe.presentation.ViewModelFactory
 import com.android.recipe.presentation.adapters.RecipeAdapter
+import com.android.recipe.presentation.fragments.fragmentContainers.MainContainerFragment
 import javax.inject.Inject
 
 class FavouritesFragment : Fragment() {
@@ -38,6 +38,7 @@ class FavouritesFragment : Fragment() {
         component.inject(this)
         super.onAttach(context)
     }
+
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?,
         savedInstanceState: Bundle?
@@ -68,11 +69,19 @@ class FavouritesFragment : Fragment() {
             layoutManager = GridLayoutManager(view.context, 2)
             adapter = favouritesAdapter
         }
-        (activity as MainActivity).setVisibility(View.VISIBLE)
+    }
+
+    override fun onResume() {
+        super.onResume()
+        setTabLayout()
     }
 
     override fun onDestroy() {
         super.onDestroy()
         _binding = null
+    }
+
+    private fun setTabLayout() {
+        MainContainerFragment.getInstance().setVisibility(View.VISIBLE)
     }
 }

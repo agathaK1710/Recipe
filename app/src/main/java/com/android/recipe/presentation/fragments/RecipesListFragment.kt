@@ -15,6 +15,7 @@ import com.android.recipe.databinding.FragmentRecipesListBinding
 import com.android.recipe.presentation.*
 import com.android.recipe.presentation.adapters.CuisineAdapter
 import com.android.recipe.presentation.adapters.RecipeAdapter
+import com.android.recipe.presentation.fragments.fragmentContainers.MainContainerFragment
 import javax.inject.Inject
 
 class RecipesListFragment : Fragment() {
@@ -63,7 +64,11 @@ class RecipesListFragment : Fragment() {
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
         setupRV()
-        (activity as MainActivity).setVisibility(View.VISIBLE)
+    }
+
+    override fun onResume() {
+        super.onResume()
+        setTabLayout()
     }
 
     private fun setupRV() {
@@ -145,6 +150,10 @@ class RecipesListFragment : Fragment() {
 //            }
 //        })
 //    }
+
+    private fun setTabLayout() {
+        MainContainerFragment.getInstance().setVisibility(View.VISIBLE)
+    }
 
     override fun onDestroy() {
         super.onDestroy()

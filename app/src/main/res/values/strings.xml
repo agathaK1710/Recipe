@@ -35,6 +35,11 @@
     <string name="save_changes">Save changes</string>
     <string name="no_image_available">No image available</string>
     <string name="recipe">Recipe</string>
+    <string name="i_already_have_an_account">I already have an account</string>
+    <string name="i_don_t_have_an_account">I don\'t have an account</string>
+    <string name="edit_profile">Edit profile</string>
+    <string name="you_can">You can</string>
+    <string name="delete_account">delete account</string>
     <string-array name="cuisine_list">
         <item>Chinese</item>
         <item>British</item>

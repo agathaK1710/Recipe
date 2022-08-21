@@ -3,10 +3,8 @@ package com.android.recipe.presentation.fragments
 import android.app.Activity
 import android.content.Context
 import android.content.Intent
-import android.net.Uri
 import android.os.Bundle
 import android.provider.MediaStore
-import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
@@ -16,11 +14,13 @@ import androidx.activity.result.contract.ActivityResultContracts
 import androidx.core.os.bundleOf
 import androidx.fragment.app.Fragment
 import androidx.fragment.app.setFragmentResult
+import com.android.recipe.R
 import com.android.recipe.databinding.FragmentEditBinding
 import com.android.recipe.presentation.RecipeApp
 import com.android.recipe.presentation.ViewModelFactory
 import com.android.recipe.presentation.fragments.ProfileFragment.Companion.REQUEST_KEY
 import com.android.recipe.presentation.fragments.ProfileFragment.Companion.URI_STRING
+import com.android.recipe.presentation.fragments.fragmentContainers.MainContainerFragment
 import javax.inject.Inject
 
 class EditFragment : Fragment() {
@@ -60,6 +60,7 @@ class EditFragment : Fragment() {
         return binding.root
     }
 
+
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
         setOnBackPressed()
@@ -74,6 +75,11 @@ class EditFragment : Fragment() {
         }
     }
 
+    override fun onResume() {
+        super.onResume()
+        hideTabLayout()
+    }
+
     override fun onDestroy() {
         super.onDestroy()
         _binding = null
@@ -86,5 +92,9 @@ class EditFragment : Fragment() {
                     parentFragmentManager.popBackStack()
                 }
             })
+    }
+
+    private fun hideTabLayout() {
+        MainContainerFragment.getInstance().setVisibility(View.GONE)
     }
 }

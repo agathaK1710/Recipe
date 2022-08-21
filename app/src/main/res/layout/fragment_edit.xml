@@ -11,10 +11,19 @@
         style="@style/MyTextView"
         android:layout_marginStart="@dimen/margin_start_end"
         android:layout_marginTop="@dimen/margin_start_top"
-        android:text="Edit profile"
+        android:text="@string/edit_profile"
         android:textColor="@color/black"
         android:textSize="32sp"
         app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent" />
+
+    <Spinner
+        android:id="@+id/spinner"
+        android:layout_width="50dp"
+        android:layout_height="50dp"
+        android:background="@drawable/three_dots"
+        android:backgroundTint="@color/dark_grey"
+        app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintTop_toTopOf="parent" />
 
 
@@ -23,8 +32,8 @@
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_gravity="center_horizontal"
-        android:layout_marginTop="@dimen/margin_start_end"
         android:layout_marginStart="@dimen/margin_start_top"
+        android:layout_marginTop="@dimen/margin_start_end"
         app:cardCornerRadius="125dp"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/textView3">
@@ -90,6 +99,7 @@
         style="@style/TextInputLayout"
         android:layout_marginTop="10dp"
         android:hint="@string/email"
+        android:textColor="@color/black"
         app:boxStrokeColor="@color/medium_blue"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/tfUsername">
@@ -100,7 +110,8 @@
             android:layout_height="wrap_content"
             android:background="@color/white"
             android:fontFamily="@font/lato_light"
-            android:inputType="text" />
+            android:inputType="text"
+            android:textColor="@color/black" />
     </com.google.android.material.textfield.TextInputLayout>
 
     <Button
@@ -114,5 +125,32 @@
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/tfEmail" />
+
+    <TextView
+        style="@style/MyTextView"
+        android:layout_margin="@dimen/margin_start_top"
+        android:text="@string/you_can"
+        android:textColor="@color/black"
+        android:textSize="20sp"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toStartOf="@+id/guideline6" />
+
+    <TextView
+        style="@style/MyTextView"
+        android:layout_marginBottom="@dimen/margin_start_top"
+        android:text="@string/delete_account"
+        android:textColor="@color/red"
+        android:textSize="20sp"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintStart_toStartOf="@+id/guideline6" />
+
+    <androidx.constraintlayout.widget.Guideline
+        android:id="@+id/guideline6"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:orientation="vertical"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintGuide_percent="0.5"
+        app:layout_constraintStart_toStartOf="parent" />
 
 </androidx.constraintlayout.widget.ConstraintLayout>

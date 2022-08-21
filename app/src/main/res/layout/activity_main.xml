@@ -7,25 +7,11 @@
     android:orientation="vertical"
     tools:context=".presentation.MainActivity">
 
-<!--    <androidx.fragment.app.FragmentContainerView-->
-<!--        android:id="@+id/mainFragmentContainer"-->
-<!--        android:name="com.android.recipe.presentation.fragments.RegistrationFragment"-->
-<!--        android:layout_width="match_parent"-->
-<!--        android:layout_height="match_parent"/>-->
-
-    <androidx.viewpager2.widget.ViewPager2
-
-        android:id="@+id/viewPager"
+    <androidx.fragment.app.FragmentContainerView
+        android:id="@+id/fragment_container_main"
+        android:name="androidx.navigation.fragment.NavHostFragment"
         android:layout_width="match_parent"
-        android:layout_height="0dp"
-        android:layout_weight="1"/>
-
-    <com.google.android.material.tabs.TabLayout
-
-        android:id="@+id/tabLayout"
-        android:background="@drawable/tab_rounded"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        app:layout_scrollFlags="scroll|exitUntilCollapsed"/>
-
+        android:layout_height="match_parent"
+        app:defaultNavHost="true"
+        app:navGraph="@navigation/main_nav_graph"/>
 </LinearLayout>

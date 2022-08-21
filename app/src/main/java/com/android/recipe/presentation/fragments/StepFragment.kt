@@ -11,12 +11,11 @@ import androidx.lifecycle.ViewModelProvider
 import androidx.lifecycle.lifecycleScope
 import androidx.navigation.fragment.findNavController
 import androidx.navigation.fragment.navArgs
+import com.android.recipe.R
 import com.android.recipe.databinding.FragmentStepBinding
-import com.android.recipe.presentation.RecipeApp
-import com.android.recipe.presentation.RecipeViewModel
-import com.android.recipe.presentation.Step
-import com.android.recipe.presentation.ViewModelFactory
+import com.android.recipe.presentation.*
 import com.android.recipe.presentation.adapters.StepAdapter
+import com.android.recipe.presentation.fragments.fragmentContainers.MainContainerFragment
 import kotlinx.coroutines.*
 import javax.inject.Inject
 
@@ -66,6 +65,11 @@ class StepFragment : Fragment() {
         getStepList()
     }
 
+    override fun onResume() {
+        super.onResume()
+        hideTabLayout()
+    }
+
     private fun getStepList() {
         var listOfSteps: List<Deferred<Step>>
         viewModel.getStepsListByRecipeId(args.recipeId).observe(viewLifecycleOwner) { list ->
@@ -88,6 +92,10 @@ class StepFragment : Fragment() {
                 binding.lvStep.adapter = stepAdapter
             }
         }
+    }
+
+    private fun hideTabLayout() {
+        MainContainerFragment.getInstance().setVisibility(View.GONE)
     }
 
     override fun onDestroy() {

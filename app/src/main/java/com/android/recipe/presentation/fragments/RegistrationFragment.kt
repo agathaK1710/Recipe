@@ -7,8 +7,8 @@ import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import androidx.lifecycle.ViewModelProvider
+import androidx.navigation.fragment.findNavController
 import com.android.recipe.R
-import com.android.recipe.databinding.FragmentFavouritesBinding
 import com.android.recipe.databinding.FragmentRegistrationBinding
 import com.android.recipe.presentation.RecipeApp
 import com.android.recipe.presentation.RecipeViewModel
@@ -42,6 +42,13 @@ class RegistrationFragment : Fragment() {
     ): View {
         _binding = FragmentRegistrationBinding.inflate(inflater, container,false)
         return binding.root
+    }
+
+    override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
+        super.onViewCreated(view, savedInstanceState)
+        binding.tvAccount.setOnClickListener {
+            findNavController().navigate(R.id.action_registrationFragment_to_loginFragment)
+        }
     }
 
     override fun onDestroy() {

@@ -5,8 +5,8 @@ import androidx.fragment.app.Fragment
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import androidx.navigation.fragment.findNavController
 import com.android.recipe.R
-import com.android.recipe.databinding.FragmentEditBinding
 import com.android.recipe.databinding.FragmentFirstBinding
 
 class FirstFragment : Fragment() {
@@ -22,6 +22,15 @@ class FirstFragment : Fragment() {
         return binding.root
     }
 
+    override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
+        super.onViewCreated(view, savedInstanceState)
+        binding.btnSignUp.setOnClickListener {
+            findNavController().navigate(R.id.action_firstFragment_to_registrationFragment)
+        }
+        binding.btnSignIn.setOnClickListener {
+            findNavController().navigate(R.id.action_firstFragment_to_loginFragment)
+        }
+    }
     override fun onDestroy() {
         super.onDestroy()
         _binding = null

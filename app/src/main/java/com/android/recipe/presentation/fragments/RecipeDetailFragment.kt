@@ -2,6 +2,7 @@ package com.android.recipe.presentation.fragments
 
 import android.content.Context
 import android.os.Bundle
+import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
@@ -19,6 +20,7 @@ import com.android.recipe.databinding.FragmentRecipeDetailBinding
 import com.android.recipe.domain.entities.RecipeInfo
 import com.android.recipe.presentation.*
 import com.android.recipe.presentation.adapters.RecipeDetailAdapter
+import com.android.recipe.presentation.fragments.fragmentContainers.MainContainerFragment
 import com.squareup.picasso.Picasso
 import kotlinx.coroutines.*
 import javax.inject.Inject
@@ -45,7 +47,6 @@ class RecipeDetailFragment : Fragment() {
     override fun onAttach(context: Context) {
         component.inject(this)
         super.onAttach(context)
-        (activity as MainActivity).setVisibility(View.GONE)
     }
 
 
@@ -65,6 +66,15 @@ class RecipeDetailFragment : Fragment() {
         }
         setStepBtnClickListener()
         setOnBackPressed()
+    }
+
+    override fun onResume() {
+        super.onResume()
+        hideTabLayout()
+    }
+
+    private fun hideTabLayout() {
+        MainContainerFragment.getInstance().setVisibility(View.GONE)
     }
 
     private fun setStepBtnClickListener() {
