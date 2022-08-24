@@ -9,6 +9,7 @@ import androidx.core.content.ContextCompat
 import androidx.core.graphics.BlendModeColorFilterCompat
 import androidx.core.graphics.BlendModeCompat
 import androidx.fragment.app.Fragment
+import androidx.fragment.app.FragmentManager
 import com.android.recipe.R
 import com.android.recipe.databinding.FragmentMainContainerBinding
 import com.android.recipe.presentation.adapters.ViewPagerAdapter
@@ -23,6 +24,7 @@ class MainContainerFragment : Fragment() {
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         instance = this
+        fragManager = parentFragmentManager
     }
 
     override fun onCreateView(
@@ -82,6 +84,8 @@ class MainContainerFragment : Fragment() {
 
     companion object {
         private lateinit var instance: MainContainerFragment
+        private lateinit var fragManager: FragmentManager
         fun getInstance() = instance
+        fun fragmentManager() = fragManager
     }
 }

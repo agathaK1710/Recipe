@@ -1,6 +1,7 @@
 package com.android.recipe.presentation.fragments
 
 import android.content.Context
+import android.graphics.BitmapFactory
 import android.net.Uri
 import android.os.Bundle
 import android.provider.MediaStore
@@ -15,6 +16,7 @@ import com.android.recipe.R
 import com.android.recipe.databinding.FragmentProfileBinding
 import com.android.recipe.presentation.RecipeApp
 import com.android.recipe.presentation.RecipeViewModel
+import com.android.recipe.presentation.UserViewModel
 import com.android.recipe.presentation.ViewModelFactory
 import com.android.recipe.presentation.adapters.RecipeAdapter
 import com.android.recipe.presentation.fragments.fragmentContainers.MainContainerFragment
@@ -37,6 +39,10 @@ class ProfileFragment : Fragment() {
         ViewModelProvider(this, viewModelFactory)[RecipeViewModel::class.java]
     }
 
+    private val userViewModel by lazy {
+        ViewModelProvider(this, viewModelFactory)[UserViewModel::class.java]
+    }
+
     override fun onAttach(context: Context) {
         component.inject(this)
         super.onAttach(context)
@@ -48,6 +54,7 @@ class ProfileFragment : Fragment() {
             bundle.getString(URI_STRING)?.let { Log.d(URI_STRING, it) }
             uri = Uri.parse(bundle.getString(URI_STRING))
         }
+        Log.d("user", "ProfileFragment ${userViewModel.currentUser?.uid.toString()}")
     }
 
     override fun onCreateView(
@@ -67,7 +74,7 @@ class ProfileFragment : Fragment() {
         }
         binding.btnEdit.setOnClickListener {
             parentFragmentManager.beginTransaction()
-                .replace(R.id.fragment_container3, EditFragment())
+                .replace(R.id.fragment_container3, EditFragment.getInstance() ?: EditFragment())
                 .addToBackStack(null)
                 .commit()
 
@@ -79,6 +86,15 @@ class ProfileFragment : Fragment() {
             )
             binding.ivPhoto.setImageBitmap(bitmapImage)
         }
+
+        userViewModel.storage.child("images/${userViewModel.currentUser?.uid}")
+            .getBytes(Long.MAX_VALUE).addOnSuccessListener {
+                val bmp = BitmapFactory.decodeByteArray(it, 0, it.size)
+                Log.d("image", bmp.toString())
+                binding.ivPhoto.setImageBitmap(bmp)
+            }.addOnFailureListener {
+                binding.ivPhoto.setImageBitmap(null)
+            }
     }
 
     override fun onResume() {
@@ -98,5 +114,9 @@ class ProfileFragment : Fragment() {
     companion object {
         const val URI_STRING = "uri"
         const val REQUEST_KEY = "111"
+
+        private var instance: EditFragment? = null
+        fun getInstance() = instance
+
     }
 }

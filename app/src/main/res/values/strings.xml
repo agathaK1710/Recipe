@@ -50,4 +50,11 @@
         <item>German</item>
         <item>Spanish</item>
     </string-array>
+    <string-array name="spinner_list">
+        <item></item>
+        <item>Exit</item>
+    </string-array>
+    <string name="delete_account_dialog">Do you want to delete your account?</string>
+    <string name="yes">Yes</string>
+    <string name="no">No</string>
 </resources>

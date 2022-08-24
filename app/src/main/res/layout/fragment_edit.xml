@@ -19,12 +19,14 @@
 
     <Spinner
         android:id="@+id/spinner"
+        android:layout_margin="@dimen/margin_start_top"
         android:layout_width="50dp"
         android:layout_height="50dp"
         android:background="@drawable/three_dots"
         android:backgroundTint="@color/dark_grey"
         app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintTop_toTopOf="parent" />
+        app:layout_constraintTop_toTopOf="parent"
+        android:entries="@array/spinner_list"/>
 
 
     <androidx.cardview.widget.CardView
@@ -37,6 +39,13 @@
         app:cardCornerRadius="125dp"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/textView3">
+
+        <ImageView
+            android:id="@+id/ivNoPhoto"
+            android:layout_width="100dp"
+            android:layout_height="100dp"
+            android:background="@drawable/photo"
+            android:layout_gravity="center_vertical|center_horizontal" />
 
         <ImageView
             android:id="@+id/ivPhoto"
@@ -116,12 +125,12 @@
 
     <Button
         android:id="@+id/btnSave"
-        style="@style/Widget.MaterialComponents.Button.TextButton"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_marginTop="@dimen/margin_start_end"
         android:fontFamily="@font/lato_light"
         android:text="@string/save_changes"
+        android:backgroundTint="@color/turquoise"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/tfEmail" />
@@ -136,6 +145,7 @@
         app:layout_constraintEnd_toStartOf="@+id/guideline6" />
 
     <TextView
+        android:id="@+id/tvDelete"
         style="@style/MyTextView"
         android:layout_marginBottom="@dimen/margin_start_top"
         android:text="@string/delete_account"
@@ -150,7 +160,7 @@
         android:layout_height="wrap_content"
         android:orientation="vertical"
         app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintGuide_percent="0.5"
+        app:layout_constraintGuide_percent="0.47"
         app:layout_constraintStart_toStartOf="parent" />
 
 </androidx.constraintlayout.widget.ConstraintLayout>
