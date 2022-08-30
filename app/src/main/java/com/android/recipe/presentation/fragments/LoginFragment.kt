@@ -2,25 +2,20 @@ package com.android.recipe.presentation.fragments
 
 import android.content.Context
 import android.os.Bundle
-import android.provider.ContactsContract
 import android.util.Log
-import androidx.fragment.app.Fragment
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import android.widget.Toast
-import androidx.lifecycle.ViewModel
+import androidx.fragment.app.Fragment
 import androidx.lifecycle.ViewModelProvider
 import androidx.navigation.fragment.findNavController
 import com.android.recipe.R
 import com.android.recipe.databinding.FragmentLoginBinding
-import com.android.recipe.databinding.FragmentRecipesListBinding
 import com.android.recipe.presentation.RecipeApp
 import com.android.recipe.presentation.UserViewModel
 import com.android.recipe.presentation.ViewModelFactory
-import com.google.firebase.auth.FirebaseAuth
-import com.google.firebase.auth.ktx.auth
-import com.google.firebase.ktx.Firebase
+import com.android.recipe.presentation.fragments.fragmentContainers.MainContainerFragment
 import javax.inject.Inject
 
 class LoginFragment : Fragment() {
@@ -67,7 +62,13 @@ class LoginFragment : Fragment() {
     private fun signIn(context: Context, email: String, password: String) {
         userViewModel.auth.signInWithEmailAndPassword(email, password).addOnSuccessListener {
             Log.d("user", "LoginFragment ${userViewModel.currentUser?.uid.toString()}")
-            findNavController().navigate(R.id.action_loginFragment_to_mainContainerFragment)
+            requireActivity().supportFragmentManager
+                .beginTransaction()
+                .replace(
+                    R.id.fragment_container_main,
+                    MainContainerFragment()
+                )
+                .commit()
         }.addOnFailureListener {
             Toast.makeText(context, it.message.toString(), Toast.LENGTH_SHORT).show()
         }

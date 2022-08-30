@@ -6,6 +6,7 @@ import androidx.appcompat.app.AppCompatActivity
 import androidx.core.content.ContextCompat
 import androidx.core.graphics.BlendModeColorFilterCompat
 import androidx.core.graphics.BlendModeCompat
+import androidx.fragment.app.FragmentManager
 import androidx.lifecycle.ViewModelProvider
 import androidx.lifecycle.lifecycleScope
 import androidx.navigation.findNavController
@@ -51,23 +52,15 @@ class MainActivity : AppCompatActivity() {
         component.inject(this)
         super.onCreate(savedInstanceState)
         setContentView(binding.root)
-        Log.d("user", "MainActivity ${userViewModel.currentUser?.uid.toString()}")
-        userViewModel.currentUser?.let {
-                Log.d("user", it.uid.toString())
-                supportFragmentManager.beginTransaction()
-                    .replace(R.id.fragment_container_main, MainContainerFragment())
-                    .commit()
-            }
+        if (userViewModel.currentUser != null){
+            supportFragmentManager.beginTransaction()
+                .replace(R.id.fragment_container_main, MainContainerFragment())
+        }
 //        lifecycleScope.launch(Dispatchers.IO) {
 //            resources.getStringArray(R.array.cuisine_list).forEach {
 //                viewModel.loadData(it)
 //            }
 //        }
 
-    }
-
-    companion object {
-        private var currentUser: FirebaseUser? = null
-        fun currentUser() = currentUser
     }
 }

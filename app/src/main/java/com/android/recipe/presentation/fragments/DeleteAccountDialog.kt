@@ -13,6 +13,7 @@ import androidx.navigation.findNavController
 import androidx.navigation.fragment.findNavController
 import com.android.recipe.R
 import com.android.recipe.presentation.*
+import com.android.recipe.presentation.fragments.fragmentContainers.AuthFragmentContainer
 import com.android.recipe.presentation.fragments.fragmentContainers.MainContainerFragment
 import com.android.recipe.presentation.fragments.fragmentContainers.ThirdPageContainerFragment
 import com.google.firebase.auth.FirebaseAuth
@@ -38,36 +39,40 @@ class DeleteAccountDialog : DialogFragment() {
     override fun onCreateDialog(savedInstanceState: Bundle?): Dialog {
         super.onCreateDialog(savedInstanceState)
         return activity?.let {
-            // Use the Builder class for convenient dialog construction
             val builder = AlertDialog.Builder(it)
             builder.setMessage(R.string.delete_account_dialog)
                 .setPositiveButton(
                     R.string.yes
                 ) { _, _ ->
-//                    MainContainerFragment.fragmentManager()
-//                        .beginTransaction()
-//                        .replace(
-//                            R.id.fragment_container_main,
-//                            LoginFragment()
-//                        )
-//                        .commit()
-                    //FirebaseAuth.getInstance().currentUser?.delete()
-
-//                    findNavController().popBackStack()
-//                    findNavController().navigate(R.id.action_loginFragment_to_registrationFragment)
-
-
-//                    userViewModel.currentUser?.delete()
-//                    if (userId != null) {
-//                        userViewModel.reference.child("users")
-//                            .child(userId)
-//                            .removeValue()
-//                    }
+                    requireActivity().supportFragmentManager
+                        .beginTransaction()
+                        .replace(
+                            R.id.fragment_container_main,
+                            AuthFragmentContainer()
+                        )
+                        .commit()
+                    userViewModel.currentUser?.delete()
+                    val userId = userViewModel.currentUser?.uid
+                    if (userId != null) {
+                        Log.d("userId", userId)
+                        userViewModel.reference
+                            .child(userId)
+                            .removeValue()
+                            .addOnSuccessListener {
+                                Log.d("delete", "success")
+                            }
+                            .addOnFailureListener {
+                                Log.e("delete", it.message.toString())
+                            }
+                        userViewModel.storage
+                            .child("images/${userViewModel.currentUser?.uid}")
+                            .delete()
+                    }
                 }
-                .setNegativeButton(R.string.no,
-                    DialogInterface.OnClickListener { dialog, _ ->
-                        dialog.cancel()
-                    })
+                .setNegativeButton(R.string.no
+                ) { dialog, _ ->
+                    dialog.cancel()
+                }
             builder.create()
         } ?: throw IllegalStateException("Activity cannot be null")
     }
