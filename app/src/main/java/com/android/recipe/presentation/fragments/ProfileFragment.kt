@@ -27,7 +27,6 @@ class ProfileFragment : Fragment() {
     private var _binding: FragmentProfileBinding? = null
     private val binding: FragmentProfileBinding
         get() = _binding ?: throw RuntimeException("FragmentProfileBinding is null")
-    private var uri: Uri? = null
 
     @Inject
     lateinit var viewModelFactory: ViewModelFactory
@@ -48,15 +47,6 @@ class ProfileFragment : Fragment() {
         super.onAttach(context)
     }
 
-    override fun onCreate(savedInstanceState: Bundle?) {
-        super.onCreate(savedInstanceState)
-        setFragmentResultListener(REQUEST_KEY) { _, bundle ->
-            bundle.getString(URI_STRING)?.let { Log.d(URI_STRING, it) }
-            uri = Uri.parse(bundle.getString(URI_STRING))
-        }
-        Log.d("user", "ProfileFragment ${userViewModel.currentUser?.uid.toString()}")
-    }
-
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?,
         savedInstanceState: Bundle?
@@ -74,17 +64,10 @@ class ProfileFragment : Fragment() {
         }
         binding.btnEdit.setOnClickListener {
             parentFragmentManager.beginTransaction()
-                .replace(R.id.fragment_container3, EditFragment.getInstance() ?: EditFragment())
+                .replace(R.id.fragment_container3, EditFragment())
                 .addToBackStack(null)
                 .commit()
 
-        }
-        uri?.let {
-            val bitmapImage = MediaStore.Images.Media.getBitmap(
-                requireActivity().contentResolver,
-                uri
-            )
-            binding.ivPhoto.setImageBitmap(bitmapImage)
         }
 
         userViewModel.storage.child("images/${userViewModel.currentUser?.uid}")
@@ -106,17 +89,8 @@ class ProfileFragment : Fragment() {
         MainContainerFragment.getInstance().setVisibility(View.VISIBLE)
     }
 
-    override fun onDestroy() {
-        super.onDestroy()
-        _binding = null
-    }
-
     companion object {
         const val URI_STRING = "uri"
         const val REQUEST_KEY = "111"
-
-        private var instance: EditFragment? = null
-        fun getInstance() = instance
-
     }
 }

@@ -19,7 +19,7 @@ class ViewPagerAdapter(fragmentManager: FragmentManager, lifecycle: Lifecycle) :
             1 -> SecondPageContainerFragment()
             2 -> ThirdPageContainerFragment()
             else -> {
-                ThirdPageContainerFragment()
+                throw RuntimeException("No fragment")
             }
         }
     }

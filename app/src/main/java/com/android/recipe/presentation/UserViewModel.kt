@@ -17,5 +17,4 @@ class UserViewModel @Inject constructor(
     val reference = userReference.child("users")
     val currentUser = auth.currentUser
     val storage = storageReference
-    val bitmap = MutableLiveData<Bitmap>()
 }

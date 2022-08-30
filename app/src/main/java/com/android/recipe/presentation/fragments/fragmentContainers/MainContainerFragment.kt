@@ -12,6 +12,7 @@ import androidx.fragment.app.Fragment
 import androidx.fragment.app.FragmentManager
 import com.android.recipe.R
 import com.android.recipe.databinding.FragmentMainContainerBinding
+import com.android.recipe.presentation.MainActivity
 import com.android.recipe.presentation.adapters.ViewPagerAdapter
 import com.google.android.material.tabs.TabLayout
 import com.google.android.material.tabs.TabLayoutMediator
@@ -24,7 +25,7 @@ class MainContainerFragment : Fragment() {
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         instance = this
-        fragManager = parentFragmentManager
+        fragManager = childFragmentManager
     }
 
     override fun onCreateView(
@@ -48,7 +49,7 @@ class MainContainerFragment : Fragment() {
     private fun setUpTabLayout(context: Context) {
         val icons =
             arrayListOf(R.drawable.home, R.drawable.heart, R.drawable.chef)
-        binding.viewPager.adapter = ViewPagerAdapter(parentFragmentManager, lifecycle)
+        binding.viewPager.adapter = ViewPagerAdapter(fragManager, lifecycle)
         val tabLayoutMediator =
             TabLayoutMediator(binding.tabLayout, binding.viewPager) { tab, position ->
                 tab.setIcon(icons[position])
@@ -83,9 +84,9 @@ class MainContainerFragment : Fragment() {
     }
 
     companion object {
-        private lateinit var instance: MainContainerFragment
+        private var instance: MainContainerFragment? = null
         private lateinit var fragManager: FragmentManager
-        fun getInstance() = instance
+        fun getInstance() = instance ?: MainContainerFragment()
         fun fragmentManager() = fragManager
     }
 }

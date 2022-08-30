@@ -7,7 +7,6 @@ import android.graphics.BitmapFactory
 import android.net.Uri
 import android.os.Bundle
 import android.provider.MediaStore
-import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
@@ -19,12 +18,16 @@ import androidx.core.os.bundleOf
 import androidx.fragment.app.Fragment
 import androidx.fragment.app.setFragmentResult
 import androidx.lifecycle.ViewModelProvider
+import com.android.recipe.R
 import com.android.recipe.databinding.FragmentEditBinding
-import com.android.recipe.presentation.*
+import com.android.recipe.presentation.RecipeApp
+import com.android.recipe.presentation.User
+import com.android.recipe.presentation.UserViewModel
+import com.android.recipe.presentation.ViewModelFactory
 import com.android.recipe.presentation.fragments.ProfileFragment.Companion.REQUEST_KEY
 import com.android.recipe.presentation.fragments.ProfileFragment.Companion.URI_STRING
+import com.android.recipe.presentation.fragments.fragmentContainers.AuthFragmentContainer
 import com.android.recipe.presentation.fragments.fragmentContainers.MainContainerFragment
-import java.io.File
 import javax.inject.Inject
 
 class EditFragment : Fragment() {
@@ -50,12 +53,6 @@ class EditFragment : Fragment() {
         super.onAttach(context)
     }
 
-    override fun onCreate(savedInstanceState: Bundle?) {
-        super.onCreate(savedInstanceState)
-        instance = this
-        Log.d("user", "EditFragment ${userViewModel.currentUser?.uid.toString()}")
-
-    }
 
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?,
@@ -74,8 +71,17 @@ class EditFragment : Fragment() {
         }
         binding.spinner.onItemSelectedListener = object : AdapterView.OnItemSelectedListener {
             override fun onItemSelected(p0: AdapterView<*>?, p1: View?, p2: Int, p3: Long) {
-                userViewModel.auth.signOut()
-
+                if (p2 == 1) {
+                    userViewModel.auth.signOut()
+                    val fm = requireActivity().supportFragmentManager
+                    for (i in 0 until fm.backStackEntryCount) {
+                        fm.popBackStack()
+                    }
+                    requireActivity().supportFragmentManager
+                        .beginTransaction()
+                        .replace(R.id.fragment_container_main, AuthFragmentContainer())
+                        .commit()
+                }
             }
 
             override fun onNothingSelected(p0: AdapterView<*>?) {
@@ -137,11 +143,6 @@ class EditFragment : Fragment() {
         hideTabLayout()
     }
 
-    override fun onDestroy() {
-        super.onDestroy()
-        _binding = null
-    }
-
     private fun setOnBackPressed() {
         requireActivity().onBackPressedDispatcher
             .addCallback(viewLifecycleOwner, object : OnBackPressedCallback(true) {
@@ -153,10 +154,5 @@ class EditFragment : Fragment() {
 
     private fun hideTabLayout() {
         MainContainerFragment.getInstance().setVisibility(View.GONE)
-    }
-
-    companion object {
-        private var instance: EditFragment? = null
-        fun getInstance() = instance
     }
 }
