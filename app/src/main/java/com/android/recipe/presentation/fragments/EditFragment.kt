@@ -126,6 +126,9 @@ class EditFragment : Fragment() {
 
         binding.btnDelete.setOnClickListener {
             binding.ivPhoto.setImageBitmap(null)
+            userViewModel.storage
+                .child("images/${userViewModel.currentUser?.uid}")
+                .delete()
         }
 
         binding.btnSave.setOnClickListener {

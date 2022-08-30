@@ -113,8 +113,10 @@ class RegistrationFragment : Fragment() {
     }
 
     private fun signUp(context: Context, email: String, password: String, userName: String) {
+        binding.progressBar.visibility = View.VISIBLE
         userViewModel.auth.createUserWithEmailAndPassword(email, password)
             .addOnSuccessListener { authResult ->
+                binding.progressBar.visibility = View.GONE
                 val firebaseUser = authResult.user
                 firebaseUser?.let {
                     val user = User(

@@ -60,8 +60,10 @@ class LoginFragment : Fragment() {
     }
 
     private fun signIn(context: Context, email: String, password: String) {
-        userViewModel.auth.signInWithEmailAndPassword(email, password).addOnSuccessListener {
-            Log.d("user", "LoginFragment ${userViewModel.currentUser?.uid.toString()}")
+        binding.progressBar.visibility = View.VISIBLE
+        userViewModel.auth.signInWithEmailAndPassword(email, password)
+            .addOnSuccessListener {
+            binding.progressBar.visibility = View.GONE
             requireActivity().supportFragmentManager
                 .beginTransaction()
                 .replace(
