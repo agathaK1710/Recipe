@@ -1,6 +1,7 @@
 package com.android.recipe.presentation.fragments
 
 import android.content.Context
+import android.graphics.BitmapFactory
 import android.os.Bundle
 import android.util.Log
 import android.view.LayoutInflater
@@ -12,7 +13,9 @@ import androidx.lifecycle.ViewModelProvider
 import androidx.navigation.fragment.findNavController
 import com.android.recipe.R
 import com.android.recipe.databinding.FragmentLoginBinding
+import com.android.recipe.domain.entities.UserInfo
 import com.android.recipe.presentation.RecipeApp
+import com.android.recipe.presentation.User
 import com.android.recipe.presentation.UserViewModel
 import com.android.recipe.presentation.ViewModelFactory
 import com.android.recipe.presentation.fragments.fragmentContainers.MainContainerFragment
@@ -63,17 +66,17 @@ class LoginFragment : Fragment() {
         binding.progressBar.visibility = View.VISIBLE
         userViewModel.auth.signInWithEmailAndPassword(email, password)
             .addOnSuccessListener {
-            binding.progressBar.visibility = View.GONE
-            requireActivity().supportFragmentManager
-                .beginTransaction()
-                .replace(
-                    R.id.fragment_container_main,
-                    MainContainerFragment()
-                )
-                .commit()
-        }.addOnFailureListener {
-            Toast.makeText(context, it.message.toString(), Toast.LENGTH_SHORT).show()
-        }
+                binding.progressBar.visibility = View.GONE
+                requireActivity().supportFragmentManager
+                    .beginTransaction()
+                    .replace(
+                        R.id.fragment_container_main,
+                        MainContainerFragment()
+                    )
+                    .commit()
+            }.addOnFailureListener {
+                Toast.makeText(context, it.message.toString(), Toast.LENGTH_SHORT).show()
+            }
     }
 
     override fun onDestroy() {

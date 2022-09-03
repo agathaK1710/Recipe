@@ -1,4 +1,4 @@
-package com.android.recipe.domain.usecases
+package com.android.recipe.domain.usecases.recipeUsecases
 
 import com.android.recipe.domain.RecipeRepository
 import com.android.recipe.domain.entities.RecipeInfo

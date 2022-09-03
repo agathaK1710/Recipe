@@ -25,9 +25,8 @@
                 android:id="@+id/cardView5"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:layout_gravity="center_horizontal"
-                app:cardCornerRadius="125dp"
                 android:layout_marginTop="@dimen/margin_start_top"
+                app:cardCornerRadius="125dp"
                 app:layout_constraintEnd_toEndOf="parent"
                 app:layout_constraintStart_toStartOf="parent"
                 app:layout_constraintTop_toTopOf="parent">
@@ -36,8 +35,8 @@
                     android:id="@+id/ivNoPhoto"
                     android:layout_width="100dp"
                     android:layout_height="100dp"
-                    android:background="@drawable/photo"
-                    android:layout_gravity="center_vertical|center_horizontal" />
+                    android:layout_gravity="center_vertical|center_horizontal"
+                    android:background="@drawable/photo" />
 
                 <ImageView
                     android:id="@+id/ivPhoto"
@@ -48,6 +47,7 @@
             </androidx.cardview.widget.CardView>
 
             <TextView
+                android:id="@+id/tvUserName"
                 style="@style/MyTextView"
                 android:layout_gravity="center_horizontal"
                 android:textColor="@color/black"
@@ -68,6 +68,8 @@
                 app:layout_constraintEnd_toEndOf="parent"
                 app:layout_constraintStart_toEndOf="@+id/cardView5"
                 app:layout_constraintTop_toTopOf="parent" />
+
+
         </androidx.constraintlayout.widget.ConstraintLayout>
 
     </androidx.cardview.widget.CardView>

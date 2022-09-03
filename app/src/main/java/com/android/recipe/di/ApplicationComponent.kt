@@ -5,8 +5,6 @@ import com.android.recipe.presentation.MainActivity
 import com.android.recipe.presentation.fragments.*
 import com.android.recipe.presentation.fragments.fragmentContainers.MainContainerFragment
 import com.android.recipe.presentation.fragments.fragmentContainers.ThirdPageContainerFragment
-import com.google.firebase.auth.FirebaseAuth
-import com.google.firebase.auth.FirebaseUser
 import com.google.firebase.ktx.Firebase
 import dagger.BindsInstance
 import dagger.Component
@@ -26,7 +24,7 @@ interface ApplicationComponent {
     fun inject(fragment: LoginFragment)
     fun inject(fragment: EditFragment)
     fun inject(fragment: DeleteAccountDialog)
-    fun inject(fragment: ThirdPageContainerFragment)
+    fun inject(fragment: MainContainerFragment)
 
     @Component.Factory
     interface ApplicationFactory {

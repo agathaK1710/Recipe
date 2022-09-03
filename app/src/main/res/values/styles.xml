@@ -14,6 +14,6 @@
     </style>
 
     <style name="ProgressBarStyle">
-        <item name="colorAccent">@color/turquoise</item>
+        <item name="colorAccent">@color/medium_blue</item>
     </style>
 </resources>

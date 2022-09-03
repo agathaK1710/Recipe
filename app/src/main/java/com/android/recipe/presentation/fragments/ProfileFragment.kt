@@ -2,24 +2,23 @@ package com.android.recipe.presentation.fragments
 
 import android.content.Context
 import android.graphics.BitmapFactory
-import android.net.Uri
 import android.os.Bundle
-import android.provider.MediaStore
 import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import androidx.fragment.app.Fragment
-import androidx.fragment.app.setFragmentResultListener
 import androidx.lifecycle.ViewModelProvider
+import androidx.lifecycle.lifecycleScope
 import com.android.recipe.R
 import com.android.recipe.databinding.FragmentProfileBinding
-import com.android.recipe.presentation.RecipeApp
-import com.android.recipe.presentation.RecipeViewModel
-import com.android.recipe.presentation.UserViewModel
-import com.android.recipe.presentation.ViewModelFactory
+import com.android.recipe.presentation.*
 import com.android.recipe.presentation.adapters.RecipeAdapter
 import com.android.recipe.presentation.fragments.fragmentContainers.MainContainerFragment
+import com.android.recipe.presentation.fragments.fragmentContainers.ThirdPageContainerFragment
+import kotlinx.coroutines.CoroutineScope
+import kotlinx.coroutines.Dispatchers
+import kotlinx.coroutines.launch
 import javax.inject.Inject
 
 
@@ -44,6 +43,7 @@ class ProfileFragment : Fragment() {
 
     override fun onAttach(context: Context) {
         component.inject(this)
+        userViewModel.addUser()
         super.onAttach(context)
     }
 
@@ -69,14 +69,20 @@ class ProfileFragment : Fragment() {
                 .commit()
 
         }
+        setViews()
+    }
 
-        userViewModel.storage.child("images/${userViewModel.currentUser?.uid}")
-            .getBytes(Long.MAX_VALUE).addOnSuccessListener {
-                val bmp = BitmapFactory.decodeByteArray(it, 0, it.size)
-                Log.d("image", bmp.toString())
+    private fun setViews() {
+        userViewModel.currentUser?.uid?.let { userViewModel.getUser(it) }
+            ?.observe(viewLifecycleOwner) { user ->
+                val bmp = user.imageByteArray?.let {
+                    BitmapFactory.decodeByteArray(
+                        user.imageByteArray, 0,
+                        it.size
+                    )
+                }
                 binding.ivPhoto.setImageBitmap(bmp)
-            }.addOnFailureListener {
-                binding.ivPhoto.setImageBitmap(null)
+                binding.tvUserName.text = user?.userName
             }
     }
 
@@ -87,10 +93,5 @@ class ProfileFragment : Fragment() {
 
     private fun setTabLayout() {
         MainContainerFragment.getInstance().setVisibility(View.VISIBLE)
-    }
-
-    companion object {
-        const val URI_STRING = "uri"
-        const val REQUEST_KEY = "111"
     }
 }

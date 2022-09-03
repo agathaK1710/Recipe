@@ -16,4 +16,8 @@ interface RecipeRepository {
     suspend fun getRecipeWithSteps(id: Int): RecipeWithStepsInfo
     suspend fun getStepWithIngredients(name: String): StepWithIngredientsInfo
     suspend fun loadData(cuisine: String)
+    fun getUser(id: String): LiveData<UserInfo>
+    suspend fun deleteUser(user: UserInfo)
+    suspend fun insertUser(user: UserInfo)
+    suspend fun editUser(user: UserInfo)
 }

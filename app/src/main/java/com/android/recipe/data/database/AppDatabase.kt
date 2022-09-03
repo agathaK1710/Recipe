@@ -7,14 +7,15 @@ import androidx.room.RoomDatabase
 import com.android.recipe.data.database.entities.*
 
 @Database(
-    version = 2,
+    version = 1,
     entities = [
         IngredientEntity::class,
         RecipeEntity::class,
         StepEntity::class,
         RecipeIngredientRatio::class,
-        StepIngredientRatio::class
-               ],
+        StepIngredientRatio::class,
+        UserEntity::class
+    ],
     exportSchema = false
 )
 
@@ -40,4 +41,5 @@ abstract class AppDatabase : RoomDatabase() {
     }
 
     abstract fun recipeDao(): RecipeDao
+    abstract fun userDao(): UserDao
 }

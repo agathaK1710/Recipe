@@ -1,4 +1,4 @@
-package com.android.recipe.data.database.mapper
+package com.android.recipe.data.database.mappers
 
 import com.android.recipe.data.database.entities.StepEntity
 import com.android.recipe.data.database.relations.StepWithIngredients

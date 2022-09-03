@@ -4,11 +4,13 @@ import android.util.Log
 import androidx.lifecycle.LiveData
 import androidx.lifecycle.Transformations
 import com.android.recipe.data.database.RecipeDao
+import com.android.recipe.data.database.UserDao
 import com.android.recipe.data.database.entities.RecipeIngredientRatio
 import com.android.recipe.data.database.entities.StepIngredientRatio
-import com.android.recipe.data.database.mapper.IngredientMapper
-import com.android.recipe.data.database.mapper.RecipeMapper
-import com.android.recipe.data.database.mapper.StepMapper
+import com.android.recipe.data.database.mappers.IngredientMapper
+import com.android.recipe.data.database.mappers.RecipeMapper
+import com.android.recipe.data.database.mappers.StepMapper
+import com.android.recipe.data.database.mappers.UserMapper
 import com.android.recipe.data.network.ApiFactory
 import com.android.recipe.domain.RecipeRepository
 import com.android.recipe.domain.entities.*
@@ -20,7 +22,9 @@ class RecipeRepositoryImpl @Inject constructor(
     private val recipeMapper: RecipeMapper,
     private val stepMapper: StepMapper,
     private val ingredientMapper: IngredientMapper,
-    private val recipeDao: RecipeDao
+    private val userMapper: UserMapper,
+    private val recipeDao: RecipeDao,
+    private val userDao: UserDao
 ) : RecipeRepository {
     private val apiService = ApiFactory.apiService
 
@@ -145,5 +149,23 @@ class RecipeRepositoryImpl @Inject constructor(
         } catch (e: Exception) {
             Log.e("Error", e.message.toString())
         }
+    }
+
+    override fun getUser(id: String): LiveData<UserInfo> {
+        return Transformations.map(userDao.getUser(id)) {
+            userMapper.mapUserEntityToInfo(it)
+        }
+    }
+
+    override suspend fun deleteUser(user: UserInfo) {
+        userMapper.mapUserInfoToEntity(user)?.let { userDao.deleteUser(it) }
+    }
+
+    override suspend fun insertUser(user: UserInfo) {
+        userMapper.mapUserInfoToEntity(user)?.let { userDao.insertUser(it) }
+    }
+
+    override suspend fun editUser(user: UserInfo) {
+        userMapper.mapUserInfoToEntity(user)?.let { userDao.editUser(it) }
     }
 }

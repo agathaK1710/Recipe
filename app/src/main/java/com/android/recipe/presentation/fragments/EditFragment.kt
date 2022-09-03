@@ -14,20 +14,19 @@ import android.widget.AdapterView
 import androidx.activity.OnBackPressedCallback
 import androidx.activity.result.ActivityResultLauncher
 import androidx.activity.result.contract.ActivityResultContracts
-import androidx.core.os.bundleOf
 import androidx.fragment.app.Fragment
-import androidx.fragment.app.setFragmentResult
 import androidx.lifecycle.ViewModelProvider
+import androidx.lifecycle.lifecycleScope
 import com.android.recipe.R
 import com.android.recipe.databinding.FragmentEditBinding
 import com.android.recipe.presentation.RecipeApp
 import com.android.recipe.presentation.User
 import com.android.recipe.presentation.UserViewModel
 import com.android.recipe.presentation.ViewModelFactory
-import com.android.recipe.presentation.fragments.ProfileFragment.Companion.REQUEST_KEY
-import com.android.recipe.presentation.fragments.ProfileFragment.Companion.URI_STRING
 import com.android.recipe.presentation.fragments.fragmentContainers.AuthFragmentContainer
 import com.android.recipe.presentation.fragments.fragmentContainers.MainContainerFragment
+import kotlinx.coroutines.Dispatchers
+import kotlinx.coroutines.launch
 import javax.inject.Inject
 
 class EditFragment : Fragment() {
@@ -66,6 +65,10 @@ class EditFragment : Fragment() {
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
         setOnBackPressed()
+        setViews()
+    }
+
+    private fun setViews() {
         binding.tvDelete.setOnClickListener {
             DeleteAccountDialog().show(parentFragmentManager, "tag")
         }
@@ -87,14 +90,7 @@ class EditFragment : Fragment() {
             override fun onNothingSelected(p0: AdapterView<*>?) {
             }
         }
-        userViewModel.currentUser?.uid?.let {
-            userViewModel.reference.child(it).get()
-                .addOnSuccessListener { dataSnapshot ->
-                    val user = dataSnapshot.getValue(User::class.java)
-                    binding.etUsername.setText(user?.username)
-                    binding.etEmail.setText(user?.email)
-                }
-        }
+
         resultLauncher =
             registerForActivityResult(ActivityResultContracts.StartActivityForResult()) { result ->
                 if (result.resultCode == Activity.RESULT_OK) {
@@ -103,7 +99,6 @@ class EditFragment : Fragment() {
                     val bitmapImage =
                         MediaStore.Images.Media.getBitmap(requireActivity().contentResolver, uri)
                     binding.ivPhoto.setImageBitmap(bitmapImage)
-                    setFragmentResult(REQUEST_KEY, bundleOf(URI_STRING to uri.toString()))
                 }
             }
         binding.btnUpload.setOnClickListener {
@@ -116,19 +111,16 @@ class EditFragment : Fragment() {
             resultLauncher.launch(intent)
         }
 
-        userViewModel.storage.child("images/${userViewModel.currentUser?.uid}")
-            .getBytes(Long.MAX_VALUE).addOnSuccessListener {
-                val bmp = BitmapFactory.decodeByteArray(it, 0, it.size)
-                binding.ivPhoto.setImageBitmap(bmp)
-            }.addOnFailureListener {
-                binding.ivPhoto.setImageBitmap(null)
-            }
-
         binding.btnDelete.setOnClickListener {
             binding.ivPhoto.setImageBitmap(null)
-            userViewModel.storage
-                .child("images/${userViewModel.currentUser?.uid}")
-                .delete()
+            userViewModel.currentUser?.uid?.let { id ->
+                userViewModel.getUser(id).observe(viewLifecycleOwner) {
+                    val updateUser = it.copy(imageByteArray = null)
+                    lifecycleScope.launch(Dispatchers.IO) {
+                        userViewModel.updateUser(updateUser)
+                    }
+                }
+            }
         }
 
         binding.btnSave.setOnClickListener {
@@ -138,7 +130,18 @@ class EditFragment : Fragment() {
                 }
             }
         }
-
+        userViewModel.currentUser?.uid?.let { userViewModel.getUser(it) }
+            ?.observe(viewLifecycleOwner) { user ->
+                val bmp = user.imageByteArray?.let {
+                    BitmapFactory.decodeByteArray(
+                        user.imageByteArray, 0,
+                        it.size
+                    )
+                }
+                binding.ivPhoto.setImageBitmap(bmp)
+                binding.etEmail.setText(user?.email)
+                binding.etUsername.setText(user?.userName)
+            }
     }
 
     override fun onResume() {
