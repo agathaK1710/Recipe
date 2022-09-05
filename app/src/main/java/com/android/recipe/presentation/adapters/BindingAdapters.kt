@@ -34,11 +34,4 @@ fun bindRecipeImage(imageView: ImageView, imageUrl: String?) {
     Picasso.get().load(imageUrl).into(imageView)
 }
 
-//@BindingAdapter("clickAction")
-//fun bindClickAction(imageView: ImageView, clickListener: (Boolean) -> Unit, isFavourite: Boolean){
-//    imageView.setOnClickListener {
-//        clickListener(isFavourite)
-//    }
-//}
-
 

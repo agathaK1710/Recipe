@@ -5,15 +5,12 @@ import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import androidx.fragment.app.Fragment
-import androidx.fragment.app.FragmentManager
-import com.android.recipe.R
 import com.android.recipe.databinding.FragmentAuthContainerBinding
 
 class AuthFragmentContainer : Fragment() {
     private var _binding: FragmentAuthContainerBinding? = null
     private val binding: FragmentAuthContainerBinding
         get() = _binding ?: throw RuntimeException("FragmentAuthContainerBinding is null")
-
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?,
         savedInstanceState: Bundle?

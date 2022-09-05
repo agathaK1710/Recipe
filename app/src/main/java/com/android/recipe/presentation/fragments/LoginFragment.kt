@@ -1,9 +1,7 @@
 package com.android.recipe.presentation.fragments
 
 import android.content.Context
-import android.graphics.BitmapFactory
 import android.os.Bundle
-import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
@@ -13,9 +11,7 @@ import androidx.lifecycle.ViewModelProvider
 import androidx.navigation.fragment.findNavController
 import com.android.recipe.R
 import com.android.recipe.databinding.FragmentLoginBinding
-import com.android.recipe.domain.entities.UserInfo
 import com.android.recipe.presentation.RecipeApp
-import com.android.recipe.presentation.User
 import com.android.recipe.presentation.UserViewModel
 import com.android.recipe.presentation.ViewModelFactory
 import com.android.recipe.presentation.fragments.fragmentContainers.MainContainerFragment

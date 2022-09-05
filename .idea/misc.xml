@@ -35,7 +35,11 @@
         <entry key="..\:/Kotlin/udemy course/Recipe/app/src/main/res/layout/activity_main.xml" value="0.47161572052401746" />
         <entry key="..\:/Kotlin/udemy course/Recipe/app/src/main/res/layout/cuisine_item.xml" value="0.536" />
         <entry key="..\:/Kotlin/udemy course/Recipe/app/src/main/res/layout/favourites_item.xml" value="0.253125" />
+<<<<<<< HEAD
         <entry key="..\:/Kotlin/udemy course/Recipe/app/src/main/res/layout/fragment_auth_container.xml" value="0.444672131147541" />
+=======
+        <entry key="..\:/Kotlin/udemy course/Recipe/app/src/main/res/layout/fragment_auth_container.xml" value="0.61" />
+>>>>>>> 62ad3409b0361e46f64cac2f799b28f93ef990e1
         <entry key="..\:/Kotlin/udemy course/Recipe/app/src/main/res/layout/fragment_blank.xml" value="0.25416666666666665" />
         <entry key="..\:/Kotlin/udemy course/Recipe/app/src/main/res/layout/fragment_container.xml" value="0.25416666666666665" />
         <entry key="..\:/Kotlin/udemy course/Recipe/app/src/main/res/layout/fragment_create_recipe.xml" value="0.57625" />
