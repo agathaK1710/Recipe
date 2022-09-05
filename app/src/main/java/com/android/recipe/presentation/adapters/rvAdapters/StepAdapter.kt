@@ -1,4 +1,4 @@
-package com.android.recipe.presentation.adapters
+package com.android.recipe.presentation.adapters.rvAdapters
 
 import android.view.LayoutInflater
 import android.view.View

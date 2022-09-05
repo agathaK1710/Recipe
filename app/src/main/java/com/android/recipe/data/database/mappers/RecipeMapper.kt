@@ -20,7 +20,7 @@ class RecipeMapper @Inject constructor(
         recipeId = recipeDetailDto.id,
         image = recipeDetailDto.image,
         title = recipeDetailDto.title,
-        favouriteRecipe = 0,
+        favouriteRecipe = false,
         likes = recipeDetailDto.likes,
         healthScore = recipeDetailDto.healthScore,
         readyInMinutes = recipeDetailDto.readyInMinutes,

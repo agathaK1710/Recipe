@@ -1,151 +1,153 @@
 <?xml version="1.0" encoding="utf-8"?>
-<androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
-    xmlns:app="http://schemas.android.com/apk/res-auto"
-    xmlns:tools="http://schemas.android.com/tools"
-    android:layout_width="match_parent"
-    android:layout_height="match_parent">
+<layout>
+    <androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+        xmlns:app="http://schemas.android.com/apk/res-auto"
+        xmlns:tools="http://schemas.android.com/tools"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent">
 
-    <ImageView
-        android:id="@+id/ivHat"
-        android:layout_width="250dp"
-        android:layout_height="250dp"
-        android:layout_margin="@dimen/margin_start_end"
-        android:src="@drawable/chef_hat"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="parent"
-        app:tint="@color/medium_blue" />
+        <ImageView
+            android:id="@+id/ivHat"
+            android:layout_width="250dp"
+            android:layout_height="250dp"
+            android:layout_margin="@dimen/margin_start_end"
+            android:src="@drawable/chef_hat"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toTopOf="parent"
+            app:tint="@color/medium_blue" />
 
-    <TextView
-        android:id="@+id/tvLogin"
-        style="@style/MyTextView"
-        android:layout_marginBottom="40dp"
-        android:text="@string/registration"
-        android:textColor="@color/dark_grey"
-        android:textSize="32sp"
-        app:layout_constraintBottom_toBottomOf="@+id/ivHat"
-        app:layout_constraintEnd_toEndOf="@+id/ivHat"
-        app:layout_constraintStart_toStartOf="@+id/ivHat"
-        app:layout_constraintTop_toTopOf="@+id/ivHat" />
+        <TextView
+            android:id="@+id/tvLogin"
+            style="@style/MyTextView"
+            android:layout_marginBottom="40dp"
+            android:text="@string/registration"
+            android:textColor="@color/dark_grey"
+            android:textSize="32sp"
+            app:layout_constraintBottom_toBottomOf="@+id/ivHat"
+            app:layout_constraintEnd_toEndOf="@+id/ivHat"
+            app:layout_constraintStart_toStartOf="@+id/ivHat"
+            app:layout_constraintTop_toTopOf="@+id/ivHat" />
 
-    <com.google.android.material.textfield.TextInputLayout
-        android:id="@+id/tfUsername"
-        style="@style/TextInputLayout"
-        android:layout_marginTop="50dp"
-        android:hint="@string/username"
-        app:errorEnabled="true"
-        app:boxStrokeColor="@color/medium_blue"
-        app:boxStrokeErrorColor="@color/red"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/ivHat"
-        app:startIconDrawable="@drawable/person">
+        <com.google.android.material.textfield.TextInputLayout
+            android:id="@+id/tfUsername"
+            style="@style/TextInputLayout"
+            android:layout_marginTop="50dp"
+            android:hint="@string/username"
+            app:boxStrokeColor="@color/medium_blue"
+            app:boxStrokeErrorColor="@color/red"
+            app:errorEnabled="true"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@+id/ivHat"
+            app:startIconDrawable="@drawable/person">
 
-        <com.google.android.material.textfield.TextInputEditText
-            android:id="@+id/etUsername"
-            android:layout_width="match_parent"
+            <com.google.android.material.textfield.TextInputEditText
+                android:id="@+id/etUsername"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:background="@color/white"
+                android:fontFamily="@font/lato_light"
+                android:inputType="text" />
+        </com.google.android.material.textfield.TextInputLayout>
+
+        <com.google.android.material.textfield.TextInputLayout
+            android:id="@+id/tfEmail"
+            style="@style/TextInputLayout"
+            android:hint="@string/email"
+            app:boxStrokeColor="@color/medium_blue"
+            app:boxStrokeErrorColor="@color/red"
+            app:errorEnabled="true"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@+id/tfUsername"
+            app:startIconDrawable="@drawable/email">
+
+            <com.google.android.material.textfield.TextInputEditText
+                android:id="@+id/etEmail"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:background="@color/white"
+                android:fontFamily="@font/lato_light"
+                android:inputType="textEmailAddress" />
+        </com.google.android.material.textfield.TextInputLayout>
+
+        <com.google.android.material.textfield.TextInputLayout
+            android:id="@+id/tfPassword"
+            style="@style/TextInputLayout"
+            android:hint="@string/password"
+            app:boxStrokeColor="@color/medium_blue"
+            app:boxStrokeErrorColor="@color/red"
+            app:errorEnabled="true"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@+id/tfEmail"
+            app:passwordToggleContentDescription="password"
+            app:passwordToggleEnabled="true"
+            app:startIconDrawable="@drawable/lock">
+
+            <com.google.android.material.textfield.TextInputEditText
+                android:id="@+id/etPassword"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:background="@color/white"
+                android:fontFamily="@font/lato_light"
+                android:inputType="textPassword" />
+
+        </com.google.android.material.textfield.TextInputLayout>
+
+
+        <com.google.android.material.textfield.TextInputLayout
+            android:id="@+id/tfRPassword"
+            style="@style/TextInputLayout"
+            android:hint="@string/repeat_password"
+            app:boxStrokeColor="@color/medium_blue"
+            app:boxStrokeErrorColor="@color/red"
+            app:errorEnabled="true"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@+id/tfPassword"
+            app:passwordToggleContentDescription="password"
+            app:passwordToggleEnabled="true"
+            app:startIconDrawable="@drawable/lock">
+
+            <com.google.android.material.textfield.TextInputEditText
+                android:id="@+id/etRPassword"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:background="@color/white"
+                android:fontFamily="@font/lato_light"
+                android:inputType="textPassword" />
+        </com.google.android.material.textfield.TextInputLayout>
+
+        <Button
+            android:id="@+id/btnRegistration"
+            android:layout_width="250dp"
             android:layout_height="wrap_content"
-            android:background="@color/white"
+            android:layout_marginTop="20dp"
+            android:backgroundTint="@color/turquoise"
             android:fontFamily="@font/lato_light"
-            android:inputType="text" />
-    </com.google.android.material.textfield.TextInputLayout>
+            android:text="@string/sign_up"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@+id/tfRPassword" />
 
-    <com.google.android.material.textfield.TextInputLayout
-        android:id="@+id/tfEmail"
-        style="@style/TextInputLayout"
-        android:hint="@string/email"
-        app:errorEnabled="true"
-        app:boxStrokeColor="@color/medium_blue"
-        app:boxStrokeErrorColor="@color/red"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/tfUsername"
-        app:startIconDrawable="@drawable/email">
+        <TextView
+            android:id="@+id/tvAccount"
+            style="@style/MyTextView"
+            android:layout_margin="@dimen/margin_start_top"
+            android:text="@string/i_already_have_an_account"
+            android:textColor="@color/medium_blue"
+            android:textSize="20sp"
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent" />
 
-        <com.google.android.material.textfield.TextInputEditText
-            android:id="@+id/etEmail"
-            android:layout_width="match_parent"
+        <ProgressBar
+            android:id="@+id/progressBar"
+            android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:background="@color/white"
-            android:fontFamily="@font/lato_light"
-            android:inputType="textEmailAddress" />
-    </com.google.android.material.textfield.TextInputLayout>
-
-    <com.google.android.material.textfield.TextInputLayout
-        android:id="@+id/tfPassword"
-        style="@style/TextInputLayout"
-        app:errorEnabled="true"
-        android:hint="@string/password"
-        app:boxStrokeColor="@color/medium_blue"
-        app:boxStrokeErrorColor="@color/red"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/tfEmail"
-        app:passwordToggleContentDescription="password"
-        app:passwordToggleEnabled="true"
-        app:startIconDrawable="@drawable/lock">
-
-        <com.google.android.material.textfield.TextInputEditText
-            android:id="@+id/etPassword"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:background="@color/white"
-            android:fontFamily="@font/lato_light"
-            android:inputType="textPassword" />
-
-    </com.google.android.material.textfield.TextInputLayout>
-
-
-    <com.google.android.material.textfield.TextInputLayout
-        android:id="@+id/tfRPassword"
-        style="@style/TextInputLayout"
-        app:errorEnabled="true"
-        android:hint="@string/repeat_password"
-        app:boxStrokeColor="@color/medium_blue"
-        app:boxStrokeErrorColor="@color/red"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/tfPassword"
-        app:passwordToggleContentDescription="password"
-        app:passwordToggleEnabled="true"
-        app:startIconDrawable="@drawable/lock">
-
-        <com.google.android.material.textfield.TextInputEditText
-            android:id="@+id/etRPassword"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:background="@color/white"
-            android:fontFamily="@font/lato_light"
-            android:inputType="textPassword" />
-    </com.google.android.material.textfield.TextInputLayout>
-
-    <Button
-        android:id="@+id/btnRegistration"
-        android:layout_width="250dp"
-        android:layout_height="wrap_content"
-        android:layout_marginTop="20dp"
-        android:backgroundTint="@color/turquoise"
-        android:fontFamily="@font/lato_light"
-        android:text="@string/sign_up"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/tfRPassword" />
-
-    <TextView
-        android:id="@+id/tvAccount"
-        style="@style/MyTextView"
-        android:text="@string/i_already_have_an_account"
-        android:textColor="@color/medium_blue"
-        android:textSize="20sp"
-        android:layout_margin="@dimen/margin_start_top"
-        app:layout_constraintBottom_toBottomOf="parent"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintStart_toStartOf="parent" />
-
-    <ProgressBar
-        android:id="@+id/progressBar"
-        android:visibility="gone"
-        android:theme="@style/ProgressBarStyle"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        app:layout_constraintBottom_toBottomOf="parent"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="parent" />
-</androidx.constraintlayout.widget.ConstraintLayout>
+            android:theme="@style/ProgressBarStyle"
+            android:visibility="gone"
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toTopOf="parent" />
+    </androidx.constraintlayout.widget.ConstraintLayout>
+</layout>

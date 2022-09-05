@@ -1,7 +1,6 @@
 package com.android.recipe.presentation.fragments.fragmentContainers
 
 import android.content.Context
-import android.content.res.ColorStateList
 import android.os.Bundle
 import android.view.LayoutInflater
 import android.view.View
@@ -75,8 +74,6 @@ class MainContainerFragment : Fragment() {
             TabLayoutMediator(binding.tabLayout, binding.viewPager) { tab, position ->
                 tab.setIcon(icons[position])
             }
-        binding.tabLayout.tabIconTint =
-            ColorStateList.valueOf(ContextCompat.getColor(context, R.color.dark_grey))
         binding.tabLayout.addOnTabSelectedListener(object : TabLayout.OnTabSelectedListener {
             override fun onTabSelected(tab: TabLayout.Tab?) {
                 val tabIconColor = ContextCompat.getColor(context, R.color.white)

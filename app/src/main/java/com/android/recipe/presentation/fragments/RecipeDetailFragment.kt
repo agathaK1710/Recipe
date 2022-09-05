@@ -2,7 +2,6 @@ package com.android.recipe.presentation.fragments
 
 import android.content.Context
 import android.os.Bundle
-import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
@@ -62,6 +61,7 @@ class RecipeDetailFragment : Fragment() {
         super.onViewCreated(view, savedInstanceState)
         setUpRV()
         lifecycleScope.launch(Dispatchers.Main) {
+            binding.recipe = viewModel.getRecipeInfo(args.id)
             setViews(viewModel.getRecipeInfo(args.id))
         }
         setStepBtnClickListener()
@@ -143,43 +143,28 @@ class RecipeDetailFragment : Fragment() {
     }
 
     private fun setViews(recipe: RecipeInfo) {
-        with(binding) {
-            tvTitle.text = recipe.title
-            tvReadyInMinutes.text = recipe.readyInMinutes.toString()
-            tvHealthScore.text = recipe.healthScore.toString()
-            pbHeathScore.progress = recipe.healthScore
-            tvCalories.text = recipe.calories.toInt().toString()
-            Picasso.get().load(recipe.image).into(ivRecipeImage)
-            tvServings.text = recipe.servings.toString()
-            tvDishTypes.text = recipe.dishTypes
-            if (recipe.favouriteRecipe == 1) {
-                ivHeart.setImageResource(R.drawable.read_heart)
-            } else {
-                ivHeart.setImageResource(R.drawable.heart)
-            }
-            ivHeart.setOnClickListener {
-                if (recipe.favouriteRecipe == 0) {
-                    (it as ImageView).setImageResource(R.drawable.read_heart)
+            binding.ivHeart.setOnClickListener {
+                if (!recipe.favouriteRecipe) {
+                    (it as ImageView).setImageResource(R.drawable.red_heart)
                     addToFavourites(recipe)
                 } else {
                     (it as ImageView).setImageResource(R.drawable.heart)
                     removeAtFavourites(recipe)
                 }
             }
-        }
     }
 
     private fun removeAtFavourites(recipe: RecipeInfo) {
         lifecycleScope.launch(Dispatchers.IO) {
-            recipe.favouriteRecipe = 0
-            viewModel.editRecipe(recipe)
+            val editRecipe = recipe.copy(favouriteRecipe = false)
+            viewModel.editRecipe(editRecipe)
         }
     }
 
     private fun addToFavourites(recipe: RecipeInfo) {
         lifecycleScope.launch(Dispatchers.IO) {
-            recipe.favouriteRecipe = 1
-            viewModel.editRecipe(recipe)
+            val editRecipe = recipe.copy(favouriteRecipe = true)
+            viewModel.editRecipe(editRecipe)
         }
     }
 }

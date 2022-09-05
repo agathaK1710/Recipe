@@ -7,7 +7,7 @@ import androidx.room.PrimaryKey
 data class RecipeEntity(
     @PrimaryKey
     val recipeId: Int, //todo id
-    val favouriteRecipe: Int, //todo extract this information to another table?
+    val favouriteRecipe: Boolean, //todo extract this information to another table?
     val image: String,
     val title: String,
     val likes: Int,

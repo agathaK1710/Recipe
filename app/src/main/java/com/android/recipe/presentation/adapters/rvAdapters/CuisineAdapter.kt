@@ -1,4 +1,4 @@
-package com.android.recipe.presentation.adapters
+package com.android.recipe.presentation.adapters.rvAdapters
 
 import android.view.LayoutInflater
 import android.view.ViewGroup
@@ -8,6 +8,7 @@ import androidx.recyclerview.widget.RecyclerView
 import com.android.recipe.R
 import com.android.recipe.databinding.CuisineItemBinding
 import com.android.recipe.presentation.Cuisine
+import com.android.recipe.presentation.adapters.viewHolders.CuisineViewHolder
 
 class CuisineAdapter(private val cuisines: List<Cuisine>) :
     RecyclerView.Adapter<CuisineViewHolder>() {

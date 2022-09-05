@@ -1,108 +1,110 @@
 <?xml version="1.0" encoding="utf-8"?>
-<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
-    xmlns:app="http://schemas.android.com/apk/res-auto"
-    xmlns:tools="http://schemas.android.com/tools"
-    android:layout_width="match_parent"
-    android:layout_height="match_parent"
-    android:orientation="vertical"
-    tools:context=".presentation.fragments.RecipeDetailFragment">
-
-    <androidx.cardview.widget.CardView
+<layout>
+    <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+        xmlns:app="http://schemas.android.com/apk/res-auto"
+        xmlns:tools="http://schemas.android.com/tools"
         android:layout_width="match_parent"
-        android:layout_height="320dp"
-        android:layout_margin="@dimen/margin_start_top"
-        app:cardCornerRadius="@dimen/corner_radius"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="parent">
+        android:layout_height="match_parent"
+        android:orientation="vertical"
+        tools:context=".presentation.fragments.RecipeDetailFragment">
 
-        <androidx.constraintlayout.widget.ConstraintLayout
+        <androidx.cardview.widget.CardView
             android:layout_width="match_parent"
-            android:layout_height="match_parent"
-            android:orientation="vertical">
+            android:layout_height="320dp"
+            android:layout_margin="@dimen/margin_start_top"
+            app:cardCornerRadius="@dimen/corner_radius"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toTopOf="parent">
 
-            <androidx.cardview.widget.CardView
-                android:id="@+id/cardView5"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_marginTop="@dimen/margin_start_top"
-                app:cardCornerRadius="125dp"
-                app:layout_constraintEnd_toEndOf="parent"
-                app:layout_constraintStart_toStartOf="parent"
-                app:layout_constraintTop_toTopOf="parent">
+            <androidx.constraintlayout.widget.ConstraintLayout
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:orientation="vertical">
 
-                <ImageView
-                    android:id="@+id/ivNoPhoto"
-                    android:layout_width="100dp"
-                    android:layout_height="100dp"
-                    android:layout_gravity="center_vertical|center_horizontal"
-                    android:background="@drawable/photo" />
+                <androidx.cardview.widget.CardView
+                    android:id="@+id/cardView5"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginTop="@dimen/margin_start_top"
+                    app:cardCornerRadius="125dp"
+                    app:layout_constraintEnd_toEndOf="parent"
+                    app:layout_constraintStart_toStartOf="parent"
+                    app:layout_constraintTop_toTopOf="parent">
 
-                <ImageView
-                    android:id="@+id/ivPhoto"
-                    android:layout_width="250dp"
-                    android:layout_height="250dp"
-                    android:scaleType="centerCrop" />
+                    <ImageView
+                        android:id="@+id/ivNoPhoto"
+                        android:layout_width="100dp"
+                        android:layout_height="100dp"
+                        android:layout_gravity="center_vertical|center_horizontal"
+                        android:background="@drawable/photo" />
 
-            </androidx.cardview.widget.CardView>
+                    <ImageView
+                        android:id="@+id/ivPhoto"
+                        android:layout_width="250dp"
+                        android:layout_height="250dp"
+                        android:scaleType="centerCrop" />
 
-            <TextView
-                android:id="@+id/tvUserName"
-                style="@style/MyTextView"
-                android:layout_gravity="center_horizontal"
-                android:textColor="@color/black"
-                android:textSize="@dimen/title"
-                app:layout_constraintBottom_toBottomOf="parent"
-                app:layout_constraintEnd_toEndOf="parent"
-                app:layout_constraintStart_toStartOf="parent"
-                app:layout_constraintTop_toBottomOf="@+id/cardView5"
-                tools:text="Makar" />
+                </androidx.cardview.widget.CardView>
 
-            <ImageButton
-                android:id="@+id/btnEdit"
-                style="@style/Widget.MaterialComponents.Button.OutlinedButton"
-                android:layout_width="45dp"
-                android:layout_height="40dp"
-                android:src="@drawable/edit"
-                android:layout_marginTop="@dimen/margin_start_top"
-                app:layout_constraintEnd_toEndOf="parent"
-                app:layout_constraintStart_toEndOf="@+id/cardView5"
-                app:layout_constraintTop_toTopOf="parent" />
+                <TextView
+                    android:id="@+id/tvUserName"
+                    style="@style/MyTextView"
+                    android:layout_gravity="center_horizontal"
+                    android:textColor="@color/black"
+                    android:textSize="@dimen/title"
+                    app:layout_constraintBottom_toBottomOf="parent"
+                    app:layout_constraintEnd_toEndOf="parent"
+                    app:layout_constraintStart_toStartOf="parent"
+                    app:layout_constraintTop_toBottomOf="@+id/cardView5"
+                    tools:text="Makar" />
+
+                <ImageButton
+                    android:id="@+id/btnEdit"
+                    style="@style/Widget.MaterialComponents.Button.OutlinedButton"
+                    android:layout_width="45dp"
+                    android:layout_height="40dp"
+                    android:layout_marginTop="@dimen/margin_start_top"
+                    android:src="@drawable/edit"
+                    app:layout_constraintEnd_toEndOf="parent"
+                    app:layout_constraintStart_toEndOf="@+id/cardView5"
+                    app:layout_constraintTop_toTopOf="parent" />
 
 
-        </androidx.constraintlayout.widget.ConstraintLayout>
+            </androidx.constraintlayout.widget.ConstraintLayout>
 
-    </androidx.cardview.widget.CardView>
+        </androidx.cardview.widget.CardView>
 
-    <TextView
-        android:id="@+id/myRecipes"
-        style="@style/MyTextView"
-        android:layout_marginTop="@dimen/margin_start_top"
-        android:layout_marginStart="20dp"
+        <TextView
+            android:id="@+id/myRecipes"
+            style="@style/MyTextView"
+            android:layout_marginStart="20dp"
+            android:layout_marginTop="@dimen/margin_start_top"
 
-        android:text="@string/my_recipes"
-        android:textColor="@color/black"
-        android:textSize="@dimen/title" />
+            android:text="@string/my_recipes"
+            android:textColor="@color/black"
+            android:textSize="@dimen/title" />
 
-    <androidx.recyclerview.widget.RecyclerView
-        android:id="@+id/rvMyRecipes"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:layout_margin="@dimen/margin_start_top"
-        android:orientation="horizontal"
-        app:layoutManager="androidx.recyclerview.widget.LinearLayoutManager"
-        tools:listitem="@layout/recipe_item" />
+        <androidx.recyclerview.widget.RecyclerView
+            android:id="@+id/rvMyRecipes"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_margin="@dimen/margin_start_top"
+            android:orientation="horizontal"
+            app:layoutManager="androidx.recyclerview.widget.LinearLayoutManager"
+            tools:listitem="@layout/recipe_item" />
 
-    <Button
-        android:id="@+id/btnCreateRecipe"
-        style="@style/Widget.MaterialComponents.Button.TextButton"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_marginEnd="20dp"
-        android:layout_marginBottom="@dimen/margin_start_top"
-        android:fontFamily="@font/lato_light"
-        android:text="@string/create_recipe"
-        android:layout_gravity="end"
-        android:textColor="@color/black" />
+        <Button
+            android:id="@+id/btnCreateRecipe"
+            style="@style/Widget.MaterialComponents.Button.TextButton"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_gravity="end"
+            android:layout_marginEnd="20dp"
+            android:layout_marginBottom="@dimen/margin_start_top"
+            android:fontFamily="@font/lato_light"
+            android:text="@string/create_recipe"
+            android:textColor="@color/black" />
 
-</LinearLayout>
+    </LinearLayout>
+</layout>

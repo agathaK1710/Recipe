@@ -11,10 +11,9 @@ import androidx.lifecycle.ViewModelProvider
 import androidx.lifecycle.lifecycleScope
 import androidx.navigation.fragment.findNavController
 import androidx.navigation.fragment.navArgs
-import com.android.recipe.R
 import com.android.recipe.databinding.FragmentStepBinding
 import com.android.recipe.presentation.*
-import com.android.recipe.presentation.adapters.StepAdapter
+import com.android.recipe.presentation.adapters.rvAdapters.StepAdapter
 import com.android.recipe.presentation.fragments.fragmentContainers.MainContainerFragment
 import kotlinx.coroutines.*
 import javax.inject.Inject

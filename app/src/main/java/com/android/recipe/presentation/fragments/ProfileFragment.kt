@@ -3,22 +3,19 @@ package com.android.recipe.presentation.fragments
 import android.content.Context
 import android.graphics.BitmapFactory
 import android.os.Bundle
-import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import androidx.fragment.app.Fragment
 import androidx.lifecycle.ViewModelProvider
-import androidx.lifecycle.lifecycleScope
 import com.android.recipe.R
 import com.android.recipe.databinding.FragmentProfileBinding
-import com.android.recipe.presentation.*
-import com.android.recipe.presentation.adapters.RecipeAdapter
+import com.android.recipe.presentation.RecipeApp
+import com.android.recipe.presentation.RecipeViewModel
+import com.android.recipe.presentation.UserViewModel
+import com.android.recipe.presentation.ViewModelFactory
+import com.android.recipe.presentation.adapters.rvAdapters.RecipeAdapter
 import com.android.recipe.presentation.fragments.fragmentContainers.MainContainerFragment
-import com.android.recipe.presentation.fragments.fragmentContainers.ThirdPageContainerFragment
-import kotlinx.coroutines.CoroutineScope
-import kotlinx.coroutines.Dispatchers
-import kotlinx.coroutines.launch
 import javax.inject.Inject
 
 
@@ -43,7 +40,6 @@ class ProfileFragment : Fragment() {
 
     override fun onAttach(context: Context) {
         component.inject(this)
-        userViewModel.addUser()
         super.onAttach(context)
     }
 

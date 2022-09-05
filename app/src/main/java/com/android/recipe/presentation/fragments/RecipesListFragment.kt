@@ -13,8 +13,8 @@ import androidx.recyclerview.widget.RecyclerView
 import com.android.recipe.R
 import com.android.recipe.databinding.FragmentRecipesListBinding
 import com.android.recipe.presentation.*
-import com.android.recipe.presentation.adapters.CuisineAdapter
-import com.android.recipe.presentation.adapters.RecipeAdapter
+import com.android.recipe.presentation.adapters.rvAdapters.CuisineAdapter
+import com.android.recipe.presentation.adapters.rvAdapters.RecipeAdapter
 import com.android.recipe.presentation.fragments.fragmentContainers.MainContainerFragment
 import javax.inject.Inject
 

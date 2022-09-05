@@ -1,74 +1,75 @@
 <?xml version="1.0" encoding="utf-8"?>
-<androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
-    android:id="@+id/container"
-    android:layout_width="match_parent"
-    android:layout_height="wrap_content"
-    android:layout_marginTop="@dimen/margin_start_top"
-    android:background="@drawable/rounded_purple"
-    xmlns:app="http://schemas.android.com/apk/res-auto"
-    xmlns:tools="http://schemas.android.com/tools">
-
-    <TextView
-        android:id="@+id/step"
-        style="@style/MyTextView"
-        android:textColor="@color/black"
-        android:text="@string/step"
-        android:textSize="25sp"
-        android:layout_margin="@dimen/margin_start_top"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="parent" />
-
-    <TextView
-        android:id="@+id/tvNumOfStep"
-        style="@style/MyTextView"
-        android:textColor="@color/black"
-        android:layout_marginTop="@dimen/margin_start_top"
-        android:textSize="25sp"
-        app:layout_constraintStart_toEndOf="@+id/step"
-        app:layout_constraintTop_toTopOf="parent"
-        tools:text="1" />
-
-    <TextView
-        android:id="@+id/ingredients"
-        style="@style/MyTextView"
-        android:text="@string/ingredients_dt"
-        android:layout_marginStart="@dimen/margin_start_top"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/step" />
-
-    <TextView
-        android:id="@+id/tvIngredients"
-        style="@style/MyTextView"
-        tools:text="sugar, egg, flavor"
-        android:layout_marginStart="5dp"
-        app:layout_constraintStart_toEndOf="@+id/ingredients"
-        app:layout_constraintTop_toTopOf="@+id/ingredients" />
-
-    <TextView
-        android:id="@+id/equipments"
-        style="@style/MyTextView"
-        android:text="@string/equipments_dt"
-        android:layout_marginStart="@dimen/margin_start_top"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/ingredients" />
-
-    <TextView
-        android:id="@+id/tvEquipments"
-        style="@style/MyTextView"
-        android:layout_marginStart="5dp"
-        app:layout_constraintStart_toEndOf="@+id/equipments"
-        app:layout_constraintTop_toBottomOf="@+id/tvIngredients"
-        tools:text="spoon, knife, oven" />
-
-    <TextView
-        android:id="@+id/tvStepDescription"
+<layout>
+    <androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+        xmlns:app="http://schemas.android.com/apk/res-auto"
+        xmlns:tools="http://schemas.android.com/tools"
+        android:id="@+id/container"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:fontFamily="@font/lato_light"
-        android:textColor="@color/black"
-        android:layout_margin="15dp"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/equipments" />
+        android:layout_marginTop="@dimen/margin_start_top"
+        android:background="@drawable/rounded_purple">
 
-</androidx.constraintlayout.widget.ConstraintLayout>
+        <TextView
+            android:id="@+id/step"
+            style="@style/MyTextView"
+            android:layout_margin="@dimen/margin_start_top"
+            android:text="@string/step"
+            android:textColor="@color/black"
+            android:textSize="25sp"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toTopOf="parent" />
+
+        <TextView
+            android:id="@+id/tvNumOfStep"
+            style="@style/MyTextView"
+            android:layout_marginTop="@dimen/margin_start_top"
+            android:textColor="@color/black"
+            android:textSize="25sp"
+            app:layout_constraintStart_toEndOf="@+id/step"
+            app:layout_constraintTop_toTopOf="parent"
+            tools:text="1" />
+
+        <TextView
+            android:id="@+id/ingredients"
+            style="@style/MyTextView"
+            android:layout_marginStart="@dimen/margin_start_top"
+            android:text="@string/ingredients_dt"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@+id/step" />
+
+        <TextView
+            android:id="@+id/tvIngredients"
+            style="@style/MyTextView"
+            android:layout_marginStart="5dp"
+            app:layout_constraintStart_toEndOf="@+id/ingredients"
+            app:layout_constraintTop_toTopOf="@+id/ingredients"
+            tools:text="sugar, egg, flavor" />
+
+        <TextView
+            android:id="@+id/equipments"
+            style="@style/MyTextView"
+            android:layout_marginStart="@dimen/margin_start_top"
+            android:text="@string/equipments_dt"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@+id/ingredients" />
+
+        <TextView
+            android:id="@+id/tvEquipments"
+            style="@style/MyTextView"
+            android:layout_marginStart="5dp"
+            app:layout_constraintStart_toEndOf="@+id/equipments"
+            app:layout_constraintTop_toBottomOf="@+id/tvIngredients"
+            tools:text="spoon, knife, oven" />
+
+        <TextView
+            android:id="@+id/tvStepDescription"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_margin="15dp"
+            android:fontFamily="@font/lato_light"
+            android:textColor="@color/black"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@+id/equipments" />
+    </androidx.constraintlayout.widget.ConstraintLayout>
+</layout>

@@ -1,4 +1,4 @@
-package com.android.recipe.presentation.adapters
+package com.android.recipe.presentation.adapters.viewHolders
 
 import androidx.recyclerview.widget.RecyclerView
 import com.android.recipe.databinding.IngredientItemBinding

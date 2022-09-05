@@ -1,254 +1,244 @@
 <?xml version="1.0" encoding="utf-8"?>
-<androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+<layout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
-    xmlns:tools="http://schemas.android.com/tools"
-    android:layout_width="match_parent"
-    android:layout_height="match_parent"
-    tools:context=".presentation.fragments.RecipeDetailFragment">
+    xmlns:tools="http://schemas.android.com/tools">
 
-    <androidx.cardview.widget.CardView
-        android:id="@+id/cardView2"
+    <data>
+
+        <variable
+            name="recipe"
+            type="com.android.recipe.domain.entities.RecipeInfo" />
+
+    </data>
+
+    <androidx.constraintlayout.widget.ConstraintLayout
         android:layout_width="match_parent"
-        android:layout_height="420dp"
-        android:layout_margin="@dimen/margin_start_top"
-        app:cardCornerRadius="@dimen/corner_radius"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="parent">
+        android:layout_height="match_parent"
+        tools:context=".presentation.fragments.RecipeDetailFragment">
 
-        <androidx.constraintlayout.widget.ConstraintLayout
+        <androidx.cardview.widget.CardView
+            android:id="@+id/cardView2"
             android:layout_width="match_parent"
-            android:layout_height="420dp">
+            android:layout_height="420dp"
+            android:layout_margin="@dimen/margin_start_top"
+            app:cardCornerRadius="@dimen/corner_radius"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toTopOf="parent">
 
-            <TextView
-                android:id="@+id/tvTitle"
-                android:layout_width="0dp"
-                android:layout_height="wrap_content"
-                android:layout_margin="@dimen/margin_start_top"
-                android:fontFamily="@font/lato_light"
-                android:textColor="@color/black"
-                android:textSize="@dimen/title"
-                app:layout_constraintEnd_toStartOf="@+id/ivHeart"
-                app:layout_constraintStart_toStartOf="parent"
-                app:layout_constraintTop_toTopOf="parent"
-                tools:text="Pasta" />
-
-            <ImageView
-                android:id="@+id/ivHeart"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_marginTop="@dimen/margin_start_top"
-                android:layout_marginEnd="20dp"
-                android:src="@drawable/heart"
-                app:layout_constraintEnd_toEndOf="parent"
-                app:layout_constraintTop_toTopOf="parent" />
-
-            <ImageView
-                android:id="@+id/ivRecipeImage"
+            <androidx.constraintlayout.widget.ConstraintLayout
                 android:layout_width="match_parent"
-                android:layout_height="250dp"
-                android:layout_margin="@dimen/margin_start_top"
-                android:scaleType="centerCrop"
-                app:layout_constraintEnd_toEndOf="parent"
-                app:layout_constraintStart_toStartOf="parent"
-                app:layout_constraintTop_toBottomOf="@+id/tvTitle"
-                tools:src="@tools:sample/avatars" />
+                android:layout_height="420dp">
+
+                <TextView
+                    android:id="@+id/tvTitle"
+                    android:layout_width="0dp"
+                    android:layout_height="wrap_content"
+                    android:layout_margin="@dimen/margin_start_top"
+                    android:fontFamily="@font/lato_light"
+                    android:text="@{recipe.title}"
+                    android:textColor="@color/black"
+                    android:textSize="@dimen/title"
+                    app:layout_constraintEnd_toStartOf="@+id/ivHeart"
+                    app:layout_constraintStart_toStartOf="parent"
+                    app:layout_constraintTop_toTopOf="parent"
+                    tools:text="Pasta" />
+
+                <ImageView
+                    android:id="@+id/ivHeart"
+                    rightImage="@{recipe.favouriteRecipe}"
+                    tools:src="@drawable/heart"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginTop="@dimen/margin_start_top"
+                    android:layout_marginEnd="20dp"
+                    app:layout_constraintEnd_toEndOf="parent"
+                    app:layout_constraintTop_toTopOf="parent" />
+
+                <ImageView
+                    android:id="@+id/ivRecipeImage"
+                    imageByUrl="@{recipe.image}"
+                    android:layout_width="match_parent"
+                    android:layout_height="250dp"
+                    android:layout_margin="@dimen/margin_start_top"
+                    android:scaleType="centerCrop"
+                    app:layout_constraintEnd_toEndOf="parent"
+                    app:layout_constraintStart_toStartOf="parent"
+                    app:layout_constraintTop_toBottomOf="@+id/tvTitle"
+                    tools:src="@tools:sample/avatars" />
 
 
-            <ImageView
-                android:id="@+id/ivTime"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_marginTop="@dimen/top_for_icons"
-                android:src="@drawable/clock"
-                app:layout_constraintEnd_toStartOf="@+id/guideline1"
-                app:layout_constraintStart_toStartOf="parent"
-                app:layout_constraintTop_toBottomOf="@+id/ivRecipeImage"
-                app:tint="@color/dark_grey" />
+                <ImageView
+                    android:id="@+id/ivTime"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginTop="@dimen/top_for_icons"
+                    android:src="@drawable/clock"
+                    app:layout_constraintEnd_toStartOf="@+id/guideline1"
+                    app:layout_constraintStart_toStartOf="parent"
+                    app:layout_constraintTop_toBottomOf="@+id/ivRecipeImage"
+                    app:tint="@color/dark_grey" />
 
-            <ImageView
-                android:id="@+id/ivServings"
-                android:layout_width="25dp"
-                android:layout_height="25dp"
-                android:layout_marginTop="@dimen/top_for_icons"
-                android:src="@drawable/servings"
-                app:layout_constraintEnd_toStartOf="@+id/guideline2"
-                app:layout_constraintStart_toStartOf="@+id/guideline1"
-                app:layout_constraintTop_toBottomOf="@+id/ivRecipeImage"
-                app:tint="@color/dark_grey" />
+                <ImageView
+                    android:id="@+id/ivServings"
+                    android:layout_width="25dp"
+                    android:layout_height="25dp"
+                    android:layout_marginTop="@dimen/top_for_icons"
+                    android:src="@drawable/servings"
+                    app:layout_constraintEnd_toStartOf="@+id/guideline2"
+                    app:layout_constraintStart_toStartOf="@+id/guideline1"
+                    app:layout_constraintTop_toBottomOf="@+id/ivRecipeImage"
+                    app:tint="@color/dark_grey" />
 
-            <ProgressBar
-                android:id="@+id/pbHeathScore"
-                style="?android:attr/progressBarStyleHorizontal"
-                android:layout_width="wrap_content"
-                android:layout_height="15dp"
-                android:layout_marginTop="30dp"
-                android:max="50"
-                app:layout_constraintEnd_toStartOf="@+id/guideline3"
-                app:layout_constraintStart_toStartOf="@+id/guideline2"
-                app:layout_constraintTop_toBottomOf="@+id/ivRecipeImage"
-                tools:progress="12" />
+                <ProgressBar
+                    android:id="@+id/pbHeathScore"
+                    style="?android:attr/progressBarStyleHorizontal"
+                    android:layout_width="wrap_content"
+                    android:layout_height="15dp"
+                    android:layout_marginTop="30dp"
+                    android:max="70"
+                    android:progress="@{recipe.healthScore}"
+                    app:layout_constraintEnd_toStartOf="@+id/guideline3"
+                    app:layout_constraintStart_toStartOf="@+id/guideline2"
+                    app:layout_constraintTop_toBottomOf="@+id/ivRecipeImage"
+                    tools:progress="12" />
 
-            <ImageView
-                android:id="@+id/ivCalories"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_marginTop="@dimen/top_for_icons"
-                android:src="@drawable/energy"
-                app:layout_constraintEnd_toEndOf="parent"
-                app:layout_constraintStart_toStartOf="@+id/guideline3"
-                app:layout_constraintTop_toBottomOf="@+id/ivRecipeImage"
-                app:tint="@color/dark_grey" />
+                <ImageView
+                    android:id="@+id/ivCalories"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginTop="@dimen/top_for_icons"
+                    android:src="@drawable/energy"
+                    app:layout_constraintEnd_toEndOf="parent"
+                    app:layout_constraintStart_toStartOf="@+id/guideline3"
+                    app:layout_constraintTop_toBottomOf="@+id/ivRecipeImage"
+                    app:tint="@color/dark_grey" />
 
-            <TextView
-                android:id="@+id/tvReadyInMinutes"
-                style="@style/MyTextView"
-                app:layout_constraintEnd_toStartOf="@+id/guideline4"
-                app:layout_constraintTop_toBottomOf="@+id/ivTime"
-                tools:text="59" />
+                <TextView
+                    android:id="@+id/tvReadyInMinutes"
+                    style="@style/MyTextView"
+                    prepareTime="@{recipe.readyInMinutes}"
+                    app:layout_constraintEnd_toStartOf="@+id/guideline1"
+                    app:layout_constraintStart_toStartOf="parent"
+                    app:layout_constraintTop_toBottomOf="@+id/ivTime"
+                    tools:text="59 min" />
 
-            <TextView
-                android:id="@+id/min"
-                style="@style/MyTextView"
-                android:layout_marginStart="2dp"
-                android:text="@string/min"
-                app:layout_constraintStart_toEndOf="@+id/tvReadyInMinutes"
-                app:layout_constraintTop_toBottomOf="@+id/ivTime" />
+                <TextView
+                    android:id="@+id/tvHealthScore"
+                    style="@style/MyTextView"
+                    android:text="@{String.valueOf(recipe.healthScore)}"
+                    app:layout_constraintEnd_toStartOf="@+id/guideline3"
+                    app:layout_constraintStart_toStartOf="@+id/guideline2"
+                    app:layout_constraintTop_toBottomOf="@+id/ivCalories"
+                    tools:text="70" />
 
-            <TextView
-                android:id="@+id/tvHealthScore"
-                style="@style/MyTextView"
-                app:layout_constraintEnd_toStartOf="@+id/guideline3"
-                app:layout_constraintStart_toStartOf="@+id/guideline2"
-                app:layout_constraintTop_toBottomOf="@+id/ivCalories"
-                tools:text="70" />
+                <TextView
+                    android:id="@+id/tvServings"
+                    style="@style/MyTextView"
+                    android:text="@{String.valueOf(recipe.servings)}"
+                    app:layout_constraintEnd_toStartOf="@+id/guideline2"
+                    app:layout_constraintStart_toStartOf="@+id/guideline1"
+                    app:layout_constraintTop_toBottomOf="@+id/ivServings"
+                    tools:text="70" />
 
-            <TextView
-                android:id="@+id/tvServings"
-                style="@style/MyTextView"
-                app:layout_constraintEnd_toStartOf="@+id/guideline2"
-                app:layout_constraintStart_toStartOf="@+id/guideline1"
-                app:layout_constraintTop_toBottomOf="@+id/ivServings"
-                tools:text="70" />
+                <TextView
+                    android:id="@+id/tvCalories"
+                    style="@style/MyTextView"
+                    energy="@{recipe.calories}"
+                    android:layout_width="17dp"
+                    android:layout_height="18dp"
+                    app:layout_constraintEnd_toEndOf="parent"
+                    app:layout_constraintStart_toStartOf="@+id/guideline3"
+                    app:layout_constraintTop_toBottomOf="@+id/ivCalories"
+                    tools:text="59 kcal" />
 
-            <TextView
-                android:id="@+id/tvCalories"
-                style="@style/MyTextView"
-                app:layout_constraintEnd_toStartOf="@+id/guideline5"
-                app:layout_constraintTop_toBottomOf="@+id/ivCalories"
-                tools:text="59" />
+                <androidx.constraintlayout.widget.Guideline
+                    android:id="@+id/guideline1"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:orientation="vertical"
+                    app:layout_constraintEnd_toEndOf="parent"
+                    app:layout_constraintGuide_percent="0.25"
+                    app:layout_constraintStart_toStartOf="parent" />
 
-            <TextView
-                android:id="@+id/kcal"
-                style="@style/MyTextView"
-                android:layout_marginStart="2dp"
-                android:text="@string/kcal"
-                app:layout_constraintStart_toStartOf="@+id/guideline5"
-                app:layout_constraintTop_toBottomOf="@+id/ivCalories" />
+                <androidx.constraintlayout.widget.Guideline
+                    android:id="@+id/guideline2"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:orientation="vertical"
+                    app:layout_constraintEnd_toEndOf="parent"
+                    app:layout_constraintGuide_percent="0.5"
+                    app:layout_constraintStart_toStartOf="parent" />
 
-            <androidx.constraintlayout.widget.Guideline
-                android:id="@+id/guideline1"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:orientation="vertical"
-                app:layout_constraintEnd_toEndOf="parent"
-                app:layout_constraintGuide_percent="0.25"
-                app:layout_constraintStart_toStartOf="parent" />
+                <androidx.constraintlayout.widget.Guideline
+                    android:id="@+id/guideline3"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:orientation="vertical"
+                    app:layout_constraintEnd_toEndOf="parent"
+                    app:layout_constraintGuide_percent="0.75"
+                    app:layout_constraintStart_toStartOf="parent" />
 
-            <androidx.constraintlayout.widget.Guideline
-                android:id="@+id/guideline2"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:orientation="vertical"
-                app:layout_constraintEnd_toEndOf="parent"
-                app:layout_constraintGuide_percent="0.5"
-                app:layout_constraintStart_toStartOf="parent" />
+            </androidx.constraintlayout.widget.ConstraintLayout>
 
-            <androidx.constraintlayout.widget.Guideline
-                android:id="@+id/guideline3"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:orientation="vertical"
-                app:layout_constraintEnd_toEndOf="parent"
-                app:layout_constraintGuide_percent="0.75"
-                app:layout_constraintStart_toStartOf="parent" />
+        </androidx.cardview.widget.CardView>
 
-            <androidx.constraintlayout.widget.Guideline
-                android:id="@+id/guideline4"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:orientation="vertical"
-                app:layout_constraintEnd_toEndOf="parent"
-                app:layout_constraintGuide_percent="0.125"
-                app:layout_constraintStart_toStartOf="parent" />
+        <TextView
+            android:id="@+id/ingredients"
+            style="@style/MyTextView"
+            android:layout_marginStart="20dp"
+            android:layout_marginBottom="@dimen/margin_start_top"
+            android:text="@string/ingredients"
+            android:textColor="@color/black"
+            android:textSize="@dimen/title"
+            app:layout_constraintBottom_toTopOf="@+id/rvIngredients"
+            app:layout_constraintStart_toStartOf="parent" />
 
-            <androidx.constraintlayout.widget.Guideline
-                android:id="@+id/guideline5"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:orientation="vertical"
-                app:layout_constraintEnd_toEndOf="parent"
-                app:layout_constraintGuide_percent="0.875"
-                app:layout_constraintStart_toStartOf="parent" />
+        <androidx.recyclerview.widget.RecyclerView
+            android:id="@+id/rvIngredients"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_margin="@dimen/margin_start_top"
+            android:orientation="horizontal"
+            app:layoutManager="androidx.recyclerview.widget.LinearLayoutManager"
+            app:layout_constraintBottom_toTopOf="@+id/button"
+            tools:listitem="@layout/ingredient_item" />
 
-        </androidx.constraintlayout.widget.ConstraintLayout>
+        <TextView
+            android:id="@+id/dishTypes"
+            style="@style/MyTextView"
+            android:layout_marginStart="20dp"
+            android:layout_marginTop="20dp"
+            android:text="@string/dish_types"
+            android:textColor="@color/black"
+            android:textSize="@dimen/title"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@+id/cardView2" />
 
-    </androidx.cardview.widget.CardView>
+        <TextView
+            android:id="@+id/tvDishTypes"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_marginStart="20dp"
+            android:layout_marginTop="10dp"
+            android:layout_marginEnd="20dp"
+            android:fontFamily="@font/lato_light"
+            android:text="@{recipe.dishTypes}"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@+id/dishTypes" />
 
-    <TextView
-        android:id="@+id/ingredients"
-        style="@style/MyTextView"
-        android:layout_marginStart="20dp"
-        android:layout_marginBottom="@dimen/margin_start_top"
-        android:text="@string/ingredients"
-        android:textColor="@color/black"
-        android:textSize="@dimen/title"
-        app:layout_constraintBottom_toTopOf="@+id/rvIngredients"
-        app:layout_constraintStart_toStartOf="parent" />
+        <Button
+            android:id="@+id/button"
+            style="@style/Widget.MaterialComponents.Button.TextButton"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginEnd="20dp"
+            android:fontFamily="@font/lato_light"
+            android:text="@string/go_to_steps"
+            android:textColor="@color/black"
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintEnd_toEndOf="parent" />
 
-    <androidx.recyclerview.widget.RecyclerView
-        android:id="@+id/rvIngredients"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:layout_margin="@dimen/margin_start_top"
-        android:orientation="horizontal"
-        app:layoutManager="androidx.recyclerview.widget.LinearLayoutManager"
-        app:layout_constraintBottom_toTopOf="@+id/button"
-        tools:listitem="@layout/ingredient_item" />
-
-    <TextView
-        android:id="@+id/dishTypes"
-        style="@style/MyTextView"
-        android:layout_marginStart="20dp"
-        android:layout_marginTop="20dp"
-        android:text="@string/dish_types"
-        android:textColor="@color/black"
-        android:textSize="@dimen/title"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/cardView2" />
-
-    <TextView
-        android:id="@+id/tvDishTypes"
-        android:fontFamily="@font/lato_light"
-        android:layout_height="wrap_content"
-        android:layout_width="0dp"
-        android:layout_marginStart="20dp"
-        android:layout_marginTop="10dp"
-        android:layout_marginEnd="20dp"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/dishTypes" />
-
-    <Button
-        android:id="@+id/button"
-        style="@style/Widget.MaterialComponents.Button.TextButton"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_marginEnd="20dp"
-        android:fontFamily="@font/lato_light"
-        android:text="@string/go_to_steps"
-        android:textColor="@color/black"
-        app:layout_constraintBottom_toBottomOf="parent"
-        app:layout_constraintEnd_toEndOf="parent" />
-
-</androidx.constraintlayout.widget.ConstraintLayout>
+    </androidx.constraintlayout.widget.ConstraintLayout>
+</layout>

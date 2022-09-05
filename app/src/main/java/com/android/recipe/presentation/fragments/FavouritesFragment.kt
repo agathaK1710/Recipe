@@ -14,7 +14,7 @@ import com.android.recipe.databinding.FragmentFavouritesBinding
 import com.android.recipe.presentation.RecipeApp
 import com.android.recipe.presentation.RecipeViewModel
 import com.android.recipe.presentation.ViewModelFactory
-import com.android.recipe.presentation.adapters.RecipeAdapter
+import com.android.recipe.presentation.adapters.rvAdapters.RecipeAdapter
 import com.android.recipe.presentation.fragments.fragmentContainers.MainContainerFragment
 import javax.inject.Inject
 

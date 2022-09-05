@@ -5,6 +5,7 @@ import android.view.ViewGroup
 import androidx.recyclerview.widget.RecyclerView
 import com.android.recipe.databinding.IngredientItemBinding
 import com.android.recipe.presentation.Ingredient
+import com.android.recipe.presentation.adapters.viewHolders.DetailViewHolder
 import com.squareup.picasso.Picasso
 
 class RecipeDetailAdapter(

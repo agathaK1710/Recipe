@@ -1,4 +1,4 @@
-package com.android.recipe.presentation.adapters
+package com.android.recipe.presentation.adapters.rvAdapters
 
 import android.view.LayoutInflater
 import android.view.ViewGroup
@@ -6,6 +6,8 @@ import androidx.core.view.marginEnd
 import androidx.recyclerview.widget.ListAdapter
 import com.android.recipe.databinding.RecipeItemBinding
 import com.android.recipe.domain.entities.RecipeInfo
+import com.android.recipe.presentation.adapters.RecipeInfoDiffCallBack
+import com.android.recipe.presentation.adapters.viewHolders.RecipeViewHolder
 import com.squareup.picasso.Picasso
 
 

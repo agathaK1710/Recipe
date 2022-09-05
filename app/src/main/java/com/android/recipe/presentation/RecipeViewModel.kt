@@ -1,11 +1,17 @@
 package com.android.recipe.presentation
 
 import android.app.Application
+import android.widget.ImageView
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
+import androidx.lifecycle.lifecycleScope
+import com.android.recipe.R
 import com.android.recipe.domain.entities.RecipeInfo
+import com.android.recipe.domain.entities.StepInfo
 import com.android.recipe.domain.usecases.recipeUsecases.*
-import com.android.recipe.presentation.adapters.CuisineAdapter
+import com.android.recipe.presentation.adapters.rvAdapters.CuisineAdapter
+import com.android.recipe.presentation.adapters.rvAdapters.StepAdapter
+import kotlinx.coroutines.*
 import javax.inject.Inject
 
 class RecipeViewModel @Inject constructor(

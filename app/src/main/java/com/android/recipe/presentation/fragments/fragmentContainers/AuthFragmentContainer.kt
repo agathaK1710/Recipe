@@ -14,11 +14,6 @@ class AuthFragmentContainer : Fragment() {
     private val binding: FragmentAuthContainerBinding
         get() = _binding ?: throw RuntimeException("FragmentAuthContainerBinding is null")
 
-    override fun onCreate(savedInstanceState: Bundle?) {
-        super.onCreate(savedInstanceState)
-        fragManager = parentFragmentManager
-    }
-
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?,
         savedInstanceState: Bundle?
@@ -30,10 +25,5 @@ class AuthFragmentContainer : Fragment() {
     override fun onDestroy() {
         super.onDestroy()
         _binding = null
-    }
-
-    companion object {
-        private var fragManager: FragmentManager? = null
-        fun fragmentManager() = fragManager
     }
 }
