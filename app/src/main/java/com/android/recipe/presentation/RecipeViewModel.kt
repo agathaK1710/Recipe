@@ -5,11 +5,13 @@ import android.widget.ImageView
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.lifecycleScope
+import androidx.lifecycle.viewModelScope
 import com.android.recipe.R
 import com.android.recipe.domain.entities.RecipeInfo
 import com.android.recipe.domain.entities.StepInfo
 import com.android.recipe.domain.usecases.recipeUsecases.*
 import com.android.recipe.presentation.adapters.rvAdapters.CuisineAdapter
+import com.android.recipe.presentation.adapters.rvAdapters.RecipeAdapter
 import com.android.recipe.presentation.adapters.rvAdapters.StepAdapter
 import kotlinx.coroutines.*
 import javax.inject.Inject
@@ -27,6 +29,7 @@ class RecipeViewModel @Inject constructor(
     private val getIngredientInfoUseCase: GetIngredientInfoUseCase,
     private val getStepsListByRecipeIdUseCase: GetStepsListByRecipeIdUseCase,
     private val getStepWithIngredientsUseCase: GetStepWithIngredientsUseCase,
+    private val getPopularRecipeUseCase: GetPopularRecipeUseCase,
     getFavouriteRecipesUseCase: GetFavouriteRecipesUseCase
 ) : ViewModel() {
 
@@ -34,6 +37,10 @@ class RecipeViewModel @Inject constructor(
     val cuisineAdapter = MutableLiveData<CuisineAdapter>()
 
     val favouriteRecipesList = getFavouriteRecipesUseCase()
+    val popularRecipe = viewModelScope.async {
+        getPopularRecipeUseCase()
+    }
+
     suspend fun getRecipeInfo(id: Int) = getRecipeInfoUseCase(id)
     suspend fun getIngredientInfo(id: Int) = getIngredientInfoUseCase(id)
     suspend fun editRecipe(recipe: RecipeInfo) = editRecipeUseCase(recipe)

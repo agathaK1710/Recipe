@@ -8,15 +8,24 @@ import android.view.View
 import android.view.ViewGroup
 import androidx.fragment.app.Fragment
 import androidx.lifecycle.ViewModelProvider
+import androidx.lifecycle.lifecycleScope
 import androidx.navigation.fragment.findNavController
 import androidx.recyclerview.widget.RecyclerView
 import com.android.recipe.R
 import com.android.recipe.databinding.FragmentRecipesListBinding
-import com.android.recipe.presentation.*
+import com.android.recipe.presentation.Cuisine
+import com.android.recipe.presentation.RecipeApp
+import com.android.recipe.presentation.RecipeViewModel
+import com.android.recipe.presentation.ViewModelFactory
 import com.android.recipe.presentation.adapters.rvAdapters.CuisineAdapter
 import com.android.recipe.presentation.adapters.rvAdapters.RecipeAdapter
 import com.android.recipe.presentation.fragments.fragmentContainers.MainContainerFragment
+import com.squareup.picasso.Picasso
+import kotlinx.coroutines.Dispatchers
+import kotlinx.coroutines.launch
+import kotlinx.coroutines.withContext
 import javax.inject.Inject
+
 
 class RecipesListFragment : Fragment() {
     private var _binding: FragmentRecipesListBinding? = null
@@ -64,6 +73,20 @@ class RecipesListFragment : Fragment() {
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
         setupRV()
+        lifecycleScope.launch {
+            val recipe = viewModel.popularRecipe.await()
+            withContext(Dispatchers.Main) {
+                with(binding.recipeItem) {
+                    recipe?.let {
+                        Picasso.get().load(it.image).into(ivRecipe)
+                        tvTitle.text = it.title
+                        tvLikes.visibility = View.GONE
+                        roundedShape.visibility = View.GONE
+                        readHeart.visibility = View.GONE
+                    }
+                }
+            }
+        }
     }
 
     override fun onResume() {
@@ -83,12 +106,15 @@ class RecipesListFragment : Fragment() {
             Cuisine(R.drawable.german, cuisines[6]),
             Cuisine(R.drawable.spanish, cuisines[7])
         )
-
         val rvAdapter = RecipeAdapter()
         val cuisineAdapter = viewModel.cuisineAdapter.value ?: CuisineAdapter(cuisineList)
         binding.recipesRV.adapter = rvAdapter
-        viewModel.name.value?.let {
-            viewModel.getRecipesByCuisine(it).observe(viewLifecycleOwner) { list ->
+        if(viewModel.name.value == null) {
+            viewModel.getRecipesByCuisine(cuisines[0]).observe(viewLifecycleOwner) { list ->
+                rvAdapter.submitList(list)
+            }
+        } else {
+            viewModel.getRecipesByCuisine(viewModel.name.value!!).observe(viewLifecycleOwner) { list ->
                 rvAdapter.submitList(list)
             }
         }

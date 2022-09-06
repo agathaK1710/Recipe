@@ -21,6 +21,7 @@ class RecipeMapper @Inject constructor(
         image = recipeDetailDto.image,
         title = recipeDetailDto.title,
         favouriteRecipe = false,
+        popularRecipe = false,
         likes = recipeDetailDto.likes,
         healthScore = recipeDetailDto.healthScore,
         readyInMinutes = recipeDetailDto.readyInMinutes,
@@ -41,6 +42,7 @@ class RecipeMapper @Inject constructor(
     fun mapRecipeEntityToInfo(recipeEntity: RecipeEntity) = RecipeInfo(
         id = recipeEntity.recipeId,
         favouriteRecipe = recipeEntity.favouriteRecipe,
+        popularRecipe = recipeEntity.popularRecipe,
         image = recipeEntity.image,
         likes = recipeEntity.likes,
         title = recipeEntity.title,
@@ -61,6 +63,7 @@ class RecipeMapper @Inject constructor(
         image = recipeInfo.image,
         likes = recipeInfo.likes,
         favouriteRecipe = recipeInfo.favouriteRecipe,
+        popularRecipe = recipeInfo.popularRecipe,
         title = recipeInfo.title,
         healthScore = recipeInfo.healthScore,
         readyInMinutes = recipeInfo.readyInMinutes,

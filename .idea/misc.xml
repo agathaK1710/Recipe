@@ -20,6 +20,7 @@
         <entry key="..\:/Kotlin/udemy course/Recipe/app/src/main/res/drawable/person.xml" value="0.1815" />
         <entry key="..\:/Kotlin/udemy course/Recipe/app/src/main/res/drawable/photo.xml" value="0.1815" />
         <entry key="..\:/Kotlin/udemy course/Recipe/app/src/main/res/drawable/read_heart.xml" value="0.1815" />
+        <entry key="..\:/Kotlin/udemy course/Recipe/app/src/main/res/drawable/read_outlined_heart.xml" value="0.1825" />
         <entry key="..\:/Kotlin/udemy course/Recipe/app/src/main/res/drawable/rounded.xml" value="0.1915" />
         <entry key="..\:/Kotlin/udemy course/Recipe/app/src/main/res/drawable/rounded_green.xml" value="0.1815" />
         <entry key="..\:/Kotlin/udemy course/Recipe/app/src/main/res/drawable/rounded_grey.xml" value="0.1815" />
@@ -35,11 +36,7 @@
         <entry key="..\:/Kotlin/udemy course/Recipe/app/src/main/res/layout/activity_main.xml" value="0.47161572052401746" />
         <entry key="..\:/Kotlin/udemy course/Recipe/app/src/main/res/layout/cuisine_item.xml" value="0.536" />
         <entry key="..\:/Kotlin/udemy course/Recipe/app/src/main/res/layout/favourites_item.xml" value="0.253125" />
-<<<<<<< HEAD
         <entry key="..\:/Kotlin/udemy course/Recipe/app/src/main/res/layout/fragment_auth_container.xml" value="0.444672131147541" />
-=======
-        <entry key="..\:/Kotlin/udemy course/Recipe/app/src/main/res/layout/fragment_auth_container.xml" value="0.61" />
->>>>>>> 62ad3409b0361e46f64cac2f799b28f93ef990e1
         <entry key="..\:/Kotlin/udemy course/Recipe/app/src/main/res/layout/fragment_blank.xml" value="0.25416666666666665" />
         <entry key="..\:/Kotlin/udemy course/Recipe/app/src/main/res/layout/fragment_container.xml" value="0.25416666666666665" />
         <entry key="..\:/Kotlin/udemy course/Recipe/app/src/main/res/layout/fragment_create_recipe.xml" value="0.57625" />
@@ -58,7 +55,7 @@
         <entry key="..\:/Kotlin/udemy course/Recipe/app/src/main/res/layout/fragment_step.xml" value="0.176" />
         <entry key="..\:/Kotlin/udemy course/Recipe/app/src/main/res/layout/fragment_third_page_container.xml" value="0.25025641025641027" />
         <entry key="..\:/Kotlin/udemy course/Recipe/app/src/main/res/layout/ingredient_item.xml" value="0.6" />
-        <entry key="..\:/Kotlin/udemy course/Recipe/app/src/main/res/layout/recipe_item.xml" value="0.264" />
+        <entry key="..\:/Kotlin/udemy course/Recipe/app/src/main/res/layout/recipe_item.xml" value="0.7710526315789473" />
         <entry key="..\:/Kotlin/udemy course/Recipe/app/src/main/res/layout/step_item.xml" value="0.25416666666666665" />
         <entry key="..\:/Kotlin/udemy course/Recipe/app/src/main/res/layout/tab_layout.xml" value="0.190625" />
         <entry key="..\:/Kotlin/udemy course/Recipe/app/src/main/res/layout/view.xml" value="0.25416666666666665" />

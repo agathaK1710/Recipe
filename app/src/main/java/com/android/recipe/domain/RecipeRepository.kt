@@ -20,4 +20,5 @@ interface RecipeRepository {
     suspend fun deleteUser(user: UserInfo)
     suspend fun insertUser(user: UserInfo)
     suspend fun editUser(user: UserInfo)
+    suspend fun getPopularRecipe(): RecipeInfo?
 }

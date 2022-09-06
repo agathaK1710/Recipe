@@ -57,4 +57,5 @@
     <string name="delete_account_dialog">Do you want to delete your account?</string>
     <string name="yes">Yes</string>
     <string name="no">No</string>
+    <string name="popular_food">Popular recipe</string>
 </resources>

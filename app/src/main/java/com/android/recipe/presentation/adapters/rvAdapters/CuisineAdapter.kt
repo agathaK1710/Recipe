@@ -1,5 +1,6 @@
 package com.android.recipe.presentation.adapters.rvAdapters
 
+import android.util.Log
 import android.view.LayoutInflater
 import android.view.ViewGroup
 import androidx.core.content.ContextCompat
@@ -24,16 +25,21 @@ class CuisineAdapter(private val cuisines: List<Cuisine>) :
         with(holder) {
             icon.setImageResource(cuisine.image)
             title.text = cuisine.name
-            icon.setOnClickListener {
-                index = adapterPosition
-                onClickListener?.invoke(cuisine)
-                notifyDataSetChanged()
+            if (index == -1 && position == 0) {
+                setViewColors(R.color.medium_blue)
+            } else {
+                icon.setOnClickListener {
+                    index = adapterPosition
+                    onClickListener?.invoke(cuisine)
+                    notifyDataSetChanged()
+                }
             }
             if (index == position) {
-                setViewColors(R.color.blue)
-            } else {
+                setViewColors(R.color.medium_blue)
+            } else if (index != -1 && index != position) {
                 setViewColors(R.color.dark_grey)
             }
+
         }
     }
 

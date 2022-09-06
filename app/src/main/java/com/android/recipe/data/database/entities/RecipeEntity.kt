@@ -8,6 +8,7 @@ data class RecipeEntity(
     @PrimaryKey
     val recipeId: Int, //todo id
     val favouriteRecipe: Boolean, //todo extract this information to another table?
+    val popularRecipe: Boolean,
     val image: String,
     val title: String,
     val likes: Int,

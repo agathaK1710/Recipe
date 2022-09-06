@@ -56,6 +56,7 @@ class MainActivity : AppCompatActivity() {
             supportFragmentManager.beginTransaction()
                 .replace(R.id.fragment_container_main, MainContainerFragment())
         }
+
 //        lifecycleScope.launch(Dispatchers.IO) {
 //            resources.getStringArray(R.array.cuisine_list).forEach {
 //                viewModel.loadData(it)

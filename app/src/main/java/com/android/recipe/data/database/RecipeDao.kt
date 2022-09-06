@@ -5,6 +5,7 @@ import androidx.room.*
 import com.android.recipe.data.database.entities.*
 import com.android.recipe.data.database.relations.RecipeWithSteps
 import com.android.recipe.data.database.relations.StepWithIngredients
+import com.android.recipe.domain.entities.RecipeInfo
 
 @Dao
 interface RecipeDao {
@@ -25,6 +26,9 @@ interface RecipeDao {
 
     @Query("SELECT * FROM recipes WHERE favouriteRecipe == 1")
     fun getFavouriteRecipesList(): LiveData<List<RecipeEntity>>
+
+    @Query("SELECT * FROM recipes WHERE popularRecipe == 1 LIMIT 1")
+    suspend fun getPopularRecipe(): RecipeEntity?
 
     @Delete
     suspend fun deleteRecipe(recipe: RecipeEntity)

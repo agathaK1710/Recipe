@@ -1,7 +1,7 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
     <dimen name="box_corner">20dp</dimen>
-    <dimen name="list_title_recipe">13sp</dimen>
+    <dimen name="list_title_recipe">12sp</dimen>
     <dimen name="margin_start_top">10dp</dimen>
     <dimen name="top_for_icons">25dp</dimen>
     <dimen name="corner_radius">15dp</dimen>

@@ -18,7 +18,7 @@ import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.withContext
 import javax.inject.Inject
 
-class RecipeRepositoryImpl @Inject constructor(
+class LocalRepositoryImpl @Inject constructor(
     private val recipeMapper: RecipeMapper,
     private val stepMapper: StepMapper,
     private val ingredientMapper: IngredientMapper,
@@ -100,6 +100,14 @@ class RecipeRepositoryImpl @Inject constructor(
                 )
             }
             recipeDao.insertRecipesList(recipes)
+            val recipeDetail = apiService.getRecipeInformation(
+                apiService.getRandomRecipes(number = 1).randomRecipesId[0].id,
+                includeNutrition = true
+            )
+            recipeDao.insertRecipe(
+                recipeMapper.mapDtoToRecipeEntity(recipeDetail).copy(popularRecipe = true)
+            )
+
             val recipeIds = recipes.map {
                 it.recipeId
             }
@@ -167,5 +175,9 @@ class RecipeRepositoryImpl @Inject constructor(
 
     override suspend fun editUser(user: UserInfo) {
         userMapper.mapUserInfoToEntity(user)?.let { userDao.editUser(it) }
+    }
+
+    override suspend fun getPopularRecipe(): RecipeInfo? {
+        return recipeDao.getPopularRecipe()?.let { recipeMapper.mapRecipeEntityToInfo(it) }
     }
 }
